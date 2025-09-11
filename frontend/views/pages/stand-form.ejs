@@ -1,0 +1,458 @@
+<%- include('../layouts/header', { title: title, page: page }) %>
+
+<!-- Hero Section -->
+<section class="hero-section py-5" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content text-white">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <span class="typing-animation">Réserver un Stand</span>
+                    </h1>
+                    <p class="lead mb-4">
+                        Réservez votre stand d'exposition et présentez vos innovations à plus de 2000 participants 
+                        du Forum YouthConnekt Sahel 2025.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image text-center">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2)); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-store fa-5x text-white opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Types de Stands -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Types de Stands Disponibles</h2>
+            <p class="section-subtitle">Choisissez le stand qui correspond le mieux à vos besoins</p>
+        </div>
+        
+        <div class="row g-4 mb-5">
+            <div class="col-lg-4 col-md-6">
+                <div class="stand-type-card bg-white rounded-3 shadow-sm p-4 text-center h-100">
+                    <div class="stand-icon mb-3">
+                        <i class="fas fa-cube fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Stand Standard</h5>
+                    <p class="text-muted mb-3">Stand de base avec table et chaises</p>
+                    <ul class="list-unstyled text-start">
+                        <li><i class="fas fa-check text-success me-2"></i> 3m x 2m</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Table et 2 chaises</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Éclairage de base</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 500 USD</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="stand-type-card bg-white rounded-3 shadow-sm p-4 text-center h-100">
+                    <div class="stand-icon mb-3">
+                        <i class="fas fa-crown fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="mb-3">Stand Premium</h5>
+                    <p class="text-muted mb-3">Stand amélioré avec équipements supplémentaires</p>
+                    <ul class="list-unstyled text-start">
+                        <li><i class="fas fa-check text-success me-2"></i> 4m x 3m</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Table, 4 chaises, fauteuils</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Éclairage LED</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 800 USD</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="stand-type-card bg-white rounded-3 shadow-sm p-4 text-center h-100">
+                    <div class="stand-icon mb-3">
+                        <i class="fas fa-gem fa-3x text-danger"></i>
+                    </div>
+                    <h5 class="mb-3">Stand VIP</h5>
+                    <p class="text-muted mb-3">Stand de luxe avec tous les équipements</p>
+                    <ul class="list-unstyled text-start">
+                        <li><i class="fas fa-check text-success me-2"></i> 5m x 4m</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Mobilier complet</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Écran LED, son</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 1200 USD</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulaire de Réservation -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container bg-white rounded-3 shadow-lg p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">Formulaire de Réservation</h2>
+                        <p class="text-muted">Remplissez le formulaire ci-dessous pour réserver votre stand</p>
+                    </div>
+
+                    <form id="standForm" class="needs-validation" novalidate>
+                        <!-- Informations de l'entreprise -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-building me-2"></i>
+                                Informations de l'Entreprise
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="companyName" class="form-label">Nom de l'entreprise *</label>
+                                    <input type="text" class="form-control" id="companyName" name="companyName" required>
+                                    <div class="invalid-feedback">Veuillez saisir le nom de l'entreprise.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contactPerson" class="form-label">Personne de contact *</label>
+                                    <input type="text" class="form-control" id="contactPerson" name="contactPerson" required>
+                                    <div class="invalid-feedback">Veuillez saisir le nom de la personne de contact.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                    <div class="invalid-feedback">Veuillez saisir un email valide.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                    <div class="invalid-feedback">Veuillez saisir un numéro de téléphone.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="website" class="form-label">Site web</label>
+                                    <input type="url" class="form-control" id="website" name="website">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="country" class="form-label">Pays *</label>
+                                    <select class="form-select" id="country" name="country" required>
+                                        <option value="">Sélectionner un pays</option>
+                                        <option value="Tchad">Tchad</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Sénégal">Sénégal</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Mauritanie">Mauritanie</option>
+                                        <option value="Autre">Autre</option>
+                                    </select>
+                                    <div class="invalid-feedback">Veuillez sélectionner un pays.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Adresse complète</label>
+                                    <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Détails du stand -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-store me-2"></i>
+                                Détails du Stand
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="standType" class="form-label">Type de stand *</label>
+                                    <select class="form-select" id="standType" name="standType" required>
+                                        <option value="">Sélectionner un type</option>
+                                        <option value="Standard">Stand Standard - 500 USD</option>
+                                        <option value="Premium">Stand Premium - 800 USD</option>
+                                        <option value="VIP">Stand VIP - 1200 USD</option>
+                                    </select>
+                                    <div class="invalid-feedback">Veuillez sélectionner un type de stand.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="standSize" class="form-label">Taille souhaitée</label>
+                                    <select class="form-select" id="standSize" name="standSize">
+                                        <option value="">Sélectionner une taille</option>
+                                        <option value="3x2">3m x 2m (Standard)</option>
+                                        <option value="4x3">4m x 3m (Premium)</option>
+                                        <option value="5x4">5m x 4m (VIP)</option>
+                                        <option value="Custom">Taille personnalisée</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="description" class="form-label">Description de l'entreprise *</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3" required placeholder="Décrivez votre entreprise et ses activités..."></textarea>
+                                    <div class="invalid-feedback">Veuillez décrire votre entreprise.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="products" class="form-label">Produits/Services à exposer</label>
+                                    <textarea class="form-control" id="products" name="products" rows="3" placeholder="Décrivez les produits ou services que vous souhaitez exposer..."></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="expectedVisitors" class="form-label">Nombre de visiteurs attendus</label>
+                                    <input type="number" class="form-control" id="expectedVisitors" name="expectedVisitors" min="1" placeholder="Ex: 100">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="budget" class="form-label">Budget disponible (USD)</label>
+                                    <input type="number" class="form-control" id="budget" name="budget" min="0" placeholder="Ex: 500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services additionnels -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-cogs me-2"></i>
+                                Services Additionnels
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="additionalServices" class="form-label">Services additionnels souhaités</label>
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="electricity" name="additionalServices" value="Électricité">
+                                                <label class="form-check-label" for="electricity">Électricité</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="internet" name="additionalServices" value="Internet">
+                                                <label class="form-check-label" for="internet">Internet</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="storage" name="additionalServices" value="Espace de stockage">
+                                                <label class="form-check-label" for="storage">Espace de stockage</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="security" name="additionalServices" value="Sécurité">
+                                                <label class="form-check-label" for="security">Sécurité</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="catering" name="additionalServices" value="Restauration">
+                                                <label class="form-check-label" for="catering">Restauration</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="transport" name="additionalServices" value="Transport">
+                                                <label class="form-check-label" for="transport">Transport</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Logo -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-image me-2"></i>
+                                Logo de l'Entreprise
+                            </h4>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="logo" class="form-label">URL du logo</label>
+                                    <input type="url" class="form-control" id="logo" name="logo" placeholder="https://exemple.com/logo.png">
+                                    <div class="form-text">Vous pouvez fournir l'URL de votre logo pour l'affichage sur le site.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Boutons de soumission -->
+                        <div class="form-actions text-center">
+                            <button type="submit" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-calendar-check me-2"></i>
+                                Réserver le stand
+                            </button>
+                            <a href="/exhibitions" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Retour aux expositions
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<%- include('../layouts/footer') %>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('standForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const standTypeSelect = document.getElementById('standType');
+    const standSizeSelect = document.getElementById('standSize');
+    
+    // Synchroniser le type de stand avec la taille
+    standTypeSelect.addEventListener('change', function() {
+        const type = this.value;
+        standSizeSelect.value = '';
+        
+        if (type === 'Standard') {
+            standSizeSelect.value = '3x2';
+        } else if (type === 'Premium') {
+            standSizeSelect.value = '4x3';
+        } else if (type === 'VIP') {
+            standSizeSelect.value = '5x4';
+        }
+    });
+    
+    // Validation du formulaire
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        
+        // Désactiver le bouton de soumission
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Réservation en cours...';
+        
+        // Préparer les données
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Collecter les services additionnels
+        const additionalServices = [];
+        const serviceCheckboxes = form.querySelectorAll('input[name="additionalServices"]:checked');
+        serviceCheckboxes.forEach(checkbox => {
+            additionalServices.push(checkbox.value);
+        });
+        data.additionalServices = additionalServices.join(', ');
+        
+        // Soumettre le formulaire
+        fetch('/partner-forms/stand', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                showSuccessMessage(result.message);
+                form.reset();
+                form.classList.remove('was-validated');
+            } else {
+                showErrorMessage(result.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            showErrorMessage('Une erreur est survenue lors de la réservation. Veuillez réessayer.');
+        })
+        .finally(() => {
+            // Réactiver le bouton
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-calendar-check me-2"></i>Réserver le stand';
+        });
+    });
+    
+    function showSuccessMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            <i class="fas fa-check-circle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        form.insertBefore(alertDiv, form.firstChild);
+        
+        // Faire défiler vers le haut
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function showErrorMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            <i class="fas fa-exclamation-circle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        form.insertBefore(alertDiv, form.firstChild);
+        
+        // Faire défiler vers le haut
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+});
+</script>
+
+<style>
+.form-section {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+.form-section-title {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.form-container {
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-container:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.stand-type-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.stand-type-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+</style>
+
+

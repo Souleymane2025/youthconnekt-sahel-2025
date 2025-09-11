@@ -1,0 +1,35 @@
+<!-- Composant image avec fallback élégant -->
+<!-- Utilisation: include ce composant avec les paramètres suivants:
+     src: chemin vers l'image
+     alt: texte alternatif
+     fallbackIcon: classe d'icône Font Awesome
+     fallbackText: texte à afficher si l'image ne charge pas
+     className: classes CSS pour l'image
+     style: styles CSS inline
+-->
+
+<div class="image-container position-relative">
+    <img src="<%= src %>" 
+         alt="<%= alt %>" 
+         class="<%= className || 'img-fluid' %>"
+         <% if (typeof style !== 'undefined') { %>style="<%= style %>"<% } %>
+         onload="this.nextElementSibling.style.display='none';"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    
+    <!-- Fallback avec design professionnel -->
+    <div class="image-fallback position-absolute top-0 start-0 w-100 h-100" 
+         style="display: none; background: linear-gradient(135deg, #2E7D32 0%, #FF5722 100%); border-radius: inherit;">
+        <div class="text-center text-white">
+            <% if (typeof fallbackIcon !== 'undefined') { %>
+                <i class="<%= fallbackIcon %> fa-3x mb-3 opacity-75"></i>
+            <% } else { %>
+                <i class="fas fa-image fa-3x mb-3 opacity-75"></i>
+            <% } %>
+            <% if (typeof fallbackText !== 'undefined') { %>
+                <h6 class="fw-light"><%= fallbackText %></h6>
+            <% } else { %>
+                <h6 class="fw-light">Image en cours de chargement</h6>
+            <% } %>
+        </div>
+    </div>
+</div>

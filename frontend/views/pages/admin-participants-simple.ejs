@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+    <style>
+        .dropdown-item {
+            border: none !important;
+            background: none !important;
+            width: 100% !important;
+            text-align: left !important;
+            padding: 8px 16px !important;
+            cursor: pointer !important;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa !important;
+        }
+        .dropdown-item:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        .dropdown-item.text-danger:hover {
+            background-color: #f8d7da !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-users me-2"></i>Gestion des Participants</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-primary" onclick="addParticipant()">
+                                <i class="fas fa-plus me-1"></i>Ajouter Participant
+                            </button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger" onclick="clearAllParticipants()" title="Supprimer tous les participants">
+                                <i class="fas fa-trash-alt me-1"></i>Vider la base
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4 id="totalParticipants">0</h4>
+                                        <p class="mb-0">Total</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-users fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4 id="confirmedParticipants">0</h4>
+                                        <p class="mb-0">Confirmés</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-check-circle fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4 id="pendingParticipants">0</h4>
+                                        <p class="mb-0">En Attente</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-clock fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4 id="countriesCount">0</h4>
+                                        <p class="mb-0">Pays</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-globe fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtres -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="statusFilter" class="form-label">Statut</label>
+                                <select class="form-select" id="statusFilter" onchange="filterParticipants()">
+                                    <option value="">Tous les statuts</option>
+                                    <option value="confirmed">Confirmé</option>
+                                    <option value="pending">En attente</option>
+                                    <option value="rejected">Rejeté</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="countryFilter" class="form-label">Pays</label>
+                                <select class="form-select" id="countryFilter" onchange="filterParticipants()">
+                                    <option value="">Tous les pays</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="searchInput" class="form-label">Recherche</label>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Nom, email..." onkeyup="filterParticipants()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste des participants -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Liste des Participants</h5>
+                        <div>
+                            <button type="button" class="btn btn-outline-success btn-sm" onclick="exportParticipants()">
+                                <i class="fas fa-download me-1"></i>Exporter
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="sendBulkInvitations()">
+                                <i class="fas fa-envelope me-1"></i>Invitations
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                        </th>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Téléphone</th>
+                                        <th>Pays</th>
+                                        <th>Statut</th>
+                                        <th>Invitation</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="participantsTableBody">
+                                    <tr>
+                                        <td colspan="8" class="text-center">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Chargement...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ajouter Participant -->
+    <div class="modal fade" id="addParticipantModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter un Participant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addParticipantForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="firstName" class="form-label">Prénom</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Nom</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Téléphone</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="country" class="form-label">Pays</label>
+                                    <select class="form-select" id="country" required>
+                                        <option value="">Sélectionner un pays</option>
+                                        <option value="Tchad">Tchad</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Mauritanie">Mauritanie</option>
+                                        <option value="Sénégal">Sénégal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Statut</label>
+                                    <select class="form-select" id="status" required>
+                                        <option value="pending">En attente</option>
+                                        <option value="confirmed">Confirmé</option>
+                                        <option value="rejected">Rejeté</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="saveParticipant()">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Voir Détails Participant -->
+    <div class="modal fade" id="viewParticipantModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user me-2"></i>Détails du Participant
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="viewParticipantContent" style="max-height: 80vh; overflow-y: auto;">
+                    <!-- Contenu dynamique -->
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Fermer
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="editParticipantDetailsFromView()">
+                        <i class="fas fa-edit me-2"></i>Modifier les Informations
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Modifier Informations Participant -->
+    <div class="modal fade" id="editParticipantModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier les Informations</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editParticipantForm">
+                        <input type="hidden" id="editParticipantId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editFirstName" class="form-label">Prénom</label>
+                                    <input type="text" class="form-control" id="editFirstName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editLastName" class="form-label">Nom</label>
+                                    <input type="text" class="form-control" id="editLastName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="editEmail" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editPhone" class="form-label">Téléphone</label>
+                                    <input type="tel" class="form-control" id="editPhone" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editCountry" class="form-label">Pays</label>
+                                    <select class="form-select" id="editCountry" required>
+                                        <option value="">Sélectionner un pays</option>
+                                        <option value="Tchad">Tchad</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Mauritanie">Mauritanie</option>
+                                        <option value="Sénégal">Sénégal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editCity" class="form-label">Ville</label>
+                                    <input type="text" class="form-control" id="editCity" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editType" class="form-label">Type</label>
+                                    <select class="form-select" id="editType" required>
+                                        <option value="national">National</option>
+                                        <option value="international">International</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editStatus" class="form-label">Statut</label>
+                                    <select class="form-select" id="editStatus" required>
+                                        <option value="pending">En attente</option>
+                                        <option value="confirmed">Confirmé</option>
+                                        <option value="rejected">Rejeté</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editOrganization" class="form-label">Organisation</label>
+                                    <input type="text" class="form-control" id="editOrganization">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editOccupation" class="form-label">Profession</label>
+                                    <input type="text" class="form-control" id="editOccupation">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editExperience" class="form-label">Années d'expérience</label>
+                            <input type="number" class="form-control" id="editExperience" min="0" max="50">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMotivation" class="form-label">Motivation</label>
+                            <textarea class="form-control" id="editMotivation" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="saveParticipantEdit()">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmation Suppression -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Confirmer la suppression
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <strong>Attention !</strong> Cette action est irréversible.
+                    </div>
+                    <p>Êtes-vous sûr de vouloir supprimer définitivement ce participant ?</p>
+                    <div id="deleteParticipantInfo" class="border p-3 rounded bg-light">
+                        <!-- Informations du participant à supprimer -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDeleteParticipant()">
+                        <i class="fas fa-trash me-1"></i>Supprimer définitivement
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let participants = [];
+        let filteredParticipants = [];
+
+        // Charger les participants
+        async function loadParticipants() {
+            try {
+                console.log('🔄 Chargement des participants...');
+                const response = await fetch('/admin/api/participants');
+                const data = await response.json();
+                
+                console.log('📊 Réponse API:', data);
+                
+                if (data.success) {
+                    participants = data.data || [];
+                    filteredParticipants = [...participants];
+                    console.log(`✅ ${participants.length} participants chargés`);
+                    updateStatistics();
+                    populateCountryFilter();
+                    renderParticipants();
+                } else {
+                    console.error('❌ Erreur API:', data.message);
+                    showNotification('Erreur lors du chargement des participants: ' + (data.message || 'Erreur inconnue'), 'error');
+                }
+            } catch (error) {
+                console.error('❌ Erreur de connexion:', error);
+                showNotification('Erreur de connexion: ' + error.message, 'error');
+            }
+        }
+
+        // Mettre à jour les statistiques
+        function updateStatistics() {
+            document.getElementById('totalParticipants').textContent = participants.length;
+            document.getElementById('confirmedParticipants').textContent = participants.filter(p => p.status === 'confirmed').length;
+            document.getElementById('pendingParticipants').textContent = participants.filter(p => p.status === 'pending').length;
+            document.getElementById('countriesCount').textContent = [...new Set(participants.map(p => p.country))].length;
+        }
+
+        // Peupler le filtre des pays
+        function populateCountryFilter() {
+            const countries = [...new Set(participants.map(p => p.country))].sort();
+            const countryFilter = document.getElementById('countryFilter');
+            
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
+        }
+
+        // Filtrer les participants
+        function filterParticipants() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const countryFilter = document.getElementById('countryFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredParticipants = participants.filter(participant => {
+                const matchesStatus = !statusFilter || participant.status === statusFilter;
+                const matchesCountry = !countryFilter || participant.country === countryFilter;
+                const matchesSearch = !searchTerm || 
+                    participant.first_name.toLowerCase().includes(searchTerm) ||
+                    participant.last_name.toLowerCase().includes(searchTerm) ||
+                    participant.email.toLowerCase().includes(searchTerm);
+
+                return matchesStatus && matchesCountry && matchesSearch;
+            });
+
+            renderParticipants();
+        }
+
+        // Afficher les participants
+        function renderParticipants() {
+            const tbody = document.getElementById('participantsTableBody');
+            
+            if (filteredParticipants.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">
+                            <i class="fas fa-users fa-2x mb-3"></i>
+                            <p>Aucun participant trouvé</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredParticipants.map(participant => `
+                <tr>
+                    <td>
+                        <input type="checkbox" class="participant-checkbox" value="${participant.id}" onchange="updateSelectedParticipants()">
+                    </td>
+                    <td>
+                        <strong>${participant.first_name} ${participant.last_name}</strong>
+                    </td>
+                    <td>${participant.email}</td>
+                    <td>${participant.phone}</td>
+                    <td>${participant.country}</td>
+                    <td>
+                        <span class="badge ${getStatusBadgeClass(participant.status)}">${getStatusText(participant.status)}</span>
+                    </td>
+                    <td>
+                        ${participant.invitation_sent ? 
+                            `<span class="badge bg-success"><i class="fas fa-check"></i> Envoyée</span>` : 
+                            `<span class="badge bg-secondary"><i class="fas fa-clock"></i> Non envoyée</span>`
+                        }
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" title="Actions">
+                                <i class="fas fa-cog"></i> Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="viewParticipant('${participant.id}')">
+                                        <i class="fas fa-eye text-primary me-2"></i>Voir les détails
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="editParticipant('${participant.id}')">
+                                        <i class="fas fa-edit text-warning me-2"></i>Modifier le statut
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="editParticipantDetails('${participant.id}')">
+                                        <i class="fas fa-user-edit text-info me-2"></i>Modifier les informations
+                                    </button>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="sendInvitation('${participant.id}')">
+                                        <i class="fas fa-envelope text-success me-2"></i>Envoyer invitation
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="resendInvitation('${participant.id}')">
+                                        <i class="fas fa-redo text-info me-2"></i>Renvoyer invitation
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="sendBadge('${participant.id}')">
+                                        <i class="fas fa-id-card text-warning me-2"></i>Envoyer badge
+                                    </button>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="duplicateParticipant('${participant.id}')">
+                                        <i class="fas fa-copy text-secondary me-2"></i>Dupliquer
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button" onclick="exportParticipant('${participant.id}')">
+                                        <i class="fas fa-download text-primary me-2"></i>Exporter
+                                    </button>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item text-danger" type="button" onclick="deleteParticipant('${participant.id}')">
+                                        <i class="fas fa-trash me-2"></i>Supprimer
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Obtenir la classe CSS du badge de statut
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'confirmed': return 'bg-success';
+                case 'pending': return 'bg-warning';
+                case 'rejected': return 'bg-danger';
+                default: return 'bg-secondary';
+            }
+        }
+
+        // Obtenir le texte du statut
+        function getStatusText(status) {
+            switch(status) {
+                case 'confirmed': return 'Confirmé';
+                case 'pending': return 'En attente';
+                case 'rejected': return 'Rejeté';
+                default: return 'Inconnu';
+            }
+        }
+
+        // Fonctions des boutons
+        function addParticipant() {
+            const modal = new bootstrap.Modal(document.getElementById('addParticipantModal'));
+            modal.show();
+        }
+
+        async function saveParticipant() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const country = document.getElementById('country').value;
+            const status = document.getElementById('status').value;
+
+            if (!firstName || !lastName || !email || !phone || !country) {
+                showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/admin/api/participants', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        email: email,
+                        phone: phone,
+                        country: country,
+                        city: 'N/A', // Valeur par défaut
+                        type: 'national',
+                        status: status,
+                        organization: '',
+                        occupation: '',
+                        interests: [],
+                        experience: 0,
+                        motivation: ''
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('Participant ajouté avec succès dans la base de données !', 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('addParticipantModal')).hide();
+                    
+                    // Réinitialiser le formulaire
+                    document.getElementById('addParticipantForm').reset();
+                    
+                    // Recharger la liste
+                    loadParticipants();
+                } else {
+                    showNotification('Erreur lors de l\'ajout du participant', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur de connexion lors de l\'ajout', 'error');
+            }
+        }
+
+        let currentViewingParticipant = null;
+
+        function viewParticipant(id) {
+            console.log('🔍 viewParticipant appelée avec ID:', id, '(type:', typeof id, ')');
+            console.log('📊 Participants disponibles:', participants);
+            console.log('📊 IDs disponibles:', participants.map(p => p.id));
+            
+            // Essayer de trouver le participant avec différents types de comparaison
+            let participant = participants.find(p => p.id === id);
+            
+            if (!participant) {
+                // Essayer avec conversion en nombre
+                participant = participants.find(p => p.id == id);
+                console.log('🔄 Tentative avec conversion de type:', participant ? 'Trouvé' : 'Non trouvé');
+            }
+            
+            if (!participant) {
+                // Essayer avec conversion en string
+                participant = participants.find(p => String(p.id) === String(id));
+                console.log('🔄 Tentative avec conversion en string:', participant ? 'Trouvé' : 'Non trouvé');
+            }
+            
+            console.log('👤 Participant trouvé:', participant);
+            
+            if (participant) {
+                currentViewingParticipant = participant;
+                
+                const content = `
+                    <!-- En-tête du participant -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <div class="position-relative d-inline-block">
+                                    <img src="${participant.photo_path ? 'http://localhost:8000/api/images/participants/photos/' + participant.photo_path.split('/').pop() : '/images/default-avatar.svg'}" 
+                                         alt="Photo de ${participant.first_name} ${participant.last_name}"
+                                         class="rounded-circle border border-3 border-primary" 
+                                         style="width: 120px; height: 120px; object-fit: cover;"
+                                         onerror="this.src='/images/default-avatar.svg'">
+                                    <div class="position-absolute top-0 end-0">
+                                        <span class="badge ${getStatusBadgeClass(participant.status)} fs-6">
+                                            ${getStatusText(participant.status)}
+                                        </span>
+                                    </div>
+                                </div>
+                                <h4 class="mt-3 mb-1">${participant.first_name} ${participant.last_name}</h4>
+                                <p class="text-muted mb-0">ID: ${participant.participant_id || 'FYCS2025' + participant.id.toString().padStart(6, '0')}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Email</h6>
+                                            <p class="text-muted mb-0">${participant.email}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-phone"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Téléphone</h6>
+                                            <p class="text-muted mb-0">${participant.phone}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Localisation</h6>
+                                            <p class="text-muted mb-0">${participant.city || 'Non spécifié'}, ${participant.country}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-tag"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Type</h6>
+                                            <p class="text-muted mb-0">${participant.type === 'national' ? 'National' : 'International'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informations professionnelles -->
+                    ${participant.organization || participant.occupation ? `
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0"><i class="fas fa-briefcase me-2"></i>Informations Professionnelles</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    ${participant.organization ? `
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-building me-2 text-primary"></i>Organisation</h6>
+                                            <p class="text-muted">${participant.organization}</p>
+                                        </div>
+                                    ` : ''}
+                                    ${participant.occupation ? `
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-user-tie me-2 text-success"></i>Profession</h6>
+                                            <p class="text-muted">${participant.occupation}</p>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                ${participant.experience ? `
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-chart-line me-2 text-info"></i>Expérience</h6>
+                                            <p class="text-muted">${participant.experience} année(s)</p>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Documents et Images -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i>Documents et Images</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Photo de profil -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="text-center">
+                                        <h6><i class="fas fa-camera me-2"></i>Photo de Profil</h6>
+                                        <img src="${participant.photo_path ? 'http://localhost:8000/api/images/participants/photos/' + participant.photo_path.split('/').pop() : '/images/default-avatar.svg'}" 
+                                             alt="Photo de profil"
+                                             class="img-thumbnail" 
+                                             style="width: 150px; height: 150px; object-fit: cover;"
+                                             onerror="this.src='/images/default-avatar.svg'">
+                                        <p class="text-muted mt-2 small">${participant.photo_path ? 'Photo fournie' : 'Photo par défaut'}</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Passeport -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="text-center">
+                                        <h6><i class="fas fa-passport me-2"></i>Passeport</h6>
+                                        ${participant.passport_path ? `
+                                            <img src="http://localhost:8000/api/images/participants/passports/${participant.passport_path.split('/').pop()}" 
+                                                 alt="Passeport"
+                                                 class="img-thumbnail" 
+                                                 style="width: 150px; height: 100px; object-fit: cover;"
+                                                 onerror="this.innerHTML='<div class=\\"bg-light border rounded d-flex align-items-center justify-content-center\\" style=\\"width: 150px; height: 100px;\\"><i class=\\"fas fa-file-image text-muted\\"></i></div>'">
+                                            <p class="text-success mt-2 small"><i class="fas fa-check"></i> Document fourni</p>
+                                        ` : `
+                                            <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 150px; height: 100px;">
+                                                <i class="fas fa-file-image text-muted fa-2x"></i>
+                                            </div>
+                                            <p class="text-muted mt-2 small">Document non fourni</p>
+                                        `}
+                                    </div>
+                                </div>
+                                
+                                <!-- Pièce d'identité -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="text-center">
+                                        <h6><i class="fas fa-id-card me-2"></i>Pièce d'Identité</h6>
+                                        ${participant.cin_path ? `
+                                            <img src="http://localhost:8000/api/images/participants/cins/${participant.cin_path.split('/').pop()}" 
+                                                 alt="Pièce d'identité"
+                                                 class="img-thumbnail" 
+                                                 style="width: 150px; height: 100px; object-fit: cover;"
+                                                 onerror="this.innerHTML='<div class=\\"bg-light border rounded d-flex align-items-center justify-content-center\\" style=\\"width: 150px; height: 100px;\\"><i class=\\"fas fa-file-image text-muted\\"></i></div>'">
+                                            <p class="text-success mt-2 small"><i class="fas fa-check"></i> Document fourni</p>
+                                        ` : `
+                                            <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 150px; height: 100px;">
+                                                <i class="fas fa-file-image text-muted fa-2x"></i>
+                                            </div>
+                                            <p class="text-muted mt-2 small">Document non fourni</p>
+                                        `}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informations supplémentaires -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informations Supplémentaires</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-calendar me-2 text-primary"></i>Date d'inscription</h6>
+                                    <p class="text-muted">${new Date(participant.created_at).toLocaleDateString('fr-FR', { 
+                                        year: 'numeric', 
+                                        month: 'long', 
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-envelope me-2 text-success"></i>Statut d'Invitation</h6>
+                                    <p>${participant.invitation_sent ? 
+                                        `<span class="badge bg-success"><i class="fas fa-check"></i> Invitation envoyée</span>` : 
+                                        `<span class="badge bg-secondary"><i class="fas fa-clock"></i> Invitation non envoyée</span>`
+                                    }</p>
+                                </div>
+                            </div>
+                            ${participant.motivation ? `
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6><i class="fas fa-heart me-2 text-danger"></i>Motivation</h6>
+                                        <div class="bg-light p-3 rounded">
+                                            <p class="text-muted mb-0">${participant.motivation}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            ${participant.interests && participant.interests.length > 0 ? `
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6><i class="fas fa-star me-2 text-warning"></i>Centres d'intérêt</h6>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            ${participant.interests.map(interest => `
+                                                <span class="badge bg-primary">${interest}</span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Actions rapides -->
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions Rapides</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button class="btn btn-outline-primary w-100" onclick="sendInvitation('${participant.id}')">
+                                        <i class="fas fa-envelope me-2"></i>Envoyer Invitation
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-outline-success w-100" onclick="sendBadge('${participant.id}')">
+                                        <i class="fas fa-id-card me-2"></i>Envoyer Badge
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-outline-info w-100" onclick="editParticipantDetails('${participant.id}')">
+                                        <i class="fas fa-edit me-2"></i>Modifier
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-outline-danger w-100" onclick="deleteParticipant('${participant.id}')">
+                                        <i class="fas fa-trash me-2"></i>Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                console.log('📝 Contenu généré:', content);
+                
+                const modalContent = document.getElementById('viewParticipantContent');
+                if (modalContent) {
+                    modalContent.innerHTML = content;
+                    console.log('✅ Contenu injecté dans le modal');
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('viewParticipantModal'));
+                    modal.show();
+                    console.log('✅ Modal ouvert');
+                } else {
+                    console.error('❌ Élément viewParticipantContent non trouvé');
+                }
+            } else {
+                console.error('❌ Participant non trouvé avec ID:', id);
+            }
+        }
+
+        function editParticipant(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                const newStatus = prompt(`Changer le statut de ${participant.first_name} ${participant.last_name}:\n\nStatut actuel: ${getStatusText(participant.status)}\n\nNouveaux statuts disponibles:\n- confirmed (Confirmé)\n- pending (En attente)\n- rejected (Rejeté)`, participant.status);
+                
+                if (newStatus && newStatus !== participant.status) {
+                    updateParticipantStatus(id, newStatus);
+                }
+            }
+        }
+
+        async function updateParticipantStatus(id, status) {
+            try {
+                const response = await fetch(`/admin/api/participants/${id}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(`Statut mis à jour vers "${getStatusText(status)}" avec succès !`, 'success');
+                    loadParticipants();
+                } else {
+                    showNotification('Erreur lors de la mise à jour du statut', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur de connexion lors de la mise à jour', 'error');
+            }
+        }
+
+        async function sendInvitation(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                if (confirm(`Envoyer une invitation à ${participant.first_name} ${participant.last_name} (${participant.email}) ?`)) {
+                    try {
+                        const response = await fetch('/admin/api/invitations/send', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ participantId: id })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showNotification(`📧 Invitation envoyée avec succès à ${participant.first_name} ${participant.last_name} !`, 'success');
+                            loadParticipants(); // Recharger pour voir le statut mis à jour
+                        } else {
+                            showNotification('❌ Erreur: ' + data.message, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        showNotification('❌ Erreur de connexion lors de l\'envoi: ' + error.message, 'error');
+                    }
+                }
+            }
+        }
+
+        async function sendBadge(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                if (confirm(`Envoyer le badge à ${participant.first_name} ${participant.last_name} (${participant.email}) ?`)) {
+                    try {
+                        // Pour l'instant, utiliser la route d'invitation qui génère aussi le badge
+                        const response = await fetch('/admin/api/invitations/send', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ participantId: id })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showNotification(`🆔 Badge envoyé avec succès à ${participant.first_name} ${participant.last_name} !`, 'success');
+                            loadParticipants(); // Recharger pour voir le statut mis à jour
+                        } else {
+                            showNotification('❌ Erreur: ' + data.message, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        showNotification('❌ Erreur de connexion lors de l\'envoi du badge: ' + error.message, 'error');
+                    }
+                }
+            }
+        }
+
+        let participantToDelete = null;
+
+        function deleteParticipant(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                participantToDelete = participant;
+                
+                const info = `
+                    <div class="d-flex align-items-center">
+                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-1">${participant.first_name} ${participant.last_name}</h6>
+                            <p class="mb-1 text-muted">${participant.email}</p>
+                            <p class="mb-0 text-muted">${participant.country} • ${getStatusText(participant.status)}</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('deleteParticipantInfo').innerHTML = info;
+                const modal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+                modal.show();
+            }
+        }
+
+        async function confirmDeleteParticipant() {
+            if (!participantToDelete) return;
+            
+            try {
+                const response = await fetch(`/admin/api/participants/${participantToDelete.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(`🗑️ Participant ${participantToDelete.first_name} ${participantToDelete.last_name} supprimé avec succès !`, 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
+                    loadParticipants();
+                } else {
+                    showNotification('❌ Erreur: ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('❌ Erreur de connexion lors de la suppression: ' + error.message, 'error');
+            }
+        }
+
+        // Nouvelles fonctions pour les actions avancées
+        function editParticipantDetails(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                // Remplir le formulaire avec les données existantes
+                document.getElementById('editParticipantId').value = participant.id;
+                document.getElementById('editFirstName').value = participant.first_name;
+                document.getElementById('editLastName').value = participant.last_name;
+                document.getElementById('editEmail').value = participant.email;
+                document.getElementById('editPhone').value = participant.phone;
+                document.getElementById('editCountry').value = participant.country;
+                document.getElementById('editCity').value = participant.city || '';
+                document.getElementById('editType').value = participant.type || 'national';
+                document.getElementById('editStatus').value = participant.status;
+                document.getElementById('editOrganization').value = participant.organization || '';
+                document.getElementById('editOccupation').value = participant.occupation || '';
+                document.getElementById('editExperience').value = participant.experience || 0;
+                document.getElementById('editMotivation').value = participant.motivation || '';
+                
+                const modal = new bootstrap.Modal(document.getElementById('editParticipantModal'));
+                modal.show();
+            }
+        }
+
+        function editParticipantDetailsFromView() {
+            if (currentViewingParticipant) {
+                bootstrap.Modal.getInstance(document.getElementById('viewParticipantModal')).hide();
+                editParticipantDetails(currentViewingParticipant.id);
+            }
+        }
+
+        async function saveParticipantEdit() {
+            const id = document.getElementById('editParticipantId').value;
+            const participantData = {
+                first_name: document.getElementById('editFirstName').value,
+                last_name: document.getElementById('editLastName').value,
+                email: document.getElementById('editEmail').value,
+                phone: document.getElementById('editPhone').value,
+                country: document.getElementById('editCountry').value,
+                city: document.getElementById('editCity').value,
+                type: document.getElementById('editType').value,
+                status: document.getElementById('editStatus').value,
+                organization: document.getElementById('editOrganization').value,
+                occupation: document.getElementById('editOccupation').value,
+                experience: parseInt(document.getElementById('editExperience').value) || 0,
+                motivation: document.getElementById('editMotivation').value
+            };
+
+            try {
+                const response = await fetch(`/admin/api/participants/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(participantData)
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(`✅ Participant ${participantData.first_name} ${participantData.last_name} modifié avec succès !`, 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('editParticipantModal')).hide();
+                    loadParticipants();
+                } else {
+                    showNotification('Erreur lors de la modification du participant', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur de connexion lors de la modification', 'error');
+            }
+        }
+
+        function resendInvitation(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                if (confirm(`Renvoyer une invitation à ${participant.first_name} ${participant.last_name} (${participant.email}) ?`)) {
+                    sendInvitation(id);
+                }
+            }
+        }
+
+        function duplicateParticipant(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                if (confirm(`Dupliquer le participant ${participant.first_name} ${participant.last_name} ?\n\nUn nouveau participant sera créé avec les mêmes informations.`)) {
+                    // Remplir le formulaire d'ajout avec les données du participant existant
+                    document.getElementById('firstName').value = participant.first_name + ' (Copie)';
+                    document.getElementById('lastName').value = participant.last_name;
+                    document.getElementById('email').value = participant.email.replace('@', '+copie@');
+                    document.getElementById('phone').value = participant.phone;
+                    document.getElementById('country').value = participant.country;
+                    document.getElementById('status').value = 'pending'; // Statut par défaut pour la copie
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('addParticipantModal'));
+                    modal.show();
+                }
+            }
+        }
+
+        function exportParticipant(id) {
+            const participant = participants.find(p => p.id === id);
+            if (participant) {
+                const data = {
+                    exportDate: new Date().toISOString(),
+                    participant: participant
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `participant_${participant.first_name}_${participant.last_name}_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                showNotification(`📄 Participant ${participant.first_name} ${participant.last_name} exporté avec succès !`, 'success');
+            }
+        }
+
+        async function clearAllParticipants() {
+            if (!confirm('⚠️ ATTENTION: Cette action va supprimer TOUS les participants de la base de données. Cette action est irréversible.\n\nÊtes-vous vraiment sûr de vouloir continuer ?')) {
+                return;
+            }
+            
+            if (!confirm('Dernière confirmation: Supprimer définitivement tous les participants ?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/admin/api/participants/clear-all', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(`✅ ${result.deleted_count} participants supprimés avec succès !`, 'success');
+                    loadParticipants(); // Recharger la liste
+                } else {
+                    showNotification('❌ Erreur: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showNotification('❌ Erreur lors de la suppression: ' + error.message, 'error');
+            }
+        }
+
+        function exportParticipants() {
+            const format = confirm('Voulez-vous exporter en format CSV ?\n\nOK = CSV\nAnnuler = JSON') ? 'csv' : 'json';
+            
+            showNotification(`📊 Export en cours au format ${format.toUpperCase()}...`, 'info');
+            
+            // Créer un lien de téléchargement
+            const link = document.createElement('a');
+            link.href = `/admin/api/participants/export?format=${format}`;
+            link.download = `participants_youthconnekt_${new Date().toISOString().split('T')[0]}.${format}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => {
+                showNotification(`✅ Export terminé ! Fichier ${format.toUpperCase()} téléchargé.`, 'success');
+            }, 1000);
+        }
+
+        async function sendBulkInvitations() {
+            const selected = document.querySelectorAll('.participant-checkbox:checked');
+            if (selected.length === 0) {
+                showNotification('Veuillez sélectionner au moins un participant', 'warning');
+                return;
+            }
+            
+            const participantIds = Array.from(selected).map(cb => cb.value);
+            
+            if (confirm(`Envoyer des invitations à ${selected.length} participant(s) sélectionné(s) ?`)) {
+                try {
+                    showNotification(`📧 Envoi d'invitations en cours à ${selected.length} participants...`, 'info');
+                    
+                    const response = await fetch('/admin/api/invitations/bulk', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ participantIds: participantIds })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showNotification(`✅ ${data.data.totalSent} invitations envoyées avec succès ! ${data.data.totalErrors > 0 ? `(${data.data.totalErrors} erreurs)` : ''}`, 'success');
+                        loadParticipants(); // Recharger pour voir les statuts mis à jour
+                    } else {
+                        showNotification('Erreur lors de l\'envoi des invitations en masse', 'error');
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    showNotification('Erreur de connexion lors de l\'envoi en masse', 'error');
+                }
+            }
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.participant-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+            
+            updateSelectedParticipants();
+        }
+
+        function updateSelectedParticipants() {
+            const checkboxes = document.querySelectorAll('.participant-checkbox:checked');
+            const selectAll = document.getElementById('selectAll');
+            
+            selectAll.checked = checkboxes.length === document.querySelectorAll('.participant-checkbox').length;
+            selectAll.indeterminate = checkboxes.length > 0 && checkboxes.length < document.querySelectorAll('.participant-checkbox').length;
+        }
+
+        function showNotification(message, type = 'info') {
+            // Créer une notification simple
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Supprimer automatiquement après 5 secondes
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+
+        // Charger les participants au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadParticipants();
+        });
+    </script>
+</body>
+</html>

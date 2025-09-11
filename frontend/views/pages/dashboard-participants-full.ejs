@@ -1,0 +1,505 @@
+<%- include('../layouts/dashboard', { 
+    title: 'Gestion des participants - Youth Connekt Sahel 2025', 
+    currentPage: 'participants', 
+    content: `
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h2 text-primary mb-0">
+                    <i class="fas fa-users me-2"></i>
+                    Gestion des participants
+                </h1>
+                <p class="text-muted mb-0">Gérer les inscriptions et valider les participants</p>
+            </div>
+            <div class="btn-toolbar">
+                <div class="btn-group me-2">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addParticipantModal">
+                        <i class="fas fa-plus me-1"></i>Ajouter participant
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-download me-1"></i>Exporter
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="exportData('excel')">
+                            <i class="fas fa-file-excel me-2"></i>Excel
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" onclick="exportData('csv')">
+                            <i class="fas fa-file-csv me-2"></i>CSV
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" onclick="exportData('pdf')">
+                            <i class="fas fa-file-pdf me-2"></i>PDF
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtres et statistiques -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card dashboard-card">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-filter me-2 text-primary"></i>
+                        Filtres de recherche
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="filterForm" class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Type</label>
+                            <select class="form-select" id="filterType" name="type">
+                                <option value="">Tous</option>
+                                <option value="national">National</option>
+                                <option value="international">International</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Statut</label>
+                            <select class="form-select" id="filterStatus" name="status">
+                                <option value="">Tous</option>
+                                <option value="pending">En attente</option>
+                                <option value="confirmed">Confirmé</option>
+                                <option value="rejected">Rejeté</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Pays</label>
+                        <select class="form-select" id="filterCountry" name="country">
+                            <option value="">Tous pays</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Recherche</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Nom, email...">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card dashboard-card shadow border-0 bg-light">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="h4 mb-0 text-primary" id="totalCount">-</div>
+                        <small class="text-muted">Total</small>
+                    </div>
+                    <div class="col-4">
+                        <div class="h4 mb-0 text-success" id="confirmedCount">-</div>
+                        <small class="text-muted">Confirmés</small>
+                    </div>
+                    <div class="col-4">
+                        <div class="h4 mb-0 text-warning" id="pendingCount">-</div>
+                        <small class="text-muted">En attente</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tableau des participants -->
+<div class="card dashboard-card shadow border-0">
+    <div class="card-header bg-white">
+        <div class="row align-items-center">
+            <div class="col">
+                <h6 class="mb-0">Liste des participants</h6>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-sm" id="pageSize">
+                    <option value="10">10 par page</option>
+                    <option value="25" selected>25 par page</option>
+                    <option value="50">50 par page</option>
+                    <option value="100">100 par page</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="form-check-input" id="selectAll">
+                        </th>
+                        <th>Participant</th>
+                        <th>Type</th>
+                        <th>Pays</th>
+                        <th>Statut</th>
+                        <th>Badge</th>
+                        <th>Inscription</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="participantsTableBody">
+                    <tr>
+                        <td colspan="8" class="text-center py-4">
+                            <i class="fas fa-spinner fa-spin"></i> Chargement des participants...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer bg-white">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <small class="text-muted" id="paginationInfo">-</small>
+            </div>
+            <div class="col-sm-6">
+                <nav>
+                    <ul class="pagination pagination-sm justify-content-end mb-0" id="pagination">
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Variables globales
+let currentPage = 1;
+let participants = [];
+let filteredParticipants = [];
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    loadParticipants();
+    loadCountries();
+    setupEventListeners();
+});
+
+function setupEventListeners() {
+    // Filtres
+    document.getElementById('filterType').addEventListener('change', filterParticipants);
+    document.getElementById('filterStatus').addEventListener('change', filterParticipants);
+    document.getElementById('filterCountry').addEventListener('change', filterParticipants);
+    document.getElementById('searchInput').addEventListener('input', debounce(filterParticipants, 300));
+    document.getElementById('pageSize').addEventListener('change', function() {
+        currentPage = 1;
+        renderTable();
+    });
+    
+    // Sélection globale
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('input[name="participantIds"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+}
+
+async function loadParticipants() {
+    try {
+        const response = await fetch('/api/participants');
+        const result = await response.json();
+        
+        if (result.success) {
+            participants = result.participants.data;
+            filteredParticipants = [...participants];
+            updateCounts();
+            renderTable();
+        }
+    } catch (error) {
+        console.error('Erreur lors du chargement des participants:', error);
+        showAlert('Erreur lors du chargement des participants', 'danger');
+    }
+}
+
+async function loadCountries() {
+    try {
+        const response = await fetch('/api/participants/countries');
+        const result = await response.json();
+        
+        if (result.success) {
+            const select = document.getElementById('filterCountry');
+            result.countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                select.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Erreur lors du chargement des pays:', error);
+    }
+}
+
+function filterParticipants() {
+    const type = document.getElementById('filterType').value;
+    const status = document.getElementById('filterStatus').value;
+    const country = document.getElementById('filterCountry').value;
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    
+    filteredParticipants = participants.filter(p => {
+        const matchType = !type || p.participant_type === type;
+        const matchStatus = !status || p.status === status;
+        const matchCountry = !country || p.country === country;
+        const matchSearch = !search || 
+            p.first_name.toLowerCase().includes(search) ||
+            p.last_name.toLowerCase().includes(search) ||
+            p.email.toLowerCase().includes(search) ||
+            p.organization.toLowerCase().includes(search);
+        
+        return matchType && matchStatus && matchCountry && matchSearch;
+    });
+    
+    currentPage = 1;
+    updateCounts();
+    renderTable();
+}
+
+function updateCounts() {
+    const total = filteredParticipants.length;
+    const confirmed = filteredParticipants.filter(p => p.status === 'confirmed').length;
+    const pending = filteredParticipants.filter(p => p.status === 'pending').length;
+    
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('confirmedCount').textContent = confirmed;
+    document.getElementById('pendingCount').textContent = pending;
+}
+
+function renderTable() {
+    const pageSize = parseInt(document.getElementById('pageSize').value);
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const pageData = filteredParticipants.slice(startIndex, endIndex);
+    
+    const tbody = document.getElementById('participantsTableBody');
+    
+    if (pageData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">Aucun participant trouvé</td></tr>';
+        updatePagination(0, pageSize);
+        return;
+    }
+    
+    tbody.innerHTML = pageData.map(p => 
+        '<tr>' +
+        '<td><input type="checkbox" class="form-check-input" name="participantIds" value="' + p.id + '"></td>' +
+        '<td>' +
+            '<div class="d-flex align-items-center">' +
+                '<div class="me-3">' +
+                    (p.profile_image 
+                        ? '<img src="/storage/' + p.profile_image + '" class="rounded-circle" width="40" height="40">'
+                        : '<div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;"><i class="fas fa-user text-white"></i></div>'
+                    ) +
+                '</div>' +
+                '<div>' +
+                    '<div class="fw-bold">' + p.first_name + ' ' + p.last_name + '</div>' +
+                    '<div class="text-muted small">' + p.email + '</div>' +
+                    '<div class="text-muted small">' + (p.organization || 'N/A') + '</div>' +
+                '</div>' +
+            '</div>' +
+        '</td>' +
+        '<td><span class="badge bg-' + (p.participant_type === 'international' ? 'info' : 'success') + '">' +
+            (p.participant_type === 'international' ? 'International' : 'National') +
+        '</span></td>' +
+        '<td>' + p.country + '</td>' +
+        '<td>' + getStatusBadge(p.status) + '</td>' +
+        '<td>' + getBadgeStatus(p.badge_sent) + '</td>' +
+        '<td class="small">' + new Date(p.created_at).toLocaleDateString('fr-FR') + '</td>' +
+        '<td>' +
+            '<div class="btn-group btn-group-sm">' +
+                '<button class="btn btn-outline-primary" onclick="viewParticipant(' + p.id + ')" title="Voir">' +
+                    '<i class="fas fa-eye"></i>' +
+                '</button>' +
+                '<button class="btn btn-outline-success" onclick="editParticipant(' + p.id + ')" title="Modifier">' +
+                    '<i class="fas fa-edit"></i>' +
+                '</button>' +
+                '<button class="btn btn-outline-warning" onclick="sendBadge(' + p.id + ')" title="Envoyer badge">' +
+                    '<i class="fas fa-id-badge"></i>' +
+                '</button>' +
+                '<button class="btn btn-outline-danger" onclick="deleteParticipant(' + p.id + ')" title="Supprimer">' +
+                    '<i class="fas fa-trash"></i>' +
+                '</button>' +
+            '</div>' +
+        '</td>' +
+        '</tr>'
+    ).join('');
+    
+    updatePagination(filteredParticipants.length, pageSize);
+}
+
+function getStatusBadge(status) {
+    const badges = {
+        'pending': '<span class="badge bg-warning">En attente</span>',
+        'confirmed': '<span class="badge bg-success">Confirmé</span>',
+        'rejected': '<span class="badge bg-danger">Rejeté</span>'
+    };
+    return badges[status] || '<span class="badge bg-secondary">Inconnu</span>';
+}
+
+function getBadgeStatus(badgeSent) {
+    return badgeSent 
+        ? '<span class="badge bg-success"><i class="fas fa-check"></i> Envoyé</span>'
+        : '<span class="badge bg-secondary">Non envoyé</span>';
+}
+
+function updatePagination(totalItems, pageSize) {
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const pagination = document.getElementById('pagination');
+    const info = document.getElementById('paginationInfo');
+    
+    const startItem = totalItems > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+    const endItem = Math.min(currentPage * pageSize, totalItems);
+    
+    info.textContent = 'Affichage de ' + startItem + ' à ' + endItem + ' sur ' + totalItems + ' participants';
+    
+    let paginationHTML = '';
+    
+    // Bouton précédent
+    paginationHTML += '<li class="page-item' + (currentPage === 1 ? ' disabled' : '') + '">' +
+        '<a class="page-link" href="#" onclick="changePage(' + (currentPage - 1) + ')">Précédent</a></li>';
+    
+    // Pages
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+    
+    for (let i = startPage; i <= endPage; i++) {
+        paginationHTML += '<li class="page-item' + (i === currentPage ? ' active' : '') + '">' +
+            '<a class="page-link" href="#" onclick="changePage(' + i + ')">' + i + '</a></li>';
+    }
+    
+    // Bouton suivant
+    paginationHTML += '<li class="page-item' + (currentPage === totalPages || totalPages === 0 ? ' disabled' : '') + '">' +
+        '<a class="page-link" href="#" onclick="changePage(' + (currentPage + 1) + ')">Suivant</a></li>';
+    
+    pagination.innerHTML = paginationHTML;
+}
+
+function changePage(page) {
+    const totalPages = Math.ceil(filteredParticipants.length / parseInt(document.getElementById('pageSize').value));
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderTable();
+    }
+}
+
+// Actions sur les participants
+async function viewParticipant(id) {
+    // TODO: Implémenter la vue détaillée
+    console.log('Voir participant:', id);
+}
+
+async function editParticipant(id) {
+    // TODO: Implémenter l'édition
+    console.log('Modifier participant:', id);
+}
+
+async function sendBadge(id) {
+    if (confirm('Êtes-vous sûr de vouloir envoyer le badge à ce participant ?')) {
+        try {
+            const response = await fetch('/api/participants/' + id + '/send-badge', {
+                method: 'POST'
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                showAlert('Badge envoyé avec succès', 'success');
+                loadParticipants();
+            } else {
+                showAlert('Erreur lors de l\'envoi du badge', 'danger');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            showAlert('Erreur lors de l\'envoi du badge', 'danger');
+        }
+    }
+}
+
+async function deleteParticipant(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce participant ? Cette action est irréversible.')) {
+        try {
+            const response = await fetch('/api/participants/' + id, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                showAlert('Participant supprimé avec succès', 'success');
+                loadParticipants();
+            } else {
+                showAlert('Erreur lors de la suppression', 'danger');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            showAlert('Erreur lors de la suppression', 'danger');
+        }
+    }
+}
+
+// Export des données
+async function exportData(format) {
+    try {
+        const selectedIds = Array.from(document.querySelectorAll('input[name="participantIds"]:checked'))
+            .map(cb => cb.value);
+        
+        const params = new URLSearchParams({
+            format: format,
+            type: document.getElementById('filterType').value,
+            status: document.getElementById('filterStatus').value,
+            country: document.getElementById('filterCountry').value,
+            search: document.getElementById('searchInput').value
+        });
+        
+        if (selectedIds.length > 0) {
+            params.append('ids', selectedIds.join(','));
+        }
+        
+        const response = await fetch('/api/participants/export?' + params.toString());
+        
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'participants_export.' + format;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } else {
+            showAlert('Erreur lors de l\'export', 'danger');
+        }
+    } catch (error) {
+        console.error('Erreur export:', error);
+        showAlert('Erreur lors de l\'export', 'danger');
+    }
+}
+
+// Utilitaires
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-' + type + ' alert-dismissible fade show position-fixed';
+    alertDiv.style.top = '20px';
+    alertDiv.style.right = '20px';
+    alertDiv.style.zIndex = '9999';
+    alertDiv.innerHTML = message + 
+        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+</script>
+` }) %>

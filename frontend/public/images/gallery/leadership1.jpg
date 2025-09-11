@@ -1,0 +1,33 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="leadershipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="200" fill="url(#leadershipGradient)"/>
+  
+  <!-- Silhouette féminine -->
+  <circle cx="150" cy="80" r="25" fill="white" opacity="0.95"/>
+  <rect x="130" y="105" width="40" height="50" rx="20" fill="white" opacity="0.95"/>
+  
+  <!-- Couronne/symbole de leadership aux couleurs officielles -->
+  <polygon points="150,55 145,65 155,65" fill="#FF5722"/>
+  <circle cx="140" cy="62" r="2" fill="#FF5722"/>
+  <circle cx="150" cy="58" r="3" fill="#FF5722"/>
+  <circle cx="160" cy="62" r="2" fill="#FF5722"/>
+  
+  <!-- Détails du visage -->
+  <circle cx="145" cy="75" r="1.5" fill="#2E7D32"/>
+  <circle cx="155" cy="75" r="1.5" fill="#2E7D32"/>
+  <path d="M 145 85 Q 150 88 155 85" stroke="#2E7D32" stroke-width="1.5" fill="none"/>
+  
+  <!-- Éléments décoratifs -->
+  <circle cx="100" cy="70" r="8" fill="#FF5722" opacity="0.6"/>
+  <circle cx="200" cy="90" r="6" fill="white" opacity="0.8"/>
+  <polygon points="80,120 85,130 75,130" fill="#FF5722" opacity="0.5"/>
+  <polygon points="220,110 225,120 215,120" fill="white" opacity="0.6"/>
+  
+  <text x="150" y="185" font-family="Arial" font-size="22" fill="white" text-anchor="middle" font-weight="bold">Leadership</text>
+  <text x="150" y="195" font-family="Arial" font-size="14" fill="white" text-anchor="middle" opacity="0.9">Féminin</text>
+</svg>

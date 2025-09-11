@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../components/navbar') %>
+    
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 80px;"></div>
+
+    <!-- Hero Section -->
+    <section class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4">À propos de YouthConnekt Sahel 2025</h1>
+                    <p class="lead">Découvrez l'histoire et la mission de ce forum exceptionnel</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="mb-4">Notre Mission</h2>
+                    <p class="lead">
+                        YouthConnekt Sahel 2025 est une initiative révolutionnaire qui vise à transformer 
+                        l'avenir de la région du Sahel en autonomisant sa jeunesse dynamique et innovante.
+                        <strong>Plus de 2000 participants</strong> des <strong>10 pays du Sahel</strong> se réuniront 
+                        en format hybride pour ce forum exceptionnel.
+                    </p>
+                    
+                    <div class="row mt-5">
+                        <div class="col-md-6 mb-4">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-bullseye text-primary fa-2x"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5>Vision</h5>
+                                    <p>Créer un écosystème dynamique où les jeunes du Sahel deviennent les leaders du changement positif dans leurs communautés.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-heart text-danger fa-2x"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5>Valeurs</h5>
+                                    <p>Innovation, collaboration, leadership inclusif, développement durable et transformation sociale positive.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="mt-5 mb-4">Pourquoi YouthConnekt Sahel ?</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-chart-line text-success fa-2x mb-3"></i>
+                                <h6>Développement économique</h6>
+                                <p class="small">Stimuler l'entrepreneuriat et l'innovation chez les jeunes</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-graduation-cap text-info fa-2x mb-3"></i>
+                                <h6>Formation et compétences</h6>
+                                <p class="small">Développer les capacités nécessaires pour le XXIe siècle</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-hands-helping text-warning fa-2x mb-3"></i>
+                                <h6>Cohésion sociale</h6>
+                                <p class="small">Renforcer les liens entre les jeunes de toute la région</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Notre Équipe</h2>
+                <p class="text-muted">Des professionnels dévoués à la cause de la jeunesse</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user text-white fa-2x"></i>
+                        </div>
+                        <h6>Dr. Aminata TRAORE</h6>
+                        <small class="text-muted">Directrice Générale</small>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user text-white fa-2x"></i>
+                        </div>
+                        <h6>Ibrahim HASSAN</h6>
+                        <small class="text-muted">Coordinateur Programmes</small>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user text-white fa-2x"></i>
+                        </div>
+                        <h6>Fatima AL-RASHID</h6>
+                        <small class="text-muted">Responsable Partenariats</small>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user text-white fa-2x"></i>
+                        </div>
+                        <h6>Mohamed DIALLO</h6>
+                        <small class="text-muted">Chef de Projet</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('../layouts/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

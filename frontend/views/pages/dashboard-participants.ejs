@@ -1,0 +1,279 @@
+<%- include('../layouts/dashboard-layout-start', { title: title, section: 'participants' }) %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold text-success mb-0"><i class="fas fa-users me-2"></i>Participants</h4>
+  <div class="btn-group">
+    <button class="btn btn-sm btn-danger" onclick="clearAllParticipants()" title="Supprimer tous les participants">
+      <i class="fas fa-trash-alt me-1"></i>Vider la base
+    </button>
+    <button class="btn btn-sm btn-success" disabled><i class="fas fa-download me-1"></i>Exporter (bientôt)</button>
+  </div>
+ </div>
+<%- include('../layouts/dashboard-layout-end') %>
+<div class="card border-0 shadow-sm" style="border-radius:18px;">
+  <div class="card-body p-4">
+    <% if (participants && participants.length) { %>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Photo</th>
+              <th>Nom</th>
+              <th>Pays</th>
+              <th>WhatsApp</th>
+              <th>Type</th>
+              <th>Email</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% participants.forEach(function(p, i){ %>
+              <tr>
+                <td><%= p.participant_id || p.id || (i+1) %></td>
+                <td style="width:72px;">
+                  <% if(p.photo_path || p.passport_path){ %>
+                    <img src="<%= p.photo_path || p.passport_path %>" alt="photo" class="rounded" style="width:64px;height:48px;object-fit:cover;">
+                  <% } else { %>
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:64px;height:48px;"><i class="fas fa-user text-muted"></i></div>
+                  <% } %>
+                </td>
+                <td><%= (p.first_name ? (p.first_name + ' ' + (p.last_name||'')) : (p.name || '—')) %></td>
+                <td><%= p.country || '—' %></td>
+                <td><%= p.whatsapp || p.whatsapp_opt || '—' %></td>
+                <td><%= p.registration_type || p.type || '—' %></td>
+                <td><%= p.email || '—' %></td>
+                <td>
+                  <% if(p.status === 'confirmed'){ %>
+                    <span class="badge bg-success">Confirmé</span>
+                  <% } else if(p.status === 'pending'){ %>
+                    <span class="badge bg-warning">En attente</span>
+                  <% } else if(p.status === 'rejected'){ %>
+                    <span class="badge bg-danger">Rejeté</span>
+                  <% } else if(p.status === 'En file d\'attente'){ %>
+                    <span class="badge bg-info">En file</span>
+                  <% } else { %>
+                    <span class="badge bg-secondary"><%= p.status || '—' %></span>
+                  <% } %>
+                </td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <button class="btn btn-sm btn-info" onclick="viewProfile('<%= p.participant_id || p.id %>')" title="Voir profil">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-success" onclick="downloadPDF('<%= p.participant_id || p.id %>')" title="Télécharger PDF">
+                      <i class="fas fa-file-pdf"></i>
+                    </button>
+                    <button class="btn btn-sm btn-warning" onclick="downloadBadge('<%= p.participant_id || p.id %>')" title="Télécharger Badge">
+                      <i class="fas fa-id-badge"></i>
+                    </button>
+                    <% if(p.status === 'pending' || p.status === 'En file d\'attente'){ %>
+                    <button class="btn btn-sm btn-primary" onclick="sendInvitation('<%= p.participant_id || p.id %>')" title="Envoyer invitation">
+                      <i class="fas fa-envelope"></i>
+                    </button>
+                    <% } %>
+                    <% if(p.status === 'invited' || p.status === 'confirmed'){ %>
+                    <button class="btn btn-sm btn-secondary" onclick="sendBadge('<%= p.participant_id || p.id %>')" title="Envoyer badge">
+                      <i class="fas fa-id-card"></i>
+                    </button>
+                    <% } %>
+                    <% if(p.status !== 'confirmed'){ %>
+                    <button class="btn btn-sm btn-primary" onclick="updateStatus('<%= p.participant_id || p.id %>', 'confirmed')" title="Confirmer">
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <% } %>
+                    <% if(p.status !== 'rejected'){ %>
+                    <button class="btn btn-sm btn-danger" onclick="updateStatus('<%= p.participant_id || p.id %>', 'rejected')" title="Rejeter">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <% } %>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteParticipant('<%= p.participant_id || p.id %>')" title="Supprimer">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="text-center py-5">
+        <div class="mb-3">
+          <i class="fas fa-database fa-3x text-muted"></i>
+        </div>
+        <h5 class="text-muted mb-3">Aucune donnée affichée</h5>
+        <div class="small text-muted mb-3">
+          <% if (typeof apiConnected !== 'undefined' && !apiConnected) { %>
+            <div class="alert alert-warning">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <strong>API Backend non connectée</strong><br>
+              Le backend Laravel n'est pas accessible. Vérifiez que le serveur est démarré.
+            </div>
+          <% } else { %>
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Données en cours de chargement...</strong><br>
+              Vérifiez la connexion avec l'API backend.
+            </div>
+          <% } %>
+        </div>
+        <div class="small text-muted">
+          <strong>Actions recommandées:</strong><br>
+          1. Vérifiez que le backend Laravel est démarré (port 8000)<br>
+          2. Testez l'API: <a href="http://localhost:8000/api/participants" target="_blank">http://localhost:8000/api/participants</a><br>
+          3. Vérifiez les logs du serveur pour plus de détails
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<script>
+// Fonctions pour les actions du dashboard
+function viewProfile(participantId) {
+    window.open(`/dashboard/participants/${participantId}/view`, '_blank');
+}
+
+function downloadPDF(participantId) {
+    window.open(`/dashboard/participants/${participantId}/pdf`, '_blank');
+}
+
+function downloadBadge(participantId) {
+    window.open(`/dashboard/participants/${participantId}/badge`, '_blank');
+}
+
+async function updateStatus(participantId, status) {
+    try {
+        const response = await fetch(`/dashboard/participants/${participantId}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ status: status })
+        });
+        
+        if (response.ok) {
+            alert(`Statut mis à jour: ${status}`);
+            location.reload(); // Recharger la page pour voir les changements
+        } else {
+            throw new Error('Erreur lors de la mise à jour');
+        }
+    } catch (error) {
+        alert('Erreur: ' + error.message);
+    }
+}
+
+async function sendInvitation(participantId) {
+    if (!confirm('Êtes-vous sûr de vouloir envoyer une invitation officielle à ce participant ?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`http://localhost:8000/api/participants/${participantId}/send-invitation`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('✅ Invitation envoyée avec succès !');
+            location.reload();
+        } else {
+            alert('❌ Erreur: ' + result.message);
+        }
+    } catch (error) {
+        alert('❌ Erreur lors de l\'envoi de l\'invitation: ' + error.message);
+    }
+}
+
+async function sendBadge(participantId) {
+    if (!confirm('Êtes-vous sûr de vouloir envoyer le badge à ce participant ?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`http://localhost:8000/api/participants/${participantId}/send-badge`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('✅ Badge envoyé avec succès !');
+            location.reload();
+        } else {
+            alert('❌ Erreur: ' + result.message);
+        }
+    } catch (error) {
+        alert('❌ Erreur lors de l\'envoi du badge: ' + error.message);
+    }
+}
+
+async function deleteParticipant(participantId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce participant ? Cette action est irréversible.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`http://localhost:8000/api/participants/${participantId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('✅ Participant supprimé avec succès !');
+            location.reload();
+        } else {
+            alert('❌ Erreur: ' + result.message);
+        }
+    } catch (error) {
+        alert('❌ Erreur lors de la suppression: ' + error.message);
+    }
+}
+
+async function clearAllParticipants() {
+    if (!confirm('⚠️ ATTENTION: Cette action va supprimer TOUS les participants de la base de données. Cette action est irréversible.\n\nÊtes-vous vraiment sûr de vouloir continuer ?')) {
+        return;
+    }
+    
+    if (!confirm('Dernière confirmation: Supprimer définitivement tous les participants ?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`http://localhost:8000/api/participants/clear-all`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`✅ ${result.deleted_count} participants supprimés avec succès !`);
+            location.reload();
+        } else {
+            alert('❌ Erreur: ' + result.message);
+        }
+    } catch (error) {
+        alert('❌ Erreur lors de la suppression: ' + error.message);
+    }
+}
+</script>

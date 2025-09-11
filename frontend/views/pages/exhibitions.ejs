@@ -1,0 +1,295 @@
+<%- include('../layouts/header', { title: title, page: page }) %>
+
+<!-- Hero Section -->
+<section class="hero-section py-5" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content text-white">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <span class="typing-animation">Expositions & Stands</span>
+                    </h1>
+                    <p class="lead mb-4">
+                        Découvrez les innovations, projets et initiatives des jeunes entrepreneurs 
+                        et organisations du Sahel lors de notre exposition interactive.
+                    </p>
+                    <div class="hero-stats row g-3 mb-4">
+                        <div class="col-4">
+                            <div class="stat-item text-center">
+                                <h3 class="h2 fw-bold mb-1 stat-number" data-target="50">0</h3>
+                                <p class="mb-0 small">Stands</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item text-center">
+                                <h3 class="h2 fw-bold mb-1 stat-number" data-target="200">0</h3>
+                                <p class="mb-0 small">Exposants</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item text-center">
+                                <h3 class="h2 fw-bold mb-1 stat-number" data-target="10">0</h3>
+                                <p class="mb-0 small">Pays</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#reservation" class="btn btn-light btn-lg me-3 pulse-btn">
+                            <i class="fas fa-store me-2"></i>
+                            Réserver un Stand
+                        </a>
+                        <a href="#categories" class="btn btn-outline-light btn-lg hover-lift">
+                            <i class="fas fa-th-large me-2"></i>
+                            Voir les Catégories
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image text-center">
+                    <img src="/images/exhibitions/hero-exhibition.jpg" alt="Exposition YouthConnekt Sahel" 
+                         class="img-fluid rounded-3 shadow-lg hero-main-img" 
+                         style="max-height: 500px;"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display: none; width: 100%; height: 400px; background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2)); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-store fa-5x text-white opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Catégories d'Exposition</h2>
+            <p class="section-subtitle">Découvrez les différents domaines d'innovation représentés</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card p-4 bg-white rounded-3 shadow-sm h-100 text-center">
+                    <div class="category-icon mb-3">
+                        <i class="fas fa-laptop-code fa-3x text-primary"></i>
+                    </div>
+                    <h4 class="mb-3">Technologie & Innovation</h4>
+                    <p class="text-muted mb-4">
+                        Solutions technologiques, applications mobiles, plateformes digitales 
+                        et innovations technologiques pour le développement.
+                    </p>
+                    <div class="category-stats">
+                        <span class="badge bg-primary">25 Stands</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card p-4 bg-white rounded-3 shadow-sm h-100 text-center">
+                    <div class="category-icon mb-3">
+                        <i class="fas fa-seedling fa-3x text-success"></i>
+                    </div>
+                    <h4 class="mb-3">Agriculture & Environnement</h4>
+                    <p class="text-muted mb-4">
+                        Innovations agricoles, solutions environnementales, énergies renouvelables 
+                        et projets de développement durable.
+                    </p>
+                    <div class="category-stats">
+                        <span class="badge bg-success">20 Stands</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card p-4 bg-white rounded-3 shadow-sm h-100 text-center">
+                    <div class="category-icon mb-3">
+                        <i class="fas fa-heartbeat fa-3x text-danger"></i>
+                    </div>
+                    <h4 class="mb-3">Santé & Bien-être</h4>
+                    <p class="text-muted mb-4">
+                        Solutions de santé, applications médicales, bien-être communautaire 
+                        et initiatives de santé publique.
+                    </p>
+                    <div class="category-stats">
+                        <span class="badge bg-danger">15 Stands</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card p-4 bg-white rounded-3 shadow-sm h-100 text-center">
+                    <div class="category-icon mb-3">
+                        <i class="fas fa-graduation-cap fa-3x text-info"></i>
+                    </div>
+                    <h4 class="mb-3">Éducation & Formation</h4>
+                    <p class="text-muted mb-4">
+                        Plateformes éducatives, solutions de formation, e-learning 
+                        et initiatives d'éducation communautaire.
+                    </p>
+                    <div class="category-stats">
+                        <span class="badge bg-info">18 Stands</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card p-4 bg-white rounded-3 shadow-sm h-100 text-center">
+                    <div class="category-icon mb-3">
+                        <i class="fas fa-handshake fa-3x text-warning"></i>
+                    </div>
+                    <h4 class="mb-3">Entrepreneuriat Social</h4>
+                    <p class="text-muted mb-4">
+                        Projets à impact social, entreprises sociales, initiatives communautaires 
+                        et solutions pour les défis sociaux.
+                    </p>
+                    <div class="category-stats">
+                        <span class="badge bg-warning">22 Stands</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card p-4 bg-white rounded-3 shadow-sm h-100 text-center">
+                    <div class="category-icon mb-3">
+                        <i class="fas fa-palette fa-3x text-secondary"></i>
+                    </div>
+                    <h4 class="mb-3">Culture & Créativité</h4>
+                    <p class="text-muted mb-4">
+                        Arts, artisanat, design, musique, cinéma et initiatives culturelles 
+                        pour promouvoir le patrimoine sahélo-saharien.
+                    </p>
+                    <div class="category-stats">
+                        <span class="badge bg-secondary">12 Stands</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="text-center mt-5">
+            <div class="cta-section p-5 bg-white rounded-3 shadow-lg" 
+                 style="border: 2px solid transparent; background: linear-gradient(white, white) padding-box, linear-gradient(45deg, var(--primary-color), var(--secondary-color)) border-box;">
+                <h3 class="mb-3" style="color: var(--primary-color);">Réservez Votre Stand</h3>
+                <p class="lead mb-4">
+                    Rejoignez plus de 100 exposants et présentez vos innovations à plus de 2000 participants 
+                    du Forum YouthConnekt Sahel 2025.
+                </p>
+                <div class="row g-3 justify-content-center mb-4">
+                    <div class="col-md-3">
+                        <div class="benefit-item text-center">
+                            <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                            <h6>2000+ Participants</h6>
+                            <small class="text-muted">Audience qualifiée</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="benefit-item text-center">
+                            <i class="fas fa-network-wired fa-2x text-success mb-2"></i>
+                            <h6>Networking</h6>
+                            <small class="text-muted">Rencontres B2B</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="benefit-item text-center">
+                            <i class="fas fa-bullhorn fa-2x text-warning mb-2"></i>
+                            <h6>Visibilité</h6>
+                            <small class="text-muted">Exposition médiatique</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/partner-forms/stand" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-calendar-check me-2"></i>
+                        Réserver un Stand
+                    </a>
+                    <a href="/contact" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>
+                        Nous Contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<%- include('../layouts/footer') %>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom Animations -->
+<script>
+    // Animation des compteurs
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current);
+            }, 16);
+        });
+    }
+
+    // Animation au scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.category-card');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('fade-in-up');
+            }
+        });
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            animateCounters();
+            animateOnScroll();
+        }, 500);
+    });
+
+    // Animation au scroll
+    window.addEventListener('scroll', animateOnScroll);
+</script>
+
+<style>
+    .category-card {
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border-color: var(--primary-color);
+    }
+    
+    .fade-in-up {
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

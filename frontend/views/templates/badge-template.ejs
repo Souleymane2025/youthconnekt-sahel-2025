@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge YouthConnekt Sahel 2025</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+        }
+        
+        .badge-container {
+            width: 210mm;
+            height: 297mm;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10mm;
+            padding: 10mm;
+            background: #f0f0f0;
+        }
+        
+        .badge {
+            width: 85mm;
+            height: 55mm;
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 50%, #FF6B35 100%);
+            border-radius: 8mm;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 5mm;
+            box-sizing: border-box;
+        }
+        
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        .badge-header {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 2mm;
+        }
+        
+        .badge-logo {
+            width: 12mm;
+            height: 12mm;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2mm;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .badge-logo::before {
+            content: 'YC';
+            font-weight: bold;
+            font-size: 6mm;
+            color: #2E7D32;
+        }
+        
+        .badge-title {
+            font-size: 4mm;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .badge-subtitle {
+            font-size: 3mm;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .badge-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .participant-name {
+            font-size: 5mm;
+            font-weight: bold;
+            margin: 0 0 1mm 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .participant-role {
+            font-size: 3.5mm;
+            margin: 0 0 2mm 0;
+            opacity: 0.9;
+        }
+        
+        .participant-country {
+            font-size: 3mm;
+            margin: 0;
+            opacity: 0.8;
+        }
+        
+        .badge-footer {
+            position: relative;
+            z-index: 2;
+            margin-top: 2mm;
+            font-size: 2.5mm;
+            opacity: 0.8;
+        }
+        
+        .badge-qr {
+            position: absolute;
+            bottom: 3mm;
+            right: 3mm;
+            width: 8mm;
+            height: 8mm;
+            background: white;
+            border-radius: 1mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .badge-qr::before {
+            content: 'QR';
+            font-size: 2mm;
+            color: #2E7D32;
+            font-weight: bold;
+        }
+        
+        /* Types de badges */
+        .badge.speaker {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF9800 50%, #FFC107 100%);
+        }
+        
+        .badge.organizer {
+            background: linear-gradient(135deg, #9C27B0 0%, #E91E63 50%, #F44336 100%);
+        }
+        
+        .badge.volunteer {
+            background: linear-gradient(135deg, #2196F3 0%, #03A9F4 50%, #00BCD4 100%);
+        }
+        
+        .badge.media {
+            background: linear-gradient(135deg, #607D8B 0%, #795548 50%, #9E9E9E 100%);
+        }
+        
+        /* Badge premium */
+        .badge.premium {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA000 50%, #FF6B35 100%);
+            border: 1mm solid #FFD700;
+            box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+        }
+        
+        .badge.premium::after {
+            content: '★';
+            position: absolute;
+            top: 2mm;
+            right: 2mm;
+            font-size: 4mm;
+            color: #FFD700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Responsive pour impression */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .badge-container {
+                background: white;
+            }
+            
+            .badge {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="badge-container">
+        <% participants.forEach(function(participant, index) { %>
+            <div class="badge <%= participant.type || 'participant' %> <%= participant.premium ? 'premium' : '' %>">
+                <div class="badge-header">
+                    <div class="badge-logo"></div>
+                    <h3 class="badge-title">YOUTH CONNEKT</h3>
+                    <p class="badge-subtitle">SAHEL 2025</p>
+                </div>
+                
+                <div class="badge-content">
+                    <h2 class="participant-name"><%= participant.first_name %> <%= participant.last_name %></h2>
+                    <p class="participant-role"><%= participant.role || 'Participant' %></p>
+                    <p class="participant-country"><%= participant.country %></p>
+                </div>
+                
+                <div class="badge-footer">
+                    <p>13-15 Octobre 2025 | N'Djamena, Tchad</p>
+                </div>
+                
+                <div class="badge-qr"></div>
+            </div>
+        <% }); %>
+    </div>
+</body>
+</html>
+

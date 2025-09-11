@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-section { border-left: 4px solid #007bff; padding-left: 20px; margin-bottom: 30px; }
+        .required { color: #dc3545; }
+        .file-upload { border: 2px dashed #dee2e6; border-radius: 8px; padding: 20px; text-align: center; }
+        .file-upload:hover { border-color: #007bff; background-color: #f8f9fa; }
+        .preview-image { max-width: 150px; max-height: 150px; border-radius: 8px; margin-top: 10px; }
+        .province-section { display: none; }
+        .handicap-section { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../components/navbar') %>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="min-height: 50vh;">
+        <div class="container">
+            <div class="row justify-content-center text-center text-white">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">
+                        <% if (typeof registrationType !== 'undefined' && registrationType === 'national') { %>
+                            Inscription Participants Nationaux - Tchad
+                        <% } else if (typeof registrationType !== 'undefined' && registrationType === 'international') { %>
+                            Inscription Participants Internationaux
+                        <% } else { %>
+                            Inscription au Forum YouthConnekt Sahel 2025
+                        <% } %>
+                    </h1>
+                    <p class="hero-subtitle">
+                        <% if (typeof registrationType !== 'undefined' && registrationType === 'national') { %>
+                            Formulaire spécialement conçu pour les participants du Tchad avec options provinciales.
+                        <% } else if (typeof registrationType !== 'undefined' && registrationType === 'international') { %>
+                            Formulaire pour les participants venant d'autres pays et continents.
+                        <% } else { %>
+                            Rejoignez plus de 1000 jeunes leaders du Sahel pour trois jours d'innovation, 
+                            d'entrepreneuriat et de networking exceptionnel.
+                        <% } %>
+                    </p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            13-15 Octobre 2025 • N'Djamena, Tchad
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Formulaire d'inscription complet
+                            </h3>
+                            <small>ID Participant: <span id="participant-id">FYCS2025XXXXXX</span></small>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="registration-form" enctype="multipart/form-data" action="/participants/register-complete" method="POST">
+                                <!-- Hidden field for registration type -->
+                                <% if (typeof registrationType !== 'undefined') { %>
+                                    <input type="hidden" name="registration_type" value="<%= registrationType %>">
+                                <% } %>
+                                
+                                <!-- Personal Information -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-user me-2"></i>
+                                        Informations personnelles
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="first_name" class="form-label">Prénom <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="last_name" class="form-label">Nom <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email <span class="required">*</span></label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Téléphone <span class="required">*</span></label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="whatsapp" class="form-label">Numéro WhatsApp <span class="required">*</span></label>
+                                            <input type="tel" class="form-control" id="whatsapp" name="whatsapp" required placeholder="+235 XX XX XX XX">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="birth_date" class="form-label">Date de naissance <span class="required">*</span></label>
+                                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="gender" class="form-label">Genre <span class="required">*</span></label>
+                                            <select class="form-select" id="gender" name="gender" required>
+                                                <option value="">Sélectionnez</option>
+                                                <option value="male">Homme</option>
+                                                <option value="female">Femme</option>
+                                                <option value="other">Autre</option>
+                                                <option value="prefer-not-to-say">Préfère ne pas dire</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="handicap" class="form-label">Avez-vous un handicap ?</label>
+                                            <select class="form-select" id="handicap" name="handicap" onchange="toggleHandicapSection()">
+                                                <option value="no">Non</option>
+                                                <option value="yes">Oui</option>
+                                                <option value="prefer-not-to-say">Préfère ne pas dire</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Handicap Details -->
+                                    <div id="handicap-details" class="handicap-section mt-3">
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label for="handicap_type" class="form-label">Type de handicap</label>
+                                                <select class="form-select" id="handicap_type" name="handicap_type">
+                                                    <option value="">Sélectionnez</option>
+                                                    <option value="mobility">Mobilité réduite</option>
+                                                    <option value="visual">Déficience visuelle</option>
+                                                    <option value="hearing">Déficience auditive</option>
+                                                    <option value="cognitive">Déficience cognitive</option>
+                                                    <option value="other">Autre</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="handicap_accommodation" class="form-label">Besoins d'accommodation</label>
+                                                <textarea class="form-control" id="handicap_accommodation" name="handicap_accommodation" rows="2" placeholder="Décrivez vos besoins spécifiques..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Photo Upload -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-camera me-2"></i>
+                                        Photo de profil
+                                    </h5>
+                                    <div class="file-upload" onclick="document.getElementById('photo').click()">
+                                        <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                                        <p class="mb-2">Cliquez pour télécharger votre photo</p>
+                                        <small class="text-muted">Formats acceptés: JPG, PNG (max 5MB)</small>
+                                        <input type="file" id="photo" name="photo" accept="image/*" style="display: none;" onchange="previewPhoto(this)">
+                                    </div>
+                                    <div id="photo-preview"></div>
+                                </div>
+
+                                <!-- Location Information -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-map-marker-alt me-2"></i>
+                                        Localisation
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="country" class="form-label">Pays <span class="required">*</span></label>
+                                            <select class="form-select" id="country" name="country" required onchange="toggleProvinceSection()">
+                                                <option value="">Sélectionnez votre pays</option>
+                                                <option value="Tchad">Tchad</option>
+                                                <option value="Niger">Niger</option>
+                                                <option value="Mali">Mali</option>
+                                                <option value="Burkina Faso">Burkina Faso</option>
+                                                <option value="Sénégal">Sénégal</option>
+                                                <option value="Mauritanie">Mauritanie</option>
+                                                <option value="Gambie">Gambie</option>
+                                                <option value="Guinée-Bissau">Guinée-Bissau</option>
+                                                <option value="Autre">Autre</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="city" class="form-label">Ville <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="city" name="city" required>
+                                        </div>
+                                        
+                                        <!-- Province Section for Chad -->
+                                        <div id="province-section" class="province-section col-md-6">
+                                            <label for="province" class="form-label">Province (Tchad) <span class="required">*</span></label>
+                                            <select class="form-select" id="province" name="province">
+                                                <option value="">Sélectionnez votre province</option>
+                                                <option value="N'Djamena">N'Djamena</option>
+                                                <option value="Batha">Batha</option>
+                                                <option value="Borkou">Borkou</option>
+                                                <option value="Chari-Baguirmi">Chari-Baguirmi</option>
+                                                <option value="Ennedi-Est">Ennedi-Est</option>
+                                                <option value="Ennedi-Ouest">Ennedi-Ouest</option>
+                                                <option value="Guéra">Guéra</option>
+                                                <option value="Hadjer-Lamis">Hadjer-Lamis</option>
+                                                <option value="Kanem">Kanem</option>
+                                                <option value="Lac">Lac</option>
+                                                <option value="Logone-Occidental">Logone-Occidental</option>
+                                                <option value="Logone-Oriental">Logone-Oriental</option>
+                                                <option value="Mandoul">Mandoul</option>
+                                                <option value="Mayo-Kebbi-Est">Mayo-Kebbi-Est</option>
+                                                <option value="Mayo-Kebbi-Ouest">Mayo-Kebbi-Ouest</option>
+                                                <option value="Moyen-Chari">Moyen-Chari</option>
+                                                <option value="Ouaddaï">Ouaddaï</option>
+                                                <option value="Salamat">Salamat</option>
+                                                <option value="Sila">Sila</option>
+                                                <option value="Tandjilé">Tandjilé</option>
+                                                <option value="Tibesti">Tibesti</option>
+                                                <option value="Wadi-Fira">Wadi-Fira</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Professional Information -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-briefcase me-2"></i>
+                                        Informations professionnelles
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="occupation" class="form-label">Statut <span class="required">*</span></label>
+                                            <select class="form-select" id="occupation" name="occupation" required>
+                                                <option value="">Sélectionnez votre statut</option>
+                                                <option value="student">Étudiant</option>
+                                                <option value="employee">Employé</option>
+                                                <option value="entrepreneur">Entrepreneur</option>
+                                                <option value="freelancer">Freelancer</option>
+                                                <option value="unemployed">Demandeur d'emploi</option>
+                                                <option value="other">Autre</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="organization" class="form-label">Organisation/Entreprise</label>
+                                            <input type="text" class="form-control" id="organization" name="organization">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="interests" class="form-label">Domaines d'intérêt <span class="required">*</span></label>
+                                            <div class="row g-2">
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="tech" name="interests[]" value="tech">
+                                                        <label class="form-check-label" for="tech">Technologie</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="entrepreneurship" name="interests[]" value="entrepreneurship">
+                                                        <label class="form-check-label" for="entrepreneurship">Entrepreneuriat</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="agriculture" name="interests[]" value="agriculture">
+                                                        <label class="form-check-label" for="agriculture">Agriculture</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="health" name="interests[]" value="health">
+                                                        <label class="form-check-label" for="health">Santé</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="education" name="interests[]" value="education">
+                                                        <label class="form-check-label" for="education">Éducation</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="environment" name="interests[]" value="environment">
+                                                        <label class="form-check-label" for="environment">Environnement</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Experience & Motivation -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-star me-2"></i>
+                                        Expérience et motivation
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="experience" class="form-label">Décrivez brièvement votre expérience (max 500 caractères)</label>
+                                            <textarea class="form-control" id="experience" name="experience" rows="4" maxlength="500" placeholder="Parlez-nous de votre parcours, vos projets, vos réalisations..."></textarea>
+                                            <small class="text-muted">Caractères restants: <span id="exp-count">500</span></small>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="motivation" class="form-label">Pourquoi voulez-vous participer au forum ? (max 300 caractères)</label>
+                                            <textarea class="form-control" id="motivation" name="motivation" rows="3" maxlength="300" placeholder="Qu'attendez-vous de cet événement ?"></textarea>
+                                            <small class="text-muted">Caractères restants: <span id="mot-count">300</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Document Upload -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-file-upload me-2"></i>
+                                        Documents requis
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="passport" class="form-label">Passeport ou CIN <span class="required">*</span></label>
+                                            <div class="file-upload" onclick="document.getElementById('passport').click()">
+                                                <i class="fas fa-file-alt fa-2x text-muted mb-2"></i>
+                                                <p class="mb-1">Télécharger votre passeport/CIN</p>
+                                                <small class="text-muted">PDF, JPG, PNG (max 5MB)</small>
+                                                <input type="file" id="passport" name="passport" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="previewDocument(this, 'passport-preview')">
+                                            </div>
+                                            <div id="passport-preview"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="cv" class="form-label">CV (optionnel)</label>
+                                            <div class="file-upload" onclick="document.getElementById('cv').click()">
+                                                <i class="fas fa-file-alt fa-2x text-muted mb-2"></i>
+                                                <p class="mb-1">Télécharger votre CV</p>
+                                                <small class="text-muted">PDF, DOC, DOCX (max 5MB)</small>
+                                                <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" style="display: none;" onchange="previewDocument(this, 'cv-preview')">
+                                            </div>
+                                            <div id="cv-preview"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Terms and Conditions -->
+                                <div class="form-section">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-shield-alt me-2"></i>
+                                        Conditions d'utilisation
+                                    </h5>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            J'accepte les <a href="#" class="text-primary">conditions d'utilisation</a> et la <a href="#" class="text-primary">politique de confidentialité</a> <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                                        <label class="form-check-label" for="newsletter">
+                                            Je souhaite recevoir la newsletter YouthConnekt Sahel et les informations sur les événements futurs
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="photos" name="photos">
+                                        <label class="form-check-label" for="photos">
+                                            J'autorise l'utilisation de mes photos/vidéos prises pendant l'événement à des fins de communication
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-user-plus me-2"></i>
+                                        Finaliser mon inscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('../layouts/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Generate participant ID
+        function generateParticipantId() {
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `FYCS2025${timestamp}${random}`;
+        }
+        
+        // Set participant ID
+        document.getElementById('participant-id').textContent = generateParticipantId();
+        
+        // Toggle province section for Chad
+        function toggleProvinceSection() {
+            const country = document.getElementById('country').value;
+            const provinceSection = document.getElementById('province-section');
+            const provinceSelect = document.getElementById('province');
+            
+            if (country === 'Tchad') {
+                provinceSection.style.display = 'block';
+                provinceSelect.required = true;
+            } else {
+                provinceSection.style.display = 'none';
+                provinceSelect.required = false;
+                provinceSelect.value = '';
+            }
+        }
+        
+        // Toggle handicap section
+        function toggleHandicapSection() {
+            const handicap = document.getElementById('handicap').value;
+            const handicapSection = document.getElementById('handicap-details');
+            
+            if (handicap === 'yes') {
+                handicapSection.style.display = 'block';
+            } else {
+                handicapSection.style.display = 'none';
+            }
+        }
+        
+        // Preview photo
+        function previewPhoto(input) {
+            const preview = document.getElementById('photo-preview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" class="preview-image" alt="Photo preview">`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // Preview document
+        function previewDocument(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const fileName = input.files[0].name;
+                preview.innerHTML = `<div class="alert alert-info"><i class="fas fa-file me-2"></i>${fileName}</div>`;
+            }
+        }
+        
+        // Character count for textareas
+        document.getElementById('experience').addEventListener('input', function() {
+            const count = 500 - this.value.length;
+            document.getElementById('exp-count').textContent = count;
+        });
+        
+        document.getElementById('motivation').addEventListener('input', function() {
+            const count = 300 - this.value.length;
+            document.getElementById('mot-count').textContent = count;
+        });
+        
+        // Form submission
+        document.getElementById('registration-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Inscription en cours...';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData(this);
+                
+                const response = await fetch('/participants/register-complete', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    alert('Inscription réussie ! Vous recevrez un email de confirmation.');
+                    // Redirect or show success page
+                    window.location.href = '/registration-success';
+                } else {
+                    throw new Error(result.message || 'Erreur lors de l\'inscription');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'inscription: ' + error.message);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-envelope me-2"></i>Gestion des Newsletters</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createNewsletterModal">
+                            <i class="fas fa-plus me-1"></i>Nouvelle Newsletter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= newsletters.filter(n => n.status === 'published').length %></h4>
+                                        <p class="mb-0">Publiées</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-paper-plane fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= newsletters.filter(n => n.status === 'draft').length %></h4>
+                                        <p class="mb-0">Brouillons</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-edit fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= newsletters.reduce((sum, n) => sum + n.recipients, 0) %></h4>
+                                        <p class="mb-0">Destinataires</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-users fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= newsletters.length %></h4>
+                                        <p class="mb-0">Total</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-envelope fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste des newsletters -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Liste des Newsletters</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (newsletters && newsletters.length > 0) { %>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Titre</th>
+                                            <th>Statut</th>
+                                            <th>Destinataires</th>
+                                            <th>Date de création</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% newsletters.forEach(newsletter => { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><%= newsletter.title %></strong>
+                                                    <br>
+                                                    <small class="text-muted"><%= newsletter.content.substring(0, 100) %>...</small>
+                                                </td>
+                                                <td>
+                                                    <% if (newsletter.status === 'published') { %>
+                                                        <span class="badge bg-success">Publiée</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-warning">Brouillon</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-primary"><%= newsletter.recipients %></span>
+                                                </td>
+                                                <td>
+                                                    <%= new Date(newsletter.createdAt).toLocaleDateString('fr-FR') %>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="viewNewsletter('<%= newsletter.id %>')">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-outline-warning" onclick="editNewsletter('<%= newsletter.id %>')">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <% if (newsletter.status === 'draft') { %>
+                                                            <button type="button" class="btn btn-sm btn-outline-success" onclick="publishNewsletter('<%= newsletter.id %>')">
+                                                                <i class="fas fa-paper-plane"></i>
+                                                            </button>
+                                                        <% } %>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteNewsletter('<%= newsletter.id %>')">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <div class="text-center py-5">
+                                <i class="fas fa-envelope fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">Aucune newsletter</h5>
+                                <p class="text-muted">Créez votre première newsletter pour commencer.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Créer Newsletter -->
+    <div class="modal fade" id="createNewsletterModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouvelle Newsletter</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createNewsletterForm">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Contenu</label>
+                            <textarea class="form-control" id="content" rows="10" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipients" class="form-label">Destinataires</label>
+                            <select class="form-select" id="recipients">
+                                <option value="all">Tous les participants</option>
+                                <option value="partners">Partenaires uniquement</option>
+                                <option value="sponsors">Sponsors uniquement</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="createNewsletter()">Créer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function createNewsletter() {
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const recipients = document.getElementById('recipients').value;
+            
+            if (!title || !content) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            // Simulation de création
+            alert('Newsletter créée avec succès !');
+            location.reload();
+        }
+        
+        function viewNewsletter(id) {
+            alert('Visualisation de la newsletter ' + id);
+        }
+        
+        function editNewsletter(id) {
+            alert('Édition de la newsletter ' + id);
+        }
+        
+        function publishNewsletter(id) {
+            if (confirm('Êtes-vous sûr de vouloir publier cette newsletter ?')) {
+                alert('Newsletter publiée avec succès !');
+                location.reload();
+            }
+        }
+        
+        function deleteNewsletter(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette newsletter ?')) {
+                alert('Newsletter supprimée avec succès !');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
+
+

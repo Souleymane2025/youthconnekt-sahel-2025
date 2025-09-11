@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+    
+    <style>
+        .participant-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #007bff;
+        }
+        .participant-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+        }
+        .invitation-sent {
+            color: #28a745;
+        }
+        .invitation-pending {
+            color: #ffc107;
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .action-buttons {
+            gap: 0.5rem;
+        }
+        .bulk-actions {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .loading-spinner.show {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">
+                        <i class="fas fa-users text-primary me-2"></i>
+                        Gestion des Participants
+                    </h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="refreshData()">
+                                <i class="fas fa-sync-alt"></i> Actualiser
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4" id="statsContainer">
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <i class="fas fa-users"></i>
+                                </h5>
+                                <h3 id="totalParticipants">-</h3>
+                                <p class="mb-0">Total Participants</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <i class="fas fa-envelope-open"></i>
+                                </h5>
+                                <h3 id="invitationsSent">-</h3>
+                                <p class="mb-0">Invitations Envoyées</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <i class="fas fa-clock"></i>
+                                </h5>
+                                <h3 id="invitationsPending">-</h3>
+                                <p class="mb-0">En Attente</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <i class="fas fa-check-circle"></i>
+                                </h5>
+                                <h3 id="confirmedParticipants">-</h3>
+                                <p class="mb-0">Confirmés</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions en masse -->
+                <div class="bulk-actions">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h6 class="mb-0">
+                                <i class="fas fa-tasks me-2"></i>
+                                Actions en masse
+                            </h6>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <div class="btn-group action-buttons">
+                                <button type="button" class="btn btn-success btn-sm" onclick="sendBulkInvitations()">
+                                    <i class="fas fa-envelope"></i> Envoyer Invitations
+                                </button>
+                                <button type="button" class="btn btn-info btn-sm" onclick="downloadAllInvitations()">
+                                    <i class="fas fa-download"></i> Télécharger Toutes
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" onclick="exportParticipants()">
+                                    <i class="fas fa-file-excel"></i> Exporter Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtres -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <select class="form-select" id="statusFilter" onchange="filterParticipants()">
+                            <option value="">Tous les statuts</option>
+                            <option value="confirmed">Confirmés</option>
+                            <option value="pending">En attente</option>
+                            <option value="rejected">Rejetés</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" id="countryFilter" onchange="filterParticipants()">
+                            <option value="">Tous les pays</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Rechercher par nom ou email..." onkeyup="filterParticipants()">
+                    </div>
+                </div>
+
+                <!-- Table des participants -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>
+                            Liste des Participants
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="participantsTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                        </th>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Téléphone</th>
+                                        <th>Pays</th>
+                                        <th>Type</th>
+                                        <th>Statut</th>
+                                        <th>Invitation</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="participantsTableBody">
+                                    <tr>
+                                        <td colspan="9" class="text-center">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Chargement...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Pagination des participants">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Générée dynamiquement -->
+                    </ul>
+                </nav>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal d'invitation -->
+    <div class="modal fade" id="invitationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-envelope me-2"></i>
+                        Envoyer une Invitation
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="invitationContent">
+                        <!-- Contenu généré dynamiquement -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmSendInvitation()">
+                        <i class="fas fa-paper-plane"></i> Envoyer l'Invitation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast pour les notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="notificationToast" class="toast" role="alert">
+            <div class="toast-header">
+                <i class="fas fa-info-circle text-primary me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                <!-- Message généré dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let participants = [];
+        let filteredParticipants = [];
+        let selectedParticipants = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        // Charger les données au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadParticipants();
+            loadInvitationStats();
+        });
+
+        // Charger les participants
+        async function loadParticipants() {
+            try {
+                const response = await fetch('/admin/api/participants');
+                const data = await response.json();
+                
+                if (data.success) {
+                    participants = data.data;
+                    filteredParticipants = [...participants];
+                    populateCountryFilter();
+                    renderParticipants();
+                } else {
+                    showNotification('Erreur lors du chargement des participants', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur de connexion', 'error');
+            }
+        }
+
+        // Charger les statistiques des invitations
+        async function loadInvitationStats() {
+            try {
+                const response = await fetch('/admin/api/invitations/stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const stats = data.data;
+                    document.getElementById('totalParticipants').textContent = stats.total;
+                    document.getElementById('invitationsSent').textContent = stats.invitations_sent;
+                    document.getElementById('invitationsPending').textContent = stats.invitations_pending;
+                    document.getElementById('confirmedParticipants').textContent = stats.by_status.confirmed;
+                }
+            } catch (error) {
+                console.error('Erreur stats:', error);
+            }
+        }
+
+        // Remplir le filtre des pays
+        function populateCountryFilter() {
+            const countries = [...new Set(participants.map(p => p.country))].sort();
+            const countryFilter = document.getElementById('countryFilter');
+            
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
+        }
+
+        // Filtrer les participants
+        function filterParticipants() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const countryFilter = document.getElementById('countryFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredParticipants = participants.filter(participant => {
+                const matchesStatus = !statusFilter || participant.status === statusFilter;
+                const matchesCountry = !countryFilter || participant.country === countryFilter;
+                const matchesSearch = !searchTerm || 
+                    participant.first_name.toLowerCase().includes(searchTerm) ||
+                    participant.last_name.toLowerCase().includes(searchTerm) ||
+                    participant.email.toLowerCase().includes(searchTerm);
+
+                return matchesStatus && matchesCountry && matchesSearch;
+            });
+
+            currentPage = 1;
+            renderParticipants();
+        }
+
+        // Afficher les participants
+        function renderParticipants() {
+            const tbody = document.getElementById('participantsTableBody');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageParticipants = filteredParticipants.slice(startIndex, endIndex);
+
+            if (pageParticipants.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">
+                            <i class="fas fa-users fa-2x mb-3"></i>
+                            <p>Aucun participant trouvé</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = pageParticipants.map(participant => `
+                <tr>
+                    <td>
+                        <input type="checkbox" class="participant-checkbox" value="${participant.id}" 
+                               onchange="updateSelectedParticipants()">
+                    </td>
+                    <td>
+                        <strong>${participant.first_name} ${participant.last_name}</strong>
+                    </td>
+                    <td>${participant.email}</td>
+                    <td>${participant.phone}</td>
+                    <td>
+                        <span class="badge bg-light text-dark">${participant.country}</span>
+                    </td>
+                    <td>
+                        <span class="badge ${participant.registration_type === 'national' ? 'bg-primary' : 'bg-info'}">
+                            ${participant.registration_type === 'national' ? 'National' : 'International'}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge status-badge ${getStatusClass(participant.status)}">
+                            ${getStatusText(participant.status)}
+                        </span>
+                    </td>
+                    <td>
+                        ${participant.invitation_sent ? 
+                            `<span class="invitation-sent"><i class="fas fa-check-circle"></i> Envoyée</span>` :
+                            `<span class="invitation-pending"><i class="fas fa-clock"></i> En attente</span>`
+                        }
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-primary" onclick="sendInvitation('${participant.id}')" 
+                                    title="Envoyer invitation">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                            <button class="btn btn-outline-success" onclick="downloadInvitation('${participant.id}')" 
+                                    title="Télécharger invitation">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-outline-info" onclick="viewParticipant('${participant.id}')" 
+                                    title="Voir détails">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            renderPagination();
+        }
+
+        // Obtenir la classe CSS du statut
+        function getStatusClass(status) {
+            switch(status) {
+                case 'confirmed': return 'bg-success';
+                case 'pending': return 'bg-warning';
+                case 'rejected': return 'bg-danger';
+                default: return 'bg-secondary';
+            }
+        }
+
+        // Obtenir le texte du statut
+        function getStatusText(status) {
+            switch(status) {
+                case 'confirmed': return 'Confirmé';
+                case 'pending': return 'En attente';
+                case 'rejected': return 'Rejeté';
+                default: return 'Inconnu';
+            }
+        }
+
+        // Afficher la pagination
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredParticipants.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+            
+            // Bouton précédent
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Précédent</a>
+                </li>
+            `;
+
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                    </li>
+                `;
+            }
+
+            // Bouton suivant
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Suivant</a>
+                </li>
+            `;
+
+            pagination.innerHTML = paginationHTML;
+        }
+
+        // Changer de page
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredParticipants.length / itemsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderParticipants();
+            }
+        }
+
+        // Sélectionner/désélectionner tous
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.participant-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+            
+            updateSelectedParticipants();
+        }
+
+        // Mettre à jour les participants sélectionnés
+        function updateSelectedParticipants() {
+            const checkboxes = document.querySelectorAll('.participant-checkbox:checked');
+            selectedParticipants = Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // Envoyer une invitation individuelle
+        function sendInvitation(participantId) {
+            const participant = participants.find(p => p.id === participantId);
+            if (!participant) return;
+
+            document.getElementById('invitationContent').innerHTML = `
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-user me-2"></i>Participant</h6>
+                    <p><strong>${participant.first_name} ${participant.last_name}</strong><br>
+                    ${participant.email}<br>
+                    ${participant.phone}</p>
+                </div>
+                <div class="alert alert-warning">
+                    <h6><i class="fas fa-info-circle me-2"></i>Information</h6>
+                    <p>Une invitation personnalisée sera envoyée à ce participant avec tous les détails de l'événement.</p>
+                </div>
+            `;
+
+            // Stocker l'ID pour la confirmation
+            document.getElementById('invitationModal').dataset.participantId = participantId;
+            
+            const modal = new bootstrap.Modal(document.getElementById('invitationModal'));
+            modal.show();
+        }
+
+        // Confirmer l'envoi d'invitation
+        async function confirmSendInvitation() {
+            const participantId = document.getElementById('invitationModal').dataset.participantId;
+            
+            try {
+                const response = await fetch('/admin/api/invitations/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ participantId: participantId })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('invitationModal')).hide();
+                    loadParticipants();
+                    loadInvitationStats();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur lors de l\'envoi de l\'invitation', 'error');
+            }
+        }
+
+        // Envoyer des invitations en masse
+        async function sendBulkInvitations() {
+            if (selectedParticipants.length === 0) {
+                showNotification('Veuillez sélectionner au moins un participant', 'warning');
+                return;
+            }
+
+            if (!confirm(`Envoyer des invitations à ${selectedParticipants.length} participant(s) ?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/admin/api/invitations/bulk-send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        participantIds: selectedParticipants 
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    loadParticipants();
+                    loadInvitationStats();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur lors de l\'envoi des invitations', 'error');
+            }
+        }
+
+        // Télécharger une invitation
+        async function downloadInvitation(participantId) {
+            try {
+                const response = await fetch(`/admin/api/invitations/download/${participantId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    if (data.data.downloadUrl && data.data.downloadUrl !== '#') {
+                        window.open(data.data.downloadUrl, '_blank');
+                    } else {
+                        showNotification('Invitation générée avec succès', 'success');
+                    }
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur lors du téléchargement', 'error');
+            }
+        }
+
+        // Télécharger toutes les invitations
+        async function downloadAllInvitations() {
+            if (selectedParticipants.length === 0) {
+                showNotification('Veuillez sélectionner au moins un participant', 'warning');
+                return;
+            }
+
+            showNotification('Génération des invitations en cours...', 'info');
+            
+            for (const participantId of selectedParticipants) {
+                await downloadInvitation(participantId);
+                await new Promise(resolve => setTimeout(resolve, 500)); // Délai entre les téléchargements
+            }
+            
+            showNotification('Toutes les invitations ont été générées', 'success');
+        }
+
+        // Exporter les participants
+        function exportParticipants() {
+            const dataToExport = selectedParticipants.length > 0 ? 
+                participants.filter(p => selectedParticipants.includes(p.id)) : 
+                participants;
+
+            const csvContent = generateCSV(dataToExport);
+            downloadCSV(csvContent, 'participants_youthconnekt_2025.csv');
+            showNotification('Export Excel généré avec succès', 'success');
+        }
+
+        // Générer le CSV
+        function generateCSV(data) {
+            const headers = ['Nom', 'Prénom', 'Email', 'Téléphone', 'Pays', 'Ville', 'Type', 'Statut', 'Invitation Envoyée'];
+            const rows = data.map(p => [
+                p.last_name,
+                p.first_name,
+                p.email,
+                p.phone,
+                p.country,
+                p.city || '',
+                p.registration_type === 'national' ? 'National' : 'International',
+                p.status === 'confirmed' ? 'Confirmé' : p.status === 'pending' ? 'En attente' : 'Rejeté',
+                p.invitation_sent ? 'Oui' : 'Non'
+            ]);
+
+            return [headers, ...rows].map(row => 
+                row.map(field => `"${field}"`).join(',')
+            ).join('\n');
+        }
+
+        // Télécharger le CSV
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Voir les détails d'un participant
+        function viewParticipant(participantId) {
+            const participant = participants.find(p => p.id === participantId);
+            if (!participant) return;
+
+            const detailsHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Informations Personnelles</h6>
+                        <p><strong>Nom:</strong> ${participant.first_name} ${participant.last_name}</p>
+                        <p><strong>Email:</strong> ${participant.email}</p>
+                        <p><strong>Téléphone:</strong> ${participant.phone}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Informations Événement</h6>
+                        <p><strong>Pays:</strong> ${participant.country}</p>
+                        <p><strong>Ville:</strong> ${participant.city || 'Non spécifié'}</p>
+                        <p><strong>Type:</strong> ${participant.registration_type === 'national' ? 'National' : 'International'}</p>
+                        <p><strong>Statut:</strong> ${getStatusText(participant.status)}</p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6>Invitation</h6>
+                        <p><strong>Envoyée:</strong> ${participant.invitation_sent ? 'Oui' : 'Non'}</p>
+                        ${participant.invitation_sent_at ? `<p><strong>Date d'envoi:</strong> ${new Date(participant.invitation_sent_at).toLocaleString('fr-FR')}</p>` : ''}
+                        ${participant.invitation_code ? `<p><strong>Code d'invitation:</strong> ${participant.invitation_code}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // Créer un modal pour afficher les détails
+            const modalHTML = `
+                <div class="modal fade" id="participantDetailsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-user me-2"></i>
+                                    Détails du Participant
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                ${detailsHTML}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-primary" onclick="sendInvitation('${participant.id}')">
+                                    <i class="fas fa-envelope"></i> Envoyer Invitation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Supprimer l'ancien modal s'il existe
+            const existingModal = document.getElementById('participantDetailsModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Ajouter le nouveau modal
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Afficher le modal
+            const modal = new bootstrap.Modal(document.getElementById('participantDetailsModal'));
+            modal.show();
+        }
+
+        // Actualiser les données
+        function refreshData() {
+            loadParticipants();
+            loadInvitationStats();
+            showNotification('Données actualisées', 'success');
+        }
+
+        // Afficher une notification
+        function showNotification(message, type = 'info') {
+            const toast = document.getElementById('notificationToast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            // Changer l'icône selon le type
+            const iconMap = {
+                'success': 'fas fa-check-circle text-success',
+                'error': 'fas fa-exclamation-circle text-danger',
+                'warning': 'fas fa-exclamation-triangle text-warning',
+                'info': 'fas fa-info-circle text-primary'
+            };
+            
+            const toastHeader = toast.querySelector('.toast-header i');
+            toastHeader.className = iconMap[type] || iconMap['info'];
+            
+            toastMessage.textContent = message;
+            
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,130 @@
+[
+  {
+    "first_name": "Souleymane",
+    "last_name": "Mahamat Saleh",
+    "email": "souleymane@youthconnekt.td",
+    "phone": "66161753",
+    "country": "tchad",
+    "city": "N'djamena",
+    "occupation": "student",
+    "organization": "C4C",
+    "interests": [],
+    "experience": "Hello",
+    "motivation": "",
+    "registration_type": "national",
+    "savedAt": "2025-09-06T07:11:12.155Z",
+    "apiError": {
+      "success": false,
+      "error": true,
+      "message": "Request failed with status code 422",
+      "code": "ERR_BAD_REQUEST",
+      "details": {
+        "message": "Request failed with status code 422",
+        "name": "AxiosError",
+        "stack": "AxiosError: Request failed with status code 422\n    at settle (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\node_modules\\axios\\dist\\node\\axios.cjs:2090:12)\n    at IncomingMessage.handleStreamEnd (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\node_modules\\axios\\dist\\node\\axios.cjs:3207:11)\n    at IncomingMessage.emit (node:events:531:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\node_modules\\axios\\dist\\node\\axios.cjs:4317:41)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.registerParticipant (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\services\\apiService.js:17:30)\n    at async register (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\controllers\\participantController.js:64:27)",
+        "config": {
+          "transitional": {
+            "silentJSONParsing": true,
+            "forcedJSONParsing": true,
+            "clarifyTimeoutError": false
+          },
+          "adapter": [
+            "xhr",
+            "http",
+            "fetch"
+          ],
+          "transformRequest": [
+            null
+          ],
+          "transformResponse": [
+            null
+          ],
+          "timeout": 0,
+          "xsrfCookieName": "XSRF-TOKEN",
+          "xsrfHeaderName": "X-XSRF-TOKEN",
+          "maxContentLength": -1,
+          "maxBodyLength": -1,
+          "env": {},
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "User-Agent": "axios/1.11.0",
+            "Content-Length": "275",
+            "Accept-Encoding": "gzip, compress, deflate, br"
+          },
+          "baseURL": "http://localhost:8000/api",
+          "method": "post",
+          "url": "/participants",
+          "data": "{\"first_name\":\"Souleymane\",\"last_name\":\"Mahamat Saleh\",\"email\":\"souleymane@youthconnekt.td\",\"phone\":\"66161753\",\"country\":\"tchad\",\"city\":\"N'djamena\",\"occupation\":\"student\",\"organization\":\"C4C\",\"interests\":[],\"experience\":\"Hello\",\"motivation\":\"\",\"registration_type\":\"national\"}",
+          "allowAbsoluteUrls": true
+        },
+        "code": "ERR_BAD_REQUEST",
+        "status": 422
+      }
+    }
+  },
+  {
+    "first_name": "Souleymane",
+    "last_name": "Mahamat Saleh",
+    "email": "souleymanemahamatsaleh2022@gmail.com",
+    "phone": "66161753",
+    "country": "mali",
+    "city": "N'djamena",
+    "occupation": "employee",
+    "organization": "Hamadi",
+    "interests": [],
+    "experience": "FJKER",
+    "motivation": "F? F.",
+    "registration_type": "national",
+    "savedAt": "2025-09-06T10:53:46.925Z",
+    "apiError": {
+      "success": false,
+      "error": true,
+      "message": "Request failed with status code 422",
+      "code": "ERR_BAD_REQUEST",
+      "details": {
+        "message": "Request failed with status code 422",
+        "name": "AxiosError",
+        "stack": "AxiosError: Request failed with status code 422\n    at settle (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\node_modules\\axios\\dist\\node\\axios.cjs:2090:12)\n    at IncomingMessage.handleStreamEnd (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\node_modules\\axios\\dist\\node\\axios.cjs:3207:11)\n    at IncomingMessage.emit (node:events:531:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\node_modules\\axios\\dist\\node\\axios.cjs:4317:41)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.registerParticipant (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\services\\apiService.js:17:30)\n    at async register (C:\\Users\\Hp\\Desktop\\youthconnekt-sahel-2025\\frontend\\controllers\\participantController.js:64:27)",
+        "config": {
+          "transitional": {
+            "silentJSONParsing": true,
+            "forcedJSONParsing": true,
+            "clarifyTimeoutError": false
+          },
+          "adapter": [
+            "xhr",
+            "http",
+            "fetch"
+          ],
+          "transformRequest": [
+            null
+          ],
+          "transformResponse": [
+            null
+          ],
+          "timeout": 0,
+          "xsrfCookieName": "XSRF-TOKEN",
+          "xsrfHeaderName": "X-XSRF-TOKEN",
+          "maxContentLength": -1,
+          "maxBodyLength": -1,
+          "env": {},
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "User-Agent": "axios/1.11.0",
+            "Content-Length": "293",
+            "Accept-Encoding": "gzip, compress, deflate, br"
+          },
+          "baseURL": "http://localhost:8000/api",
+          "method": "post",
+          "url": "/participants",
+          "data": "{\"first_name\":\"Souleymane\",\"last_name\":\"Mahamat Saleh\",\"email\":\"souleymanemahamatsaleh2022@gmail.com\",\"phone\":\"66161753\",\"country\":\"mali\",\"city\":\"N'djamena\",\"occupation\":\"employee\",\"organization\":\"Hamadi\",\"interests\":[],\"experience\":\"FJKER\",\"motivation\":\"F? F.\",\"registration_type\":\"national\"}",
+          "allowAbsoluteUrls": true
+        },
+        "code": "ERR_BAD_REQUEST",
+        "status": 422
+      }
+    }
+  }
+]

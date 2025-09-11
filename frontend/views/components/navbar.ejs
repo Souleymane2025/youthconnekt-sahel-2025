@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-lg">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <div class="brand-logo me-3">
+                <img src="/images/logo/youthconnekt-sahel-logo.png" alt="YouthConnekt Sahel 2025" style="height: 50px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="logo-fallback" style="display:none; width: 50px; height: 50px; background: linear-gradient(45deg, #2E7D32, #4CAF50); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-users fa-lg text-white"></i>
+                </div>
+            </div>
+            <div class="brand-text">
+                <div class="brand-title">YouthConnekt Sahel</div>
+                <div class="brand-subtitle">2ème Édition 2025 • N'Djamena</div>
+            </div>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link <%= (typeof page !== 'undefined' && page === 'home') ? 'active' : '' %>" href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (typeof page !== 'undefined' && page === 'about') ? 'active' : '' %>" href="/about">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (typeof page !== 'undefined' && page === 'program') ? 'active' : '' %>" href="/program">Programme</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (typeof page !== 'undefined' && page === 'speakers') ? 'active' : '' %>" href="/speakers">Intervenants</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-plus me-1"></i> Inscription
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="px-2 py-1 text-white-50 small">Formulaires</li>
+                        <li><a class="dropdown-item" href="/registration"><i class="fas fa-edit"></i> S'inscrire au Forum</a></li>
+                        <li><a class="dropdown-item" href="/participants/national"><i class="fas fa-flag"></i> Participants Nationaux</a></li>
+                        <li><a class="dropdown-item" href="/participants/international"><i class="fas fa-globe"></i> Participants Internationaux</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="px-2 py-1 text-white-50 small">Opportunités</li>
+                        <li><a class="dropdown-item" href="/exhibitions"><i class="fas fa-store"></i> Exposition Stand</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (typeof page !== 'undefined' && page === 'blog') ? 'active' : '' %>" href="/blog">Blog</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-folder-open me-1"></i> Ressources
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="px-2 py-1 text-white-50 small">Visibilité</li>
+                        <li><a class="dropdown-item" href="/media"><i class="fas fa-photo-video"></i> Média</a></li>
+                        <li><a class="dropdown-item" href="/partners"><i class="fas fa-handshake"></i> Partenaires</a></li>
+                        <li><a class="dropdown-item" href="/sponsors"><i class="fas fa-donate"></i> Sponsors</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (typeof page !== 'undefined' && page === 'contact') ? 'active' : '' %>" href="/contact">Contact</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-outline-light btn-sm" href="/participants/register">
+                        <i class="fas fa-user-plus"></i> S'inscrire
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

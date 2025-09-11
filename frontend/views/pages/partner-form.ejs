@@ -1,0 +1,381 @@
+<%- include('../layouts/header', { title: title, page: page }) %>
+
+<!-- Hero Section -->
+<section class="hero-section py-5" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content text-white">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <span class="typing-animation">
+                            <% if (type === 'partner') { %>
+                                Devenir Partenaire
+                            <% } else { %>
+                                Devenir Sponsor
+                            <% } %>
+                        </span>
+                    </h1>
+                    <p class="lead mb-4">
+                        <% if (type === 'partner') { %>
+                            Rejoignez-nous en tant que partenaire stratégique et contribuez à l'émancipation 
+                            de la jeunesse sahélo-saharienne.
+                        <% } else { %>
+                            Investissez dans l'avenir de la jeunesse sahélo-saharienne et bénéficiez d'une 
+                            visibilité exceptionnelle.
+                        <% } %>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image text-center">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2)); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                        <% if (type === 'partner') { %>
+                            <i class="fas fa-handshake fa-5x text-white opacity-50"></i>
+                        <% } else { %>
+                            <i class="fas fa-donate fa-5x text-white opacity-50"></i>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulaire Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container bg-white rounded-3 shadow-lg p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">
+                            <% if (type === 'partner') { %>
+                                Formulaire de Candidature Partenaire
+                            <% } else { %>
+                                Formulaire de Candidature Sponsor
+                            <% } %>
+                        </h2>
+                        <p class="text-muted">Remplissez le formulaire ci-dessous pour soumettre votre candidature</p>
+                    </div>
+
+                    <form id="partnerForm" class="needs-validation" novalidate>
+                        <!-- Informations de l'entreprise -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-building me-2"></i>
+                                Informations de l'Entreprise
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="companyName" class="form-label">Nom de l'entreprise *</label>
+                                    <input type="text" class="form-control" id="companyName" name="companyName" required>
+                                    <div class="invalid-feedback">Veuillez saisir le nom de l'entreprise.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contactPerson" class="form-label">Personne de contact *</label>
+                                    <input type="text" class="form-control" id="contactPerson" name="contactPerson" required>
+                                    <div class="invalid-feedback">Veuillez saisir le nom de la personne de contact.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                    <div class="invalid-feedback">Veuillez saisir un email valide.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                    <div class="invalid-feedback">Veuillez saisir un numéro de téléphone.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="website" class="form-label">Site web</label>
+                                    <input type="url" class="form-control" id="website" name="website">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="country" class="form-label">Pays *</label>
+                                    <select class="form-select" id="country" name="country" required>
+                                        <option value="">Sélectionner un pays</option>
+                                        <option value="Tchad">Tchad</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Sénégal">Sénégal</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Mauritanie">Mauritanie</option>
+                                        <option value="Autre">Autre</option>
+                                    </select>
+                                    <div class="invalid-feedback">Veuillez sélectionner un pays.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Adresse complète</label>
+                                    <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Type de partenariat/sponsoring -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-tags me-2"></i>
+                                <% if (type === 'partner') { %>
+                                    Type de Partenariat
+                                <% } else { %>
+                                    Niveau de Sponsoring
+                                <% } %>
+                            </h4>
+                            
+                            <% if (type === 'partner') { %>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="partnershipType" class="form-label">Type de partenariat *</label>
+                                        <select class="form-select" id="partnershipType" name="partnershipType" required>
+                                            <option value="">Sélectionner un type</option>
+                                            <option value="Stratégique">Partenaire Stratégique</option>
+                                            <option value="Technique">Partenaire Technique</option>
+                                            <option value="Média">Partenaire Média</option>
+                                            <option value="Institutionnel">Partenaire Institutionnel</option>
+                                            <option value="Financier">Partenaire Financier</option>
+                                        </select>
+                                        <div class="invalid-feedback">Veuillez sélectionner un type de partenariat.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="budget" class="form-label">Budget estimé (USD)</label>
+                                        <input type="number" class="form-control" id="budget" name="budget" min="0">
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="sponsorshipLevel" class="form-label">Niveau de sponsoring *</label>
+                                        <select class="form-select" id="sponsorshipLevel" name="sponsorshipLevel" required>
+                                            <option value="">Sélectionner un niveau</option>
+                                            <option value="Principal">Sponsor Principal (50,000+ USD)</option>
+                                            <option value="Or">Sponsor Or (25,000-49,999 USD)</option>
+                                            <option value="Argent">Sponsor Argent (10,000-24,999 USD)</option>
+                                            <option value="Bronze">Sponsor Bronze (5,000-9,999 USD)</option>
+                                            <option value="Partenaire">Sponsor Partenaire (1,000-4,999 USD)</option>
+                                            <option value="Média">Sponsor Média (Services en nature)</option>
+                                        </select>
+                                        <div class="invalid-feedback">Veuillez sélectionner un niveau de sponsoring.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="budget" class="form-label">Budget estimé (USD)</label>
+                                        <input type="number" class="form-control" id="budget" name="budget" min="0">
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+
+                        <!-- Description et objectifs -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-bullseye me-2"></i>
+                                Description et Objectifs
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="description" class="form-label">Description de l'entreprise *</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3" required placeholder="Décrivez votre entreprise, ses activités et sa mission..."></textarea>
+                                    <div class="invalid-feedback">Veuillez décrire votre entreprise.</div>
+                                </div>
+                                
+                                <% if (type === 'partner') { %>
+                                    <div class="col-12">
+                                        <label for="expectedBenefits" class="form-label">Bénéfices attendus du partenariat</label>
+                                        <textarea class="form-control" id="expectedBenefits" name="expectedBenefits" rows="3" placeholder="Quels bénéfices attendez-vous de ce partenariat ?"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="previousExperience" class="form-label">Expérience précédente</label>
+                                        <textarea class="form-control" id="previousExperience" name="previousExperience" rows="3" placeholder="Décrivez vos expériences de partenariat similaires..."></textarea>
+                                    </div>
+                                <% } else { %>
+                                    <div class="col-12">
+                                        <label for="marketingObjectives" class="form-label">Objectifs marketing</label>
+                                        <textarea class="form-control" id="marketingObjectives" name="marketingObjectives" rows="3" placeholder="Quels sont vos objectifs marketing avec ce sponsoring ?"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="targetAudience" class="form-label">Audience cible</label>
+                                        <textarea class="form-control" id="targetAudience" name="targetAudience" rows="3" placeholder="Décrivez votre audience cible..."></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="additionalServices" class="form-label">Services additionnels souhaités</label>
+                                        <textarea class="form-control" id="additionalServices" name="additionalServices" rows="3" placeholder="Quels services additionnels souhaitez-vous ?"></textarea>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <!-- Logo -->
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-image me-2"></i>
+                                Logo de l'Entreprise
+                            </h4>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="logo" class="form-label">URL du logo</label>
+                                    <input type="url" class="form-control" id="logo" name="logo" placeholder="https://exemple.com/logo.png">
+                                    <div class="form-text">Vous pouvez fournir l'URL de votre logo pour l'affichage sur le site.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Boutons de soumission -->
+                        <div class="form-actions text-center">
+                            <button type="submit" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                Soumettre la candidature
+                            </button>
+                            <a href="/" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Retour à l'accueil
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<%- include('../layouts/footer') %>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('partnerForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    // Validation du formulaire
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        
+        // Désactiver le bouton de soumission
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Soumission en cours...';
+        
+        // Préparer les données
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Déterminer l'URL de soumission
+        const submitUrl = '<%= type === "partner" ? "/partner-forms/partner" : "/partner-forms/sponsor" %>';
+        
+        // Soumettre le formulaire
+        fetch(submitUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                // Afficher le message de succès
+                showSuccessMessage(result.message);
+                form.reset();
+                form.classList.remove('was-validated');
+            } else {
+                showErrorMessage(result.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            showErrorMessage('Une erreur est survenue lors de la soumission. Veuillez réessayer.');
+        })
+        .finally(() => {
+            // Réactiver le bouton
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Soumettre la candidature';
+        });
+    });
+    
+    function showSuccessMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            <i class="fas fa-check-circle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        form.insertBefore(alertDiv, form.firstChild);
+        
+        // Faire défiler vers le haut
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function showErrorMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            <i class="fas fa-exclamation-circle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        form.insertBefore(alertDiv, form.firstChild);
+        
+        // Faire défiler vers le haut
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+});
+</script>
+
+<style>
+.form-section {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+.form-section-title {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.form-container {
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-container:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+</style>
+
+

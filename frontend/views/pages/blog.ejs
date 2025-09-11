@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../components/navbar') %>
+    
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 80px;"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="min-height: 50vh;">
+        <div class="container">
+            <div class="row justify-content-center text-center text-white">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Blog & Actualités</h1>
+                    <p class="hero-subtitle">
+                        Découvrez les dernières actualités et articles du Forum YouthConnekt Sahel 2025
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <% if (blogs && blogs.length > 0) { %>
+                    <% blogs.forEach(blog => { %>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <% if (blog.image) { %>
+                                    <img src="<%= blog.image %>" class="card-img-top" alt="<%= blog.title %>" style="height: 200px; object-fit: cover;">
+                                <% } else { %>
+                                    <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                                        <i class="fas fa-newspaper text-white" style="font-size: 3rem;"></i>
+                                    </div>
+                                <% } %>
+                                
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="badge bg-secondary"><%= blog.category %></span>
+                                        <small class="text-muted ms-2">
+                                            <i class="fas fa-calendar"></i> <%= new Date(blog.createdAt).toLocaleDateString('fr-FR') %>
+                                        </small>
+                                    </div>
+                                    <h5 class="card-title"><%= blog.title %></h5>
+                                    <p class="card-text flex-grow-1"><%= blog.excerpt || blog.content.substring(0, 150) + '...' %></p>
+                                    <div class="mt-auto">
+                                        <a href="/blog/<%= blog.id %>" class="btn btn-primary">
+                                            <i class="fas fa-arrow-right me-2"></i>
+                                            Lire la suite
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="col-12 text-center py-5">
+                        <div class="empty-state">
+                            <i class="fas fa-newspaper text-muted mb-3" style="font-size: 4rem;"></i>
+                            <h3 class="text-muted">Aucun article disponible</h3>
+                            <p class="text-muted">Les articles du blog seront bientôt disponibles.</p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h2 class="section-title">Restez informé</h2>
+                    <p class="section-subtitle">
+                        Inscrivez-vous à notre newsletter pour recevoir les dernières actualités du forum.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="/registration" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>
+                            S'inscrire au forum
+                        </a>
+                        <a href="/contact" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-envelope me-2"></i>
+                            Nous contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('../layouts/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

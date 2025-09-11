@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-handshake me-2"></i>Gestion des Sponsors</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSponsorModal">
+                            <i class="fas fa-plus me-1"></i>Ajouter Sponsor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= sponsors.filter(s => s.status === 'confirmed').length %></h4>
+                                        <p class="mb-0">Confirmés</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-check-circle fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= sponsors.filter(s => s.status === 'pending').length %></h4>
+                                        <p class="mb-0">En Attente</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-clock fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= sponsors.filter(s => s.sponsorshipLevel === 'Principal').length %></h4>
+                                        <p class="mb-0">Principaux</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-crown fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= sponsors.length %></h4>
+                                        <p class="mb-0">Total</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-handshake fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste des sponsors -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Liste des Sponsors</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (sponsors && sponsors.length > 0) { %>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Entreprise</th>
+                                            <th>Contact</th>
+                                            <th>Niveau</th>
+                                            <th>Budget</th>
+                                            <th>Statut</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% sponsors.forEach(sponsor => { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><%= sponsor.companyName %></strong>
+                                                    <br>
+                                                    <small class="text-muted"><%= sponsor.country %></small>
+                                                </td>
+                                                <td>
+                                                    <%= sponsor.contactPerson %>
+                                                    <br>
+                                                    <small class="text-muted"><%= sponsor.email %></small>
+                                                </td>
+                                                <td>
+                                                    <% if (sponsor.sponsorshipLevel === 'Principal') { %>
+                                                        <span class="badge bg-warning">Principal</span>
+                                                    <% } else if (sponsor.sponsorshipLevel === 'Gold') { %>
+                                                        <span class="badge bg-warning">Gold</span>
+                                                    <% } else if (sponsor.sponsorshipLevel === 'Silver') { %>
+                                                        <span class="badge bg-secondary">Silver</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-info">Bronze</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% if (sponsor.budget) { %>
+                                                        <strong><%= sponsor.budget %> FCFA</strong>
+                                                    <% } else { %>
+                                                        <span class="text-muted">Non spécifié</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% if (sponsor.status === 'confirmed') { %>
+                                                        <span class="badge bg-success">Confirmé</span>
+                                                    <% } else if (sponsor.status === 'pending') { %>
+                                                        <span class="badge bg-warning">En Attente</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-danger">Rejeté</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="viewSponsor('<%= sponsor.id %>')">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <% if (sponsor.status === 'pending') { %>
+                                                            <button type="button" class="btn btn-sm btn-outline-success" onclick="confirmSponsor('<%= sponsor.id %>')">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="rejectSponsor('<%= sponsor.id %>')">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        <% } %>
+                                                        <button type="button" class="btn btn-sm btn-outline-warning" onclick="editSponsor('<%= sponsor.id %>')">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <div class="text-center py-5">
+                                <i class="fas fa-handshake fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">Aucun sponsor</h5>
+                                <p class="text-muted">Ajoutez votre premier sponsor pour commencer.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ajouter Sponsor -->
+    <div class="modal fade" id="addSponsorModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter un Sponsor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSponsorForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="companyName" class="form-label">Nom de l'entreprise</label>
+                                    <input type="text" class="form-control" id="companyName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="contactPerson" class="form-label">Personne de contact</label>
+                                    <input type="text" class="form-control" id="contactPerson" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Téléphone</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="sponsorshipLevel" class="form-label">Niveau de sponsoring</label>
+                                    <select class="form-select" id="sponsorshipLevel" required>
+                                        <option value="Principal">Principal</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Bronze">Bronze</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="budget" class="form-label">Budget (FCFA)</label>
+                                    <input type="number" class="form-control" id="budget" min="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="addSponsor()">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function addSponsor() {
+            const companyName = document.getElementById('companyName').value;
+            const contactPerson = document.getElementById('contactPerson').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const sponsorshipLevel = document.getElementById('sponsorshipLevel').value;
+            const budget = document.getElementById('budget').value;
+            const description = document.getElementById('description').value;
+            
+            if (!companyName || !contactPerson || !email || !phone || !sponsorshipLevel) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            // Simulation d'ajout
+            alert('Sponsor ajouté avec succès !');
+            location.reload();
+        }
+        
+        function viewSponsor(id) {
+            alert('Visualisation du sponsor ' + id);
+        }
+        
+        function confirmSponsor(id) {
+            if (confirm('Êtes-vous sûr de vouloir confirmer ce sponsor ?')) {
+                alert('Sponsor confirmé avec succès !');
+                location.reload();
+            }
+        }
+        
+        function rejectSponsor(id) {
+            if (confirm('Êtes-vous sûr de vouloir rejeter ce sponsor ?')) {
+                alert('Sponsor rejeté avec succès !');
+                location.reload();
+            }
+        }
+        
+        function editSponsor(id) {
+            alert('Édition du sponsor ' + id);
+        }
+    </script>
+</body>
+</html>
+
+

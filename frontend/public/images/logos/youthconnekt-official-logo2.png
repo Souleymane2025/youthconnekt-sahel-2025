@@ -1,0 +1,17 @@
+<!-- Logo officiel YouthConnekt Sahel - sera remplacé par la vraie image -->
+<img src="/images/logos/youthconnekt-official-logo.png" 
+     alt="YouthConnekt Sahel 2025 - Logo Officiel" 
+     style="height: 50px; width: auto;"
+     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+<!-- Fallback avec les couleurs officielles -->
+<div style="display: none; height: 50px; display: flex; align-items: center;">
+    <div style="background: linear-gradient(135deg, #2E7D32 0%, #FF5722 100%); 
+                color: white; 
+                padding: 8px 16px; 
+                border-radius: 8px; 
+                font-weight: bold; 
+                font-size: 18px;">
+        YouthConnekt Sahel
+    </div>
+</div>

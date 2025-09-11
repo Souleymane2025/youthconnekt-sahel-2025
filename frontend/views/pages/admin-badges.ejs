@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-medal me-2"></i>Gestion des Badges</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createBadgeModal">
+                            <i class="fas fa-plus me-1"></i>Nouveau Badge
+                        </button>
+                        <button type="button" class="btn btn-success ms-2" onclick="generateAllBadges()">
+                            <i class="fas fa-magic me-1"></i>Générer Tous
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= badges.length %></h4>
+                                        <p class="mb-0">Types de Badges</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-medal fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= badges.reduce((sum, b) => sum + b.generated, 0) %></h4>
+                                        <p class="mb-0">Badges Générés</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-check-circle fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= badges.reduce((sum, b) => sum + (b.total - b.generated), 0) %></h4>
+                                        <p class="mb-0">En Attente</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-clock fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= badges.reduce((sum, b) => sum + b.total, 0) %></h4>
+                                        <p class="mb-0">Total Possible</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-trophy fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste des badges -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Types de Badges</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (badges && badges.length > 0) { %>
+                            <div class="row">
+                                <% badges.forEach(badge => { %>
+                                    <div class="col-md-6 col-lg-4 mb-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <div class="mb-3">
+                                                    <i class="<%= badge.icon %> fa-3x" style="color: <%= badge.color %>"></i>
+                                                </div>
+                                                <h5 class="card-title"><%= badge.name %></h5>
+                                                <p class="card-text text-muted"><%= badge.description %></p>
+                                                <div class="mb-3">
+                                                    <small class="text-muted"><strong>Critères:</strong> <%= badge.criteria %></small>
+                                                </div>
+                                                <div class="progress mb-3">
+                                                    <div class="progress-bar" role="progressbar" 
+                                                         style="width: <%= (badge.generated / badge.total * 100) %>%"
+                                                         aria-valuenow="<%= badge.generated %>" 
+                                                         aria-valuemin="0" 
+                                                         aria-valuemax="<%= badge.total %>">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span class="badge bg-success"><%= badge.generated %> générés</span>
+                                                    <span class="badge bg-secondary"><%= badge.total %> total</span>
+                                                </div>
+                                                <div class="btn-group w-100" role="group">
+                                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="generateBadge('<%= badge.id %>')">
+                                                        <i class="fas fa-magic"></i> Générer
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-warning btn-sm" onclick="editBadge('<%= badge.id %>')">
+                                                        <i class="fas fa-edit"></i> Modifier
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteBadge('<%= badge.id %>')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <div class="text-center py-5">
+                                <i class="fas fa-medal fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">Aucun badge</h5>
+                                <p class="text-muted">Créez votre premier badge pour commencer.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Créer Badge -->
+    <div class="modal fade" id="createBadgeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouveau Badge</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createBadgeForm">
+                        <div class="mb-3">
+                            <label for="badgeName" class="form-label">Nom du Badge</label>
+                            <input type="text" class="form-control" id="badgeName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="badgeDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="badgeDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="badgeIcon" class="form-label">Icône</label>
+                            <select class="form-select" id="badgeIcon">
+                                <option value="fas fa-star">Étoile</option>
+                                <option value="fas fa-lightbulb">Ampoule</option>
+                                <option value="fas fa-trophy">Trophée</option>
+                                <option value="fas fa-medal">Médaille</option>
+                                <option value="fas fa-certificate">Certificat</option>
+                                <option value="fas fa-fire">Feu</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="badgeColor" class="form-label">Couleur</label>
+                            <input type="color" class="form-control form-control-color" id="badgeColor" value="#007bff">
+                        </div>
+                        <div class="mb-3">
+                            <label for="badgeCriteria" class="form-label">Critères</label>
+                            <input type="text" class="form-control" id="badgeCriteria" placeholder="Ex: Participation à 3+ sessions" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="badgeTotal" class="form-label">Nombre Total Possible</label>
+                            <input type="number" class="form-control" id="badgeTotal" min="1" value="100" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="createBadge()">Créer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function createBadge() {
+            const name = document.getElementById('badgeName').value;
+            const description = document.getElementById('badgeDescription').value;
+            const icon = document.getElementById('badgeIcon').value;
+            const color = document.getElementById('badgeColor').value;
+            const criteria = document.getElementById('badgeCriteria').value;
+            const total = document.getElementById('badgeTotal').value;
+            
+            if (!name || !description || !criteria || !total) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            // Simulation de création
+            alert('Badge créé avec succès !');
+            location.reload();
+        }
+        
+        function generateBadge(id) {
+            if (confirm('Êtes-vous sûr de vouloir générer ce badge pour tous les participants éligibles ?')) {
+                alert('Badge généré avec succès !');
+                location.reload();
+            }
+        }
+        
+        function generateAllBadges() {
+            if (confirm('Êtes-vous sûr de vouloir générer tous les badges pour tous les participants éligibles ?')) {
+                alert('Tous les badges ont été générés avec succès !');
+                location.reload();
+            }
+        }
+        
+        function editBadge(id) {
+            alert('Édition du badge ' + id);
+        }
+        
+        function deleteBadge(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce badge ?')) {
+                alert('Badge supprimé avec succès !');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
+
+
