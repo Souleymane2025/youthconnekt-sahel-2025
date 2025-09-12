@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Complet - YouthConnekt Sahel 2025</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .table th { background-color: #28a745; color: white; border: none; }
+        .status-pending { background-color: #ffc107; color: #000; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; }
+        .status-confirmed { background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; }
+        .status-rejected { background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; }
+        .loading { text-align: center; padding: 50px; }
+        .error { background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .success { background-color: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .participant-id { font-family: monospace; font-weight: bold; color: #007bff; }
+        .action-buttons { white-space: nowrap; }
+        .action-buttons .btn { margin: 2px; }
+        .badge-preview { width: 60px; height: 45px; border-radius: 8px; object-fit: cover; }
+        .photo-preview { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="fas fa-users me-2"></i>Dashboard Complet - Participants</h4>
+                        <small>Gestion complète avec PDFs et badges personnalisés</small>
+                    </div>
+                    <div class="card-body">
+                        <!-- Status de connexion -->
+                        <div id="connectionStatus" class="mb-3">
+                            <div class="loading">
+                                <i class="fas fa-spinner fa-spin me-2"></i>Vérification de la connexion...
+                            </div>
+                        </div>
+
+                        <!-- Statistiques -->
+                        <div id="stats" class="row mb-4" style="display: none;">
+                            <div class="col-md-2">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h5 id="totalCount">0</h5>
+                                        <small>Total</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body text-center">
+                                        <h5 id="nationalCount">0</h5>
+                                        <small>Nationaux</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body text-center">
+                                        <h5 id="internationalCount">0</h5>
+                                        <small>Internationaux</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h5 id="confirmedCount">0</h5>
+                                        <small>Confirmés</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body text-center">
+                                        <h5 id="pendingCount">0</h5>
+                                        <small>En attente</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card bg-danger text-white">
+                                    <div class="card-body text-center">
+                                        <h5 id="rejectedCount">0</h5>
+                                        <small>Rejetés</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filtres -->
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select class="form-select" id="statusFilter" onchange="filterParticipants()">
+                                    <option value="all">Tous les statuts</option>
+                                    <option value="pending">En attente</option>
+                                    <option value="confirmed">Confirmés</option>
+                                    <option value="rejected">Rejetés</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="typeFilter" onchange="filterParticipants()">
+                                    <option value="all">Tous les types</option>
+                                    <option value="national">Nationaux</option>
+                                    <option value="international">Internationaux</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Rechercher par nom, email ou ID..." onkeyup="filterParticipants()">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary w-100" onclick="loadParticipants()">
+                                    <i class="fas fa-sync-alt me-2"></i>Actualiser
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tableau des participants -->
+                        <div id="participantsTable" style="display: none;">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Photo</th>
+                                            <th>Nom</th>
+                                            <th>Email</th>
+                                            <th>Pays</th>
+                                            <th>Type</th>
+                                            <th>Statut</th>
+                                            <th>Badge</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="participantsBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Message d'erreur -->
+                        <div id="errorMessage" class="error" style="display: none;">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Erreur de connexion</h5>
+                            <p id="errorText"></p>
+                            <button class="btn btn-warning" onclick="loadParticipants()">
+                                <i class="fas fa-redo me-2"></i>Réessayer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:8000/api';
+        let allParticipants = [];
+        let filteredParticipants = [];
+        
+        // Fonction pour charger les participants
+        async function loadParticipants() {
+            const statusDiv = document.getElementById('connectionStatus');
+            const statsDiv = document.getElementById('stats');
+            const tableDiv = document.getElementById('participantsTable');
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Afficher le loading
+            statusDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin me-2"></i>Chargement des participants...</div>';
+            errorDiv.style.display = 'none';
+            statsDiv.style.display = 'none';
+            tableDiv.style.display = 'none';
+            
+            try {
+                console.log('🔄 Tentative de connexion à l\'API backend...');
+                
+                const response = await fetch(`${API_BASE_URL}/participants`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('📊 Données reçues:', data);
+                
+                let participants = [];
+                if (data && Array.isArray(data.data)) {
+                    participants = data.data;
+                } else if (Array.isArray(data)) {
+                    participants = data;
+                } else {
+                    throw new Error('Format de données inattendu');
+                }
+                
+                console.log(`✅ ${participants.length} participants récupérés`);
+                
+                // Stocker tous les participants
+                allParticipants = participants;
+                filteredParticipants = [...participants];
+                
+                // Afficher le statut de succès
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Connexion réussie !</strong> ${participants.length} participants chargés depuis le backend Laravel.
+                    </div>
+                `;
+                
+                // Calculer et afficher les statistiques
+                const stats = calculateStats(participants);
+                displayStats(stats);
+                
+                // Afficher le tableau
+                displayParticipants(filteredParticipants);
+                
+                // Afficher les éléments
+                statsDiv.style.display = 'block';
+                tableDiv.style.display = 'block';
+                
+            } catch (error) {
+                console.error('❌ Erreur:', error);
+                
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Erreur de connexion au backend</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                
+                errorDiv.style.display = 'block';
+                document.getElementById('errorText').textContent = error.message;
+            }
+        }
+        
+        // Calculer les statistiques
+        function calculateStats(participants) {
+            const total = participants.length;
+            const national = participants.filter(p => p.registration_type === 'national').length;
+            const international = participants.filter(p => p.registration_type === 'international').length;
+            const confirmed = participants.filter(p => p.status === 'confirmed').length;
+            const pending = participants.filter(p => p.status === 'pending').length;
+            const rejected = participants.filter(p => p.status === 'rejected').length;
+            
+            return { total, national, international, confirmed, pending, rejected };
+        }
+        
+        // Afficher les statistiques
+        function displayStats(stats) {
+            document.getElementById('totalCount').textContent = stats.total;
+            document.getElementById('nationalCount').textContent = stats.national;
+            document.getElementById('internationalCount').textContent = stats.international;
+            document.getElementById('confirmedCount').textContent = stats.confirmed;
+            document.getElementById('pendingCount').textContent = stats.pending;
+            document.getElementById('rejectedCount').textContent = stats.rejected;
+        }
+        
+        // Afficher les participants
+        function displayParticipants(participants) {
+            const tbody = document.getElementById('participantsBody');
+            tbody.innerHTML = '';
+            
+            participants.forEach((participant, index) => {
+                const row = document.createElement('tr');
+                
+                // Photo
+                const photoCell = participant.photo_path ? 
+                    `<img src="http://localhost:8000/storage/${participant.photo_path}" alt="photo" class="photo-preview" onerror="this.style.display='none'">` :
+                    `<div class="bg-light rounded-circle d-flex align-items-center justify-content-center photo-preview"><i class="fas fa-user text-muted"></i></div>`;
+                
+                // Nom
+                const name = participant.first_name && participant.last_name ? 
+                    `${participant.first_name} ${participant.last_name}` : 
+                    participant.name || 'N/A';
+                
+                // Statut
+                const status = participant.status || 'pending';
+                const statusClass = `status-${status}`;
+                const statusText = status === 'pending' ? 'En attente' : 
+                                 status === 'confirmed' ? 'Confirmé' : 
+                                 status === 'rejected' ? 'Rejeté' : status;
+                
+                // Badge preview
+                const badgeCell = participant.badge_path ? 
+                    `<img src="http://localhost:8000/storage/${participant.badge_path}" alt="badge" class="badge-preview" onerror="this.style.display='none'">` :
+                    `<div class="bg-light rounded d-flex align-items-center justify-content-center badge-preview"><i class="fas fa-id-badge text-muted"></i></div>`;
+                
+                row.innerHTML = `
+                    <td><span class="participant-id">${participant.participant_id || 'N/A'}</span></td>
+                    <td>${photoCell}</td>
+                    <td>${name}</td>
+                    <td>${participant.email || 'N/A'}</td>
+                    <td>${participant.country || 'N/A'}</td>
+                    <td>${participant.registration_type ? participant.registration_type.charAt(0).toUpperCase() + participant.registration_type.slice(1) : 'N/A'}</td>
+                    <td><span class="${statusClass}">${statusText}</span></td>
+                    <td>${badgeCell}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-info" onclick="viewProfile('${participant.participant_id}')" title="Voir le profil">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-success" onclick="downloadPDF('${participant.participant_id}')" title="Télécharger PDF">
+                            <i class="fas fa-file-pdf"></i>
+                        </button>
+                        <button class="btn btn-sm btn-warning" onclick="downloadBadge('${participant.participant_id}')" title="Télécharger Badge">
+                            <i class="fas fa-id-badge"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary" onclick="updateStatus('${participant.participant_id}', 'confirmed')" title="Confirmer">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="updateStatus('${participant.participant_id}', 'rejected')" title="Rejeter">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Filtrer les participants
+        function filterParticipants() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            filteredParticipants = allParticipants.filter(participant => {
+                const matchesStatus = statusFilter === 'all' || participant.status === statusFilter;
+                const matchesType = typeFilter === 'all' || participant.registration_type === typeFilter;
+                const matchesSearch = searchTerm === '' || 
+                    (participant.first_name && participant.first_name.toLowerCase().includes(searchTerm)) ||
+                    (participant.last_name && participant.last_name.toLowerCase().includes(searchTerm)) ||
+                    (participant.email && participant.email.toLowerCase().includes(searchTerm)) ||
+                    (participant.participant_id && participant.participant_id.toLowerCase().includes(searchTerm));
+                
+                return matchesStatus && matchesType && matchesSearch;
+            });
+            
+            displayParticipants(filteredParticipants);
+        }
+        
+        // Voir le profil
+        function viewProfile(participantId) {
+            window.open(`http://localhost:8000/api/participants/${participantId}`, '_blank');
+        }
+        
+        // Télécharger PDF
+        function downloadPDF(participantId) {
+            window.open(`http://localhost:8000/api/participants/${participantId}/pdf`, '_blank');
+        }
+        
+        // Télécharger Badge
+        function downloadBadge(participantId) {
+            window.open(`http://localhost:8000/api/participants/${participantId}/badge`, '_blank');
+        }
+        
+        // Mettre à jour le statut
+        async function updateStatus(participantId, status) {
+            try {
+                const response = await fetch(`http://localhost:8000/api/participants/${participantId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+                
+                if (response.ok) {
+                    alert(`Statut mis à jour: ${status}`);
+                    loadParticipants(); // Recharger les données
+                } else {
+                    throw new Error('Erreur lors de la mise à jour');
+                }
+            } catch (error) {
+                alert('Erreur: ' + error.message);
+            }
+        }
+        
+        // Charger les participants au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadParticipants();
+            
+            // Actualisation automatique toutes les 30 secondes
+            setInterval(loadParticipants, 30000);
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

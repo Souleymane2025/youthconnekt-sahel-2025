@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-download me-2"></i>Exports de Données</h1>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stats.participants %></h4>
+                                        <p class="mb-0">Participants</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-users fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stats.partners %></h4>
+                                        <p class="mb-0">Partenaires</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-handshake fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stats.sponsors %></h4>
+                                        <p class="mb-0">Sponsors</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-star fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stats.stands %></h4>
+                                        <p class="mb-0">Stands</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-store fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options d'export -->
+                <div class="row">
+                    <!-- Export Participants -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">Participants</h5>
+                                <p class="card-text">Exportez la liste complète des participants avec leurs informations.</p>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="exportData('participants', 'csv')">
+                                        <i class="fas fa-file-csv"></i> CSV
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" onclick="exportData('participants', 'excel')">
+                                        <i class="fas fa-file-excel"></i> Excel
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info" onclick="exportData('participants', 'pdf')">
+                                        <i class="fas fa-file-pdf"></i> PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Partenaires -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-handshake fa-3x text-success mb-3"></i>
+                                <h5 class="card-title">Partenaires</h5>
+                                <p class="card-text">Exportez la liste des partenaires avec leurs détails de partenariat.</p>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="exportData('partners', 'csv')">
+                                        <i class="fas fa-file-csv"></i> CSV
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" onclick="exportData('partners', 'excel')">
+                                        <i class="fas fa-file-excel"></i> Excel
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info" onclick="exportData('partners', 'pdf')">
+                                        <i class="fas fa-file-pdf"></i> PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Sponsors -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-star fa-3x text-warning mb-3"></i>
+                                <h5 class="card-title">Sponsors</h5>
+                                <p class="card-text">Exportez la liste des sponsors avec leurs niveaux de sponsoring.</p>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="exportData('sponsors', 'csv')">
+                                        <i class="fas fa-file-csv"></i> CSV
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" onclick="exportData('sponsors', 'excel')">
+                                        <i class="fas fa-file-excel"></i> Excel
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info" onclick="exportData('sponsors', 'pdf')">
+                                        <i class="fas fa-file-pdf"></i> PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Stands -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-store fa-3x text-info mb-3"></i>
+                                <h5 class="card-title">Stands</h5>
+                                <p class="card-text">Exportez la liste des stands avec leurs emplacements.</p>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="exportData('stands', 'csv')">
+                                        <i class="fas fa-file-csv"></i> CSV
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" onclick="exportData('stands', 'excel')">
+                                        <i class="fas fa-file-excel"></i> Excel
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info" onclick="exportData('stands', 'pdf')">
+                                        <i class="fas fa-file-pdf"></i> PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Complet -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-database fa-3x text-dark mb-3"></i>
+                                <h5 class="card-title">Export Complet</h5>
+                                <p class="card-text">Exportez toutes les données en un seul fichier Excel.</p>
+                                <button type="button" class="btn btn-primary w-100" onclick="exportAllData()">
+                                    <i class="fas fa-download"></i> Télécharger Tout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-bar fa-3x text-secondary mb-3"></i>
+                                <h5 class="card-title">Rapport Statistiques</h5>
+                                <p class="card-text">Générez un rapport complet avec toutes les statistiques.</p>
+                                <button type="button" class="btn btn-secondary w-100" onclick="generateReport()">
+                                    <i class="fas fa-chart-line"></i> Générer Rapport
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historique des exports -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Historique des Exports</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Format</th>
+                                        <th>Nombre d'enregistrements</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2025-01-15 14:30</td>
+                                        <td>Participants</td>
+                                        <td>Excel</td>
+                                        <td>150</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-download"></i> Télécharger
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-01-15 10:15</td>
+                                        <td>Export Complet</td>
+                                        <td>Excel</td>
+                                        <td>200</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-download"></i> Télécharger
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function exportData(type, format) {
+            // Simulation d'export
+            const message = `Export ${type} en format ${format.toUpperCase()} en cours...`;
+            alert(message);
+            
+            // Simulation de téléchargement
+            setTimeout(() => {
+                alert(`Export ${type} terminé ! Le fichier a été téléchargé.`);
+            }, 2000);
+        }
+        
+        function exportAllData() {
+            if (confirm('Êtes-vous sûr de vouloir exporter toutes les données ? Cela peut prendre quelques minutes.')) {
+                alert('Export complet en cours...');
+                setTimeout(() => {
+                    alert('Export complet terminé ! Le fichier Excel a été téléchargé.');
+                }, 3000);
+            }
+        }
+        
+        function generateReport() {
+            alert('Génération du rapport statistiques en cours...');
+            setTimeout(() => {
+                alert('Rapport généré avec succès ! Le fichier PDF a été téléchargé.');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
+

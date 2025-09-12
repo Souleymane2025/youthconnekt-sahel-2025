@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-store me-2"></i>Gestion des Stands</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStandModal">
+                            <i class="fas fa-plus me-1"></i>Ajouter Stand
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stands.filter(s => s.status === 'confirmed').length %></h4>
+                                        <p class="mb-0">Confirmés</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-check-circle fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stands.filter(s => s.status === 'pending').length %></h4>
+                                        <p class="mb-0">En Attente</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-clock fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stands.reduce((sum, s) => sum + parseInt(s.size), 0) %>m²</h4>
+                                        <p class="mb-0">Surface Totale</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-ruler-combined fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h4><%= stands.length %></h4>
+                                        <p class="mb-0">Total</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-store fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste des stands -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Liste des Stands</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (stands && stands.length > 0) { %>
+                            <div class="row">
+                                <% stands.forEach(stand => { %>
+                                    <div class="col-md-6 col-lg-4 mb-4">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                                    <h5 class="card-title"><%= stand.name %></h5>
+                                                    <% if (stand.status === 'confirmed') { %>
+                                                        <span class="badge bg-success">Confirmé</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-warning">En Attente</span>
+                                                    <% } %>
+                                                </div>
+                                                <p class="card-text">
+                                                    <strong>Entreprise:</strong> <%= stand.company %><br>
+                                                    <strong>Emplacement:</strong> <%= stand.location %><br>
+                                                    <strong>Taille:</strong> <%= stand.size %><br>
+                                                    <strong>Contact:</strong> <%= stand.contact %><br>
+                                                    <strong>Téléphone:</strong> <%= stand.phone %>
+                                                </p>
+                                                <div class="btn-group w-100" role="group">
+                                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="viewStand('<%= stand.id %>')">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <% if (stand.status === 'pending') { %>
+                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="confirmStand('<%= stand.id %>')">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    <% } %>
+                                                    <button type="button" class="btn btn-outline-warning btn-sm" onclick="editStand('<%= stand.id %>')">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteStand('<%= stand.id %>')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <div class="text-center py-5">
+                                <i class="fas fa-store fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">Aucun stand</h5>
+                                <p class="text-muted">Ajoutez votre premier stand pour commencer.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ajouter Stand -->
+    <div class="modal fade" id="addStandModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter un Stand</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addStandForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="standName" class="form-label">Nom du Stand</label>
+                                    <input type="text" class="form-control" id="standName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="company" class="form-label">Entreprise</label>
+                                    <input type="text" class="form-control" id="company" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="location" class="form-label">Emplacement</label>
+                                    <input type="text" class="form-control" id="location" placeholder="Ex: Hall A - Stand 15" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="size" class="form-label">Taille (m²)</label>
+                                    <input type="number" class="form-control" id="size" min="1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="contact" class="form-label">Contact Email</label>
+                                    <input type="email" class="form-control" id="contact" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Téléphone</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="addStand()">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function addStand() {
+            const name = document.getElementById('standName').value;
+            const company = document.getElementById('company').value;
+            const location = document.getElementById('location').value;
+            const size = document.getElementById('size').value;
+            const contact = document.getElementById('contact').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!name || !company || !location || !size || !contact || !phone) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            // Simulation d'ajout
+            alert('Stand ajouté avec succès !');
+            location.reload();
+        }
+        
+        function viewStand(id) {
+            alert('Visualisation du stand ' + id);
+        }
+        
+        function confirmStand(id) {
+            if (confirm('Êtes-vous sûr de vouloir confirmer ce stand ?')) {
+                alert('Stand confirmé avec succès !');
+                location.reload();
+            }
+        }
+        
+        function editStand(id) {
+            alert('Édition du stand ' + id);
+        }
+        
+        function deleteStand(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce stand ?')) {
+                alert('Stand supprimé avec succès !');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
+

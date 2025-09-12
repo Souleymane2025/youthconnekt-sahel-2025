@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../components/navbar') %>
+
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 80px;"></div>
+
+    <!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-calendar-alt me-3"></i>
+                    Programme YouthConnekt Sahel 2025
+                </h1>
+                <p class="lead mb-4">2ème Edition du Forum de la Jeunesse pour le développement durable du Sahel</p>
+                <p class="mb-0">
+                    <i class="fas fa-calendar-alt me-2"></i>13-15 Octobre 2025 | 
+                    <i class="fas fa-map-marker-alt me-2"></i>Hôtel Radisson Blu, N'Djamena, Tchad
+                </p>
+                <div class="mt-3">
+                    <p class="mb-0">
+                        <i class="fas fa-crown me-2"></i>
+                        <strong>Haut Patronage :</strong> Maréchal MAHAMAT IDRISS DEBY ITNO, Président de la République, Chef de l'État
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme Content -->
+    <section class="py-5">
+        <div class="container">
+        <!-- Thème principal -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="alert alert-primary text-center" role="alert">
+                    <h3 class="alert-heading">
+                        <i class="fas fa-bullhorn me-2"></i>
+                        Thème principal
+                    </h3>
+                    <h4 class="mb-0">"Jeunesse Sahélienne et Souveraineté : construire l'avenir face aux défis sécuritaires, environnementaux et de justice sociale"</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Axes du programme -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white text-center">
+                        <h3 class="mb-0">
+                            <i class="fas fa-list-ul me-2"></i>
+                            Au Programme
+                        </h3>
+                        <p class="mb-0">Différents axes d'activités</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <i class="fas fa-users fa-2x text-primary me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Panels de haut niveau</h6>
+                                        <small class="text-muted">Discussions stratégiques</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <i class="fas fa-lightbulb fa-2x text-warning me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Concours d'innovation</h6>
+                                        <small class="text-muted">Promotion des talents</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <i class="fas fa-handshake fa-2x text-success me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Rencontres inspirantes</h6>
+                                        <small class="text-muted">Networking et échanges</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <i class="fas fa-tools fa-2x text-info me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Ateliers avancés</h6>
+                                        <small class="text-muted">Formations spécialisées</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <i class="fas fa-images fa-2x text-danger me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Expositions</h6>
+                                        <small class="text-muted">Présentation des projets</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <i class="fas fa-star fa-2x text-warning me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Promotion de talents</h6>
+                                        <small class="text-muted">Opportunités exceptionnelles</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Jour 1 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                <div class="card border-0 shadow-lg">
+                        <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>
+                            Jour 1 - 13 Octobre 2025
+                        </h3>
+                        <p class="mb-0">Cérémonie d'ouverture et panel présidentiel</p>
+                        </div>
+                    <div class="card-body p-4">
+                            <div class="timeline">
+                            <!-- 09H-10H30 -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-success p-3 fs-6">09H-10H30</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-microphone me-2"></i>
+                                        Cérémonie d'ouverture
+                                    </h5>
+                                    <div class="ms-4">
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-music text-warning me-2"></i>Hymne national et allocution de bienvenue</li>
+                                            <li><i class="fas fa-user-tie text-info me-2"></i>Intervention du Ministre de la Jeunesse et des Sports</li>
+                                            <li><i class="fas fa-handshake text-success me-2"></i>Messages des partenaires : PNUD, YouthConnekt Africa, Union Africaine</li>
+                                            <li><i class="fas fa-crown text-warning me-2"></i>Discours d'ouverture du Maréchal MAHAMAT IDRISS DEBY ITNO, Président de la République</li>
+                                        </ul>
+                                    </div>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière (grande salle ou auditorium)<br>
+                                        <strong>Responsable :</strong> Protocole/comité
+                                    </p>
+                                    </div>
+                                </div>
+
+                            <!-- 11H-13H -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-warning p-3 fs-6">11H-13H</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-users-cog me-2"></i>
+                                        Panel présidentiel de haut niveau
+                                    </h5>
+                                    <p class="fw-bold text-dark">"Leadership politique et souveraineté intergénérationnelle"</p>
+                                    <div class="ms-4">
+                                        <p><strong>Chefs d'État invités :</strong></p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-flag text-primary me-2"></i>Burkina Faso</li>
+                                            <li><i class="fas fa-flag text-primary me-2"></i>Sénégal</li>
+                                            <li><i class="fas fa-flag text-primary me-2"></i>Tchad</li>
+                                        </ul>
+                                    </div>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière (grande salle ou auditorium)<br>
+                                        <strong>Modérateur :</strong> Jeune leader sahélien
+                                    </p>
+                                    </div>
+                                </div>
+
+                            <!-- 13H00 -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-info p-3 fs-6">13H00</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-rocket me-2"></i>
+                                        Lancement de l'Espace Jeunes & Innovation
+                                    </h5>
+                                    <div class="ms-4">
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-laptop text-info me-2"></i>Village numérique</li>
+                                            <li><i class="fas fa-store text-success me-2"></i>Stands start-ups</li>
+                                            <li><i class="fas fa-building text-primary me-2"></i>Pôles jeunesse des ministères</li>
+                                        </ul>
+                                    </div>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Espace pavillon et stand<br>
+                                        <strong>Responsable :</strong> Protocole/comité
+                                    </p>
+                                    </div>
+                                </div>
+
+                            <!-- 13H-13H50 -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-secondary p-3 fs-6">13H-13H50</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-utensils me-2"></i>
+                                        Pause déjeuner
+                                    </h5>
+                                    </div>
+                                </div>
+
+                            <!-- 14H-15H50 -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-danger p-3 fs-6">14H-15H50</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-comments me-2"></i>
+                                        Discussion sur le thème global
+                                    </h5>
+                                    <p class="fw-bold text-dark">"La souveraineté dans un Sahel en mutation : sécurité, autonomie de la jeunesse et gouvernance"</p>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière (grande salle ou auditorium)<br>
+                                        <strong>Participants :</strong> Experts, Jeunes participants
+                                    </p>
+                                    </div>
+                                </div>
+
+                            <!-- 16H-18H -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-dark p-3 fs-6">16H-18H</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-list-ul me-2"></i>
+                                        Discussion sur les sous-thématiques
+                                    </h5>
+                                    <p class="text-muted">10min par thématique et 1h du temps d'échange</p>
+                                    <div class="ms-4">
+                                        <ol class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="fas fa-briefcase text-success me-2"></i>
+                                                <strong>Jeunesse, emploi, autonomisation économique</strong>
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-shield-alt text-warning me-2"></i>
+                                                <strong>Jeunesse, Paix, Sécurité et Immigration</strong>
+                                                <small class="d-block text-muted ms-4">(implication des jeunes dans les instances de prise de décision, prévention des conflits, DDR, protection contre toutes les formes de violence, autonomisation et le partenariat)</small>
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-leaf text-success me-2"></i>
+                                                <strong>Jeunesse et environnement et transition écologique</strong>
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-heart text-danger me-2"></i>
+                                                <strong>Jeunesse et santé (mentale, reproductive)</strong>
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-laptop-code text-info me-2"></i>
+                                                <strong>Jeunesse, TIC et innovation</strong>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière (grande salle ou auditorium)<br>
+                                        <strong>Participants :</strong> Experts, Jeunes participants
+                                    </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jour 2 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                <div class="card border-0 shadow-lg">
+                        <div class="card-header bg-success text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>
+                            Jour 2 - 14 Octobre 2025
+                        </h3>
+                        <p class="mb-0">Ateliers thématiques et sessions parallèles</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <!-- Matin -->
+                            <div class="col-md-6 mb-4">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-sun me-2"></i>
+                                    Matin (9H-10H30)
+                                </h5>
+                                
+                                <!-- Salle 1 -->
+                                <div class="card mb-3 border-success">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0 text-success">
+                                            <i class="fas fa-door-open me-2"></i>Salle 1
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="text-primary">Sous-thématique 1</h6>
+                                        <p class="fw-bold">"Jeunesse, emploi, autonomisation économique"</p>
+                                        <p class="text-muted small">
+                                            <strong>Participants :</strong> Jeunes participants, PNUD, UNICEF, UNFPA
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Salle 2 -->
+                                <div class="card mb-3 border-warning">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0 text-warning">
+                                            <i class="fas fa-door-open me-2"></i>Salle 2
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="text-primary">Sous-thématique 2</h6>
+                                        <p class="fw-bold">"Jeunesse, Paix, Sécurité et Immigration"</p>
+                                        <p class="text-muted small">
+                                            <strong>Participants :</strong> Jeunes participants, UNFPA
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Salle 3 -->
+                                <div class="card mb-3 border-success">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0 text-success">
+                                            <i class="fas fa-door-open me-2"></i>Salle 3
+                                        </h6>
+                        </div>
+                        <div class="card-body">
+                                        <h6 class="text-primary">Sous-thématique 3</h6>
+                                        <p class="fw-bold">"Jeunesse et environnement et transition écologique"</p>
+                                        <p class="text-muted small">
+                                            <strong>Participants :</strong> Jeunes participants, PNUD, FNE
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Après-midi -->
+                            <div class="col-md-6 mb-4">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-moon me-2"></i>
+                                    Après-midi (9H-10H30)
+                                </h5>
+                                
+                                <!-- Salle 4 -->
+                                <div class="card mb-3 border-danger">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0 text-danger">
+                                            <i class="fas fa-door-open me-2"></i>Salle 4
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="text-primary">Sous-thématique 4</h6>
+                                        <p class="fw-bold">"Jeunesse et santé (mentale et reproductive)"</p>
+                                        <p class="text-muted small">
+                                            <strong>Participants :</strong> Jeunes participants, UNFPA, OMS
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Salle 5 -->
+                                <div class="card mb-3 border-info">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0 text-info">
+                                            <i class="fas fa-door-open me-2"></i>Salle 5
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="text-primary">Sous-thématique 5</h6>
+                                        <p class="fw-bold">"Jeunesse, TIC et innovation"</p>
+                                        <p class="text-muted small">
+                                            <strong>Participants :</strong> Jeunes participants
+                                        </p>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                        <!-- Suite des travaux -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <h6 class="alert-heading">
+                                        <i class="fas fa-clock me-2"></i>
+                                        Suite des travaux
+                                    </h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><strong>10H30-11H :</strong> Pause-café</p>
+                                            <p class="mb-1"><strong>11H-13H00 :</strong> Suite des travaux en atelier thématique</p>
+                                            <p class="mb-1"><strong>13H-14H :</strong> Pause déjeuner</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><strong>14H-16H :</strong> Compilation des travaux et présentation des conclusions</p>
+                                            <p class="mb-1"><strong>16H-18H :</strong> Tables rondes multi-acteurs</p>
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 mt-2">
+                                        <strong>Thème des tables rondes :</strong> "Coconstruire les politiques jeunesse - Quelles responsabilités partagées ?"
+                                    </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jour 3 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-warning text-dark">
+                        <h3 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>
+                            Jour 3 - 15 Octobre 2025
+                        </h3>
+                        <p class="mb-0">Engagement et clôture</p>
+                        </div>
+                    <div class="card-body p-4">
+                            <div class="timeline">
+                            <!-- 09H-10H -->
+                            <div class="row mb-4">
+                                <div class="col-md-2 text-center">
+                                    <span class="badge bg-primary p-3 fs-6">09H-10H</span>
+                                </div>
+                                <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-file-alt me-2"></i>
+                                        Présentation des résumés des ateliers et recommandations structurés
+                                    </h5>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière<br>
+                                        <strong>Responsable :</strong> Présidium
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 10H-11H -->
+                            <div class="row mb-4">
+                                <div class="col-md-2 text-center">
+                                    <span class="badge bg-success p-3 fs-6">10H-11H</span>
+                                </div>
+                                <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-handshake me-2"></i>
+                                        Présentation et adoption du « Pacte Jeunesse Sahel 2025-2030 »
+                                    </h5>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière<br>
+                                        <strong>Responsable :</strong> Présidium
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 11H-12H -->
+                            <div class="row mb-4">
+                                <div class="col-md-2 text-center">
+                                    <span class="badge bg-info p-3 fs-6">11H-12H</span>
+                                </div>
+                                <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-coffee me-2"></i>
+                                        Pause-café et préparation pour l'activité sociale ou communautaire
+                                    </h5>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 12H-13H -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-warning p-3 fs-6">12H-13H</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-heart me-2"></i>
+                                        Activité sociale/communautaire dans une école ou un orphelinat
+                                    </h5>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière<br>
+                                        <strong>Responsable :</strong> Comité d'organisation
+                                    </p>
+                                    </div>
+                                </div>
+
+                            <!-- 14H-16H -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-danger p-3 fs-6">14H-16H</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-flag-checkered me-2"></i>
+                                        Cérémonie de clôture
+                                    </h5>
+                                    <div class="ms-4">
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-chart-line text-info me-2"></i>Présentation des conclusions du forum</li>
+                                            <li><i class="fas fa-clipboard-list text-success me-2"></i>Remise des recommandations</li>
+                                            <li><i class="fas fa-signature text-warning me-2"></i>Signature symbolique du « Pacte Jeunesse Sahel 2025-2030 »</li>
+                                            <li><i class="fas fa-crown text-primary me-2"></i>Mot de clôture du Maréchal IDRISS DEBY ITNO, Président de la République</li>
+                                        </ul>
+                                    </div>
+                                    <p class="text-muted">
+                                        <strong>Format :</strong> Plénière<br>
+                                        <strong>Responsable :</strong> Protocole/comité
+                                    </p>
+                                    </div>
+                                </div>
+
+                            <!-- 18H -->
+                            <div class="row mb-4">
+                                    <div class="col-md-2 text-center">
+                                    <span class="badge bg-dark p-3 fs-6">18H</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-user-tie me-2"></i>
+                                        Audience avec le Président de la République et partage de diner
+                                    </h5>
+                                    <p class="text-muted">
+                                        <strong>Note :</strong> À confirmer
+                                    </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Section -->
+            <div class="row">
+                <div class="col-12 text-center">
+                <div class="bg-light p-5 rounded shadow">
+                    <h4 class="mb-3">
+                        <i class="fas fa-download me-2"></i>
+                        Télécharger le programme complet
+                    </h4>
+                    <p class="text-muted mb-4">Obtenez tous les détails du forum dans un document PDF</p>
+                        <a href="/downloads/programme-youthconnekt-sahel-2025.pdf" class="btn btn-primary btn-lg">
+                        <i class="fas fa-file-pdf me-2"></i>Télécharger le PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #2E7D32 0%, #FF6B35 100%);
+}
+
+.timeline .row {
+    border-left: 3px solid #e9ecef;
+    margin-left: 15px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.timeline .row::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 15px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #2E7D32;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+}
+
+.badge {
+    font-size: 0.8rem;
+    min-width: 100px;
+}
+
+.alert {
+    border: none;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .timeline .row {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+    }
+    
+    .timeline .row::before {
+        display: none;
+    }
+}
+</style>
+
+    <!-- Footer -->
+    <%- include('../layouts/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

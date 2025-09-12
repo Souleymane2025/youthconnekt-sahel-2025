@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <%- include('../layouts/dashboard-navbar') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <%- include('../layouts/dashboard-sidebar') %>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-cog me-2"></i>Paramètres du Système</h1>
+                </div>
+
+                <!-- Onglets -->
+                <ul class="nav nav-tabs mb-4" id="settingsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab">
+                            <i class="fas fa-calendar-alt me-1"></i>Événement
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="registration-tab" data-bs-toggle="tab" data-bs-target="#registration" type="button" role="tab">
+                            <i class="fas fa-user-plus me-1"></i>Inscription
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email" type="button" role="tab">
+                            <i class="fas fa-envelope me-1"></i>Email
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
+                            <i class="fas fa-shield-alt me-1"></i>Sécurité
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="settingsTabsContent">
+                    <!-- Paramètres Événement -->
+                    <div class="tab-pane fade show active" id="event" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Informations de l'Événement</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="eventSettingsForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="eventName" class="form-label">Nom de l'événement</label>
+                                                <input type="text" class="form-control" id="eventName" value="<%= settings.eventName %>" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="eventDate" class="form-label">Date de l'événement</label>
+                                                <input type="date" class="form-control" id="eventDate" value="<%= settings.eventDate %>" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="eventLocation" class="form-label">Lieu</label>
+                                                <input type="text" class="form-control" id="eventLocation" value="<%= settings.eventLocation %>" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="maxParticipants" class="form-label">Nombre maximum de participants</label>
+                                                <input type="number" class="form-control" id="maxParticipants" value="<%= settings.maxParticipants %>" min="1" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="eventDescription" class="form-label">Description</label>
+                                        <textarea class="form-control" id="eventDescription" rows="4">YouthConnekt Sahel 2025 est un événement majeur qui rassemble les jeunes entrepreneurs, innovateurs et leaders du Sahel pour partager leurs expériences et créer des opportunités de collaboration.</textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="saveEventSettings()">
+                                        <i class="fas fa-save me-1"></i>Sauvegarder
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paramètres Inscription -->
+                    <div class="tab-pane fade" id="registration" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Paramètres d'Inscription</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="registrationSettingsForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="registrationOpen" <%= settings.registrationOpen ? 'checked' : '' %>>
+                                                    <label class="form-check-label" for="registrationOpen">
+                                                        Inscriptions ouvertes
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="registrationDeadline" class="form-label">Date limite d'inscription</label>
+                                                <input type="date" class="form-control" id="registrationDeadline" value="2025-02-28">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="minAge" class="form-label">Âge minimum</label>
+                                                <input type="number" class="form-control" id="minAge" value="18" min="1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="maxAge" class="form-label">Âge maximum</label>
+                                                <input type="number" class="form-control" id="maxAge" value="35" min="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="requireApproval" checked>
+                                            <label class="form-check-label" for="requireApproval">
+                                                Validation manuelle des inscriptions
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="saveRegistrationSettings()">
+                                        <i class="fas fa-save me-1"></i>Sauvegarder
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paramètres Email -->
+                    <div class="tab-pane fade" id="email" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Configuration Email</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="emailSettingsForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="smtpHost" class="form-label">Serveur SMTP</label>
+                                                <input type="text" class="form-control" id="smtpHost" value="smtp.gmail.com">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="smtpPort" class="form-label">Port SMTP</label>
+                                                <input type="number" class="form-control" id="smtpPort" value="587">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="emailUser" class="form-label">Email d'envoi</label>
+                                                <input type="email" class="form-control" id="emailUser" value="noreply@youthconnekt-sahel.org">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="emailPassword" class="form-label">Mot de passe</label>
+                                                <input type="password" class="form-control" id="emailPassword" placeholder="••••••••">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="emailFrom" class="form-label">Nom d'expéditeur</label>
+                                        <input type="text" class="form-control" id="emailFrom" value="YouthConnekt Sahel 2025">
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="saveEmailSettings()">
+                                        <i class="fas fa-save me-1"></i>Sauvegarder
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info ms-2" onclick="testEmail()">
+                                        <i class="fas fa-paper-plane me-1"></i>Tester Email
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paramètres Sécurité -->
+                    <div class="tab-pane fade" id="security" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Sécurité et Accès</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="securitySettingsForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="adminUsername" class="form-label">Nom d'utilisateur admin</label>
+                                                <input type="text" class="form-control" id="adminUsername" value="admin" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="adminPassword" class="form-label">Nouveau mot de passe admin</label>
+                                                <input type="password" class="form-control" id="adminPassword" placeholder="Laissez vide pour ne pas changer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="sessionTimeout" class="form-label">Timeout de session (minutes)</label>
+                                                <input type="number" class="form-control" id="sessionTimeout" value="60" min="5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="maxLoginAttempts" class="form-label">Tentatives de connexion max</label>
+                                                <input type="number" class="form-control" id="maxLoginAttempts" value="5" min="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="enable2FA" checked>
+                                            <label class="form-check-label" for="enable2FA">
+                                                Activer l'authentification à deux facteurs
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="saveSecuritySettings()">
+                                        <i class="fas fa-save me-1"></i>Sauvegarder
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions système -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Actions Système</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-warning w-100" onclick="clearCache()">
+                                    <i class="fas fa-broom me-1"></i>Vider le Cache
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-info w-100" onclick="backupData()">
+                                    <i class="fas fa-download me-1"></i>Sauvegarde
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-danger w-100" onclick="resetSystem()">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Reset Système
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function saveEventSettings() {
+            alert('Paramètres de l\'événement sauvegardés avec succès !');
+        }
+        
+        function saveRegistrationSettings() {
+            alert('Paramètres d\'inscription sauvegardés avec succès !');
+        }
+        
+        function saveEmailSettings() {
+            alert('Configuration email sauvegardée avec succès !');
+        }
+        
+        function saveSecuritySettings() {
+            alert('Paramètres de sécurité sauvegardés avec succès !');
+        }
+        
+        function testEmail() {
+            alert('Test d\'envoi d\'email en cours...');
+            setTimeout(() => {
+                alert('Email de test envoyé avec succès !');
+            }, 2000);
+        }
+        
+        function clearCache() {
+            if (confirm('Êtes-vous sûr de vouloir vider le cache ?')) {
+                alert('Cache vidé avec succès !');
+            }
+        }
+        
+        function backupData() {
+            alert('Sauvegarde des données en cours...');
+            setTimeout(() => {
+                alert('Sauvegarde terminée ! Le fichier a été téléchargé.');
+            }, 3000);
+        }
+        
+        function resetSystem() {
+            if (confirm('ATTENTION: Cette action va réinitialiser le système. Êtes-vous absolument sûr ?')) {
+                if (confirm('Cette action est irréversible. Confirmez-vous le reset du système ?')) {
+                    alert('Reset du système en cours...');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

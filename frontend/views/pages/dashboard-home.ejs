@@ -1,0 +1,321 @@
+<%- include('../layouts/dashboard', { 
+    title: 'Tableau de bord - Youth Connekt Sahel 2025', 
+    currentPage: 'dashboard', 
+    content: `
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h2 text-primary mb-0">
+                    <i class="fas fa-tachometer-alt me-2"></i>
+                    Tableau de bord
+                </h1>
+                <p class="text-muted mb-0">Vue d'ensemble du Forum YouthConnekt Sahel 2025</p>
+            </div>
+            <div class="btn-toolbar">
+                <button type="button" class="btn btn-outline-primary" onclick="refreshDashboard()">
+                    <i class="fas fa-sync-alt me-1"></i>
+                    Actualiser
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques principales -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card dashboard-card stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <div class="text-xs fw-bold text-primary text-uppercase mb-1">
+                                Total Participants
+                            </div>
+                            <div class="h4 mb-0 fw-bold text-dark" id="total-participants">152</div>
+                        </div>
+                        <div class="text-primary">
+                            <i class="fas fa-users fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card dashboard-card" style="border-left: 4px solid #28a745;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <div class="text-xs fw-bold text-success text-uppercase mb-1">
+                                Confirmés
+                            </div>
+                            <div class="h4 mb-0 fw-bold text-dark" id="confirmed-participants">89</div>
+                        </div>
+                        <div class="text-success">
+                            <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card dashboard-card" style="border-left: 4px solid #ffc107;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <div class="text-xs fw-bold text-warning text-uppercase mb-1">
+                                En attente
+                            </div>
+                            <div class="h4 mb-0 fw-bold text-dark" id="pending-participants">24</div>
+                        </div>
+                        <div class="text-warning">
+                            <i class="fas fa-clock fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card dashboard-card" style="border-left: 4px solid #17a2b8;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <div class="text-xs fw-bold text-info text-uppercase mb-1">
+                                Pays représentés
+                            </div>
+                            <div class="h4 mb-0 fw-bold text-dark" id="countries-count">12</div>
+                        </div>
+                        <div class="text-info">
+                            <i class="fas fa-globe fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques et données -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mb-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-line me-2 text-primary"></i>
+                        Inscriptions par jour
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="registrationsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-pie-chart me-2 text-primary"></i>
+                        Répartition par type
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="participantTypeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions rapides -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card dashboard-card">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-bolt me-2 text-primary"></i>
+                        Actions rapides
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="/dashboard/participants" class="btn btn-outline-primary d-block py-3 text-decoration-none">
+                                <i class="fas fa-users fa-2x mb-2 d-block"></i>
+                                <strong>Gérer les participants</strong>
+                                <small class="d-block text-muted">Voir, modifier, valider</small>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="/dashboard/export" class="btn btn-outline-success d-block py-3 text-decoration-none">
+                                <i class="fas fa-download fa-2x mb-2 d-block"></i>
+                                <strong>Exporter les données</strong>
+                                <small class="d-block text-muted">Excel, CSV, PDF</small>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="/dashboard/badges" class="btn btn-outline-info d-block py-3 text-decoration-none">
+                                <i class="fas fa-id-card fa-2x mb-2 d-block"></i>
+                                <strong>Générer les badges</strong>
+                                <small class="d-block text-muted">Badges d'identification</small>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="/dashboard/invitations" class="btn btn-outline-warning d-block py-3 text-decoration-none">
+                                <i class="fas fa-envelope fa-2x mb-2 d-block"></i>
+                                <strong>Envoyer invitations</strong>
+                                <small class="d-block text-muted">Emails personnalisés</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activité récente -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-clock me-2 text-primary"></i>
+                        Inscriptions récentes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-start px-0">
+                            <div class="me-auto">
+                                <div class="fw-bold">Marie Dubois</div>
+                                <small class="text-muted">Entrepreneur • Sénégal</small>
+                            </div>
+                            <small class="text-muted">Il y a 2h</small>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start px-0">
+                            <div class="me-auto">
+                                <div class="fw-bold">Ahmed Traore</div>
+                                <small class="text-muted">Étudiant • Mali</small>
+                            </div>
+                            <small class="text-muted">Il y a 4h</small>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start px-0">
+                            <div class="me-auto">
+                                <div class="fw-bold">Fatima Hassan</div>
+                                <small class="text-muted">Tech • Tchad</small>
+                            </div>
+                            <small class="text-muted">Il y a 6h</small>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/dashboard/participants" class="btn btn-sm btn-outline-primary">
+                            Voir tous les participants
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-exclamation-triangle me-2 text-warning"></i>
+                        Tâches en attente
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <div>
+                                <div class="fw-bold">Valider 24 inscriptions</div>
+                                <small class="text-muted">Participants en attente</small>
+                            </div>
+                            <span class="badge bg-warning rounded-pill">24</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <div>
+                                <div class="fw-bold">Générer les badges</div>
+                                <small class="text-muted">Pour les confirmés</small>
+                            </div>
+                            <span class="badge bg-info rounded-pill">89</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <div>
+                                <div class="fw-bold">Envoyer invitations</div>
+                                <small class="text-muted">Emails de confirmation</small>
+                            </div>
+                            <span class="badge bg-success rounded-pill">152</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour actualiser le dashboard
+        function refreshDashboard() {
+            location.reload();
+        }
+
+        // Graphique des inscriptions par jour
+        const ctx1 = document.getElementById('registrationsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['25 Août', '26 Août', '27 Août', '28 Août', '29 Août', '30 Août', '31 Août'],
+                datasets: [{
+                    label: 'Inscriptions',
+                    data: [12, 19, 8, 15, 22, 18, 25],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Graphique de répartition par type
+        const ctx2 = document.getElementById('participantTypeChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Nationaux', 'Internationaux'],
+                datasets: [{
+                    data: [89, 63],
+                    backgroundColor: ['#28a745', '#17a2b8'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+    `
+}) %>

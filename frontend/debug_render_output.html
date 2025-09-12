@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            <i class="fas fa-users"></i> YouthConnekt Sahel 2025
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link " href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/about">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/program">Programme</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/speakers">Intervenants</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-plus me-1"></i> Inscription
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="px-2 py-1 text-white-50 small">Formulaires</li>
+                        <li><a class="dropdown-item" href="/registration"><i class="fas fa-edit"></i> S'inscrire au Forum</a></li>
+                        <li><a class="dropdown-item" href="/participants/national"><i class="fas fa-flag"></i> Participants Nationaux</a></li>
+                        <li><a class="dropdown-item" href="/participants/international"><i class="fas fa-globe"></i> Participants Internationaux</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="px-2 py-1 text-white-50 small">Opportunités</li>
+                        <li><a class="dropdown-item" href="/exhibitions"><i class="fas fa-store"></i> Exposition Stand</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/blog">Blog</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-folder-open me-1"></i> Ressources
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="px-2 py-1 text-white-50 small">Visibilité</li>
+                        <li><a class="dropdown-item" href="/media"><i class="fas fa-photo-video"></i> Média</a></li>
+                        <li><a class="dropdown-item" href="/partners"><i class="fas fa-handshake"></i> Partenaires</a></li>
+                        <li><a class="dropdown-item" href="/sponsors"><i class="fas fa-donate"></i> Sponsors</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/contact">Contact</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light btn-sm" href="/participants/register">
+                        <i class="fas fa-user-plus"></i> S'inscrire
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="min-height: 50vh;">
+        <div class="container">
+            <div class="row justify-content-center text-center text-white">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">
+                        
+                            Inscription au Forum
+                        
+                    </h1>
+                    <p class="hero-subtitle">
+                        
+                            Rejoignez plus de 1000 jeunes leaders du Sahel pour trois jours d'innovation, 
+                            d'entrepreneuriat et de networking exceptionnel.
+                        
+                    </p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            13-15 Octobre 2025 • N'Djamena, Tchad
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Benefits -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Pourquoi vous inscrire ?</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto mb-3">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5>Networking</h5>
+                        <p class="small">Rencontrez 1000+ jeunes leaders</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto mb-3">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h5>Innovation</h5>
+                        <p class="small">Ateliers tech et startups</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto mb-3">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h5>Certification</h5>
+                        <p class="small">Certificat de participation</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto mb-3">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h5>Gratuit</h5>
+                        <p class="small">Participation 100% gratuite</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Formulaire d'inscription
+                            </h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="registration-form">
+                                <!-- Hidden field for registration type -->
+                                
+                                
+                                <!-- Personal Information -->
+                                <div class="mb-4">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-user me-2"></i>
+                                        Informations personnelles
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="firstName" class="form-label">Prénom *</label>
+                                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="lastName" class="form-label">Nom *</label>
+                                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email *</label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Téléphone *</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="birthDate" class="form-label">Date de naissance *</label>
+                                            <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="gender" class="form-label">Genre *</label>
+                                            <select class="form-select" id="gender" name="gender" required>
+                                                <option value="">Sélectionnez</option>
+                                                <option value="male">Homme</option>
+                                                <option value="female">Femme</option>
+                                                <option value="other">Autre</option>
+                                                <option value="prefer-not-to-say">Préfère ne pas dire</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Location Information -->
+                                <div class="mb-4">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-map-marker-alt me-2"></i>
+                                        Localisation
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="country" class="form-label">Pays *</label>
+                                            <select class="form-select" id="country" name="country" required>
+                                                <option value="">Sélectionnez votre pays</option>
+                                                <option value="tchad">Tchad</option>
+                                                <option value="niger">Niger</option>
+                                                <option value="mali">Mali</option>
+                                                <option value="burkina">Burkina Faso</option>
+                                                <option value="senegal">Sénégal</option>
+                                                <option value="mauritanie">Mauritanie</option>
+                                                <option value="gambie">Gambie</option>
+                                                <option value="guinea-bissau">Guinée-Bissau</option>
+                                                <option value="autre">Autre</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="city" class="form-label">Ville *</label>
+                                            <input type="text" class="form-control" id="city" name="city" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Professional Information -->
+                                <div class="mb-4">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-briefcase me-2"></i>
+                                        Informations professionnelles
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="occupation" class="form-label">Statut *</label>
+                                            <select class="form-select" id="occupation" name="occupation" required>
+                                                <option value="">Sélectionnez votre statut</option>
+                                                <option value="student">Étudiant</option>
+                                                <option value="employee">Employé</option>
+                                                <option value="entrepreneur">Entrepreneur</option>
+                                                <option value="freelancer">Freelancer</option>
+                                                <option value="unemployed">Demandeur d'emploi</option>
+                                                <option value="other">Autre</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="organization" class="form-label">Organisation/Entreprise</label>
+                                            <input type="text" class="form-control" id="organization" name="organization">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="interests" class="form-label">Domaines d'intérêt *</label>
+                                            <div class="row g-2">
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="tech" name="interests" value="tech">
+                                                        <label class="form-check-label" for="tech">Technologie</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="entrepreneurship" name="interests" value="entrepreneurship">
+                                                        <label class="form-check-label" for="entrepreneurship">Entrepreneuriat</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="agriculture" name="interests" value="agriculture">
+                                                        <label class="form-check-label" for="agriculture">Agriculture</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="health" name="interests" value="health">
+                                                        <label class="form-check-label" for="health">Santé</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="education" name="interests" value="education">
+                                                        <label class="form-check-label" for="education">Éducation</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="environment" name="interests" value="environment">
+                                                        <label class="form-check-label" for="environment">Environnement</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Experience & Motivation -->
+                                <div class="mb-4">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-star me-2"></i>
+                                        Expérience et motivation
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="experience" class="form-label">Décrivez brièvement votre expérience (max 500 caractères)</label>
+                                            <textarea class="form-control" id="experience" name="experience" rows="4" maxlength="500" placeholder="Parlez-nous de votre parcours, vos projets, vos réalisations..."></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="motivation" class="form-label">Pourquoi voulez-vous participer au forum ? (max 300 caractères)</label>
+                                            <textarea class="form-control" id="motivation" name="motivation" rows="3" maxlength="300" placeholder="Qu'attendez-vous de cet événement ?"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Logistics -->
+                                <div class="mb-4">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-cog me-2"></i>
+                                        Logistique
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="accommodation" class="form-label">Avez-vous besoin d'aide pour l'hébergement ?</label>
+                                            <select class="form-select" id="accommodation" name="accommodation">
+                                                <option value="no">Non, j'ai déjà réservé</option>
+                                                <option value="yes">Oui, j'aimerais des recommandations</option>
+                                                <option value="local">Je vis à N'Djamena</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="transport" class="form-label">Comment comptez-vous vous rendre au forum ?</label>
+                                            <select class="form-select" id="transport" name="transport">
+                                                <option value="own">Transport personnel</option>
+                                                <option value="flight">Avion</option>
+                                                <option value="bus">Bus</option>
+                                                <option value="car">Voiture</option>
+                                                <option value="other">Autre</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="dietary" class="form-label">Régime alimentaire particulier ?</label>
+                                            <select class="form-select" id="dietary" name="dietary">
+                                                <option value="none">Aucun</option>
+                                                <option value="vegetarian">Végétarien</option>
+                                                <option value="vegan">Végétalien</option>
+                                                <option value="halal">Halal</option>
+                                                <option value="other">Autre (préciser en commentaire)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Terms and Conditions -->
+                                <div class="mb-4">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-shield-alt me-2"></i>
+                                        Conditions d'utilisation
+                                    </h5>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            J'accepte les <a href="#" class="text-primary">conditions d'utilisation</a> et la <a href="#" class="text-primary">politique de confidentialité</a> *
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                                        <label class="form-check-label" for="newsletter">
+                                            Je souhaite recevoir la newsletter YouthConnekt Sahel et les informations sur les événements futurs
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="photos" name="photos">
+                                        <label class="form-check-label" for="photos">
+                                            J'autorise l'utilisation de mes photos/vidéos prises pendant l'événement à des fins de communication
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-user-plus me-2"></i>
+                                        Finaliser mon inscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Next Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center">
+                <h3 class="mb-4">Après votre inscription</h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card text-center h-100">
+                            <div class="card-body">
+                                <div class="feature-icon mx-auto mb-3">
+                                    <i class="fas fa-envelope-check"></i>
+                                </div>
+                                <h5>Confirmation</h5>
+                                <p class="small">Vous recevrez un email de confirmation dans les 24h</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center h-100">
+                            <div class="card-body">
+                                <div class="feature-icon mx-auto mb-3">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <h5>Programme</h5>
+                                <p class="small">Le programme détaillé vous sera envoyé 2 semaines avant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center h-100">
+                            <div class="card-body">
+                                <div class="feature-icon mx-auto mb-3">
+                                    <i class="fas fa-users-cog"></i>
+                                </div>
+                                <h5>Préparation</h5>
+                                <p class="small">Accès à la communauté en ligne des participants</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <!-- Section principale du footer -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <!-- Logo officiel YouthConnekt Sahel -->
+                    <div class="me-3" style="height: 50px; display: flex; align-items: center;">
+                        <div style="background: linear-gradient(135deg, #2E7D32 0%, #FF5722 100%); 
+                                    color: white; 
+                                    padding: 8px 16px; 
+                                    border-radius: 8px; 
+                                    font-weight: bold; 
+                                    font-size: 16px;
+                                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                            YouthConnekt Sahel
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">YouthConnekt Sahel 2025</h5>
+                        <small class="text-muted">13-15 Octobre 2025</small>
+                    </div>
+                </div>
+                <p class="text-light opacity-75">
+                    Forum de la Jeunesse pour le développement durable du Sahel. 
+                    Connectons, innovons et transformons ensemble l'avenir de notre région.
+                </p>
+                
+                <!-- Réseaux sociaux avec style amélioré -->
+                <div class="social-links mt-4">
+                    <h6 class="text-white mb-3">Suivez-nous</h6>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-2 mb-4">
+                <h6 class="text-white mb-3">Navigation</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/" class="text-light opacity-75 text-decoration-none hover-underline">Accueil</a></li>
+                    <li class="mb-2"><a href="/about" class="text-light opacity-75 text-decoration-none hover-underline">À propos</a></li>
+                    <li class="mb-2"><a href="/program" class="text-light opacity-75 text-decoration-none hover-underline">Programme</a></li>
+                    <li class="mb-2"><a href="/registration" class="text-light opacity-75 text-decoration-none hover-underline">Inscription</a></li>
+                    <li class="mb-2"><a href="/speakers" class="text-light opacity-75 text-decoration-none hover-underline">Intervenants</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-2 mb-4">
+                <h6 class="text-white mb-3">Ressources</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/blog" class="text-light opacity-75 text-decoration-none hover-underline">Blog</a></li>
+                    <li class="mb-2"><a href="/media" class="text-light opacity-75 text-decoration-none hover-underline">Galerie</a></li>
+                    <li class="mb-2"><a href="/partners" class="text-light opacity-75 text-decoration-none hover-underline">Partenaires</a></li>
+                    <li class="mb-2"><a href="/sponsors" class="text-light opacity-75 text-decoration-none hover-underline">Sponsors</a></li>
+                    <li class="mb-2"><a href="/exhibitions" class="text-light opacity-75 text-decoration-none hover-underline">Expositions</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <h6 class="text-white mb-3">Restez connecté</h6>
+                <p class="text-light opacity-75 mb-3">
+                    Recevez les dernières actualités et mises à jour du forum
+                </p>
+                
+                
+                <!-- Contact info avec icônes -->
+                <div class="mt-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-map-marker-alt me-3" style="color: #FF5722;"></i>
+                        <span class="text-light opacity-75">N'Djamena, Tchad</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-envelope me-3" style="color: #FF5722;"></i>
+                        <span class="text-light opacity-75">info@youthconnekt-sahel.org</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-phone me-3" style="color: #FF5722;"></i>
+                        <span class="text-light opacity-75">+235 XX XX XX XX</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Galerie de photos mini dans le footer -->
+        <div class="row mt-4 pt-4 border-top border-secondary">
+            <div class="col-12">
+                <h6 class="text-white mb-3">Moments du Forum</h6>
+                <div class="row g-2">
+                    <div class="col-2">
+                        <img src="/images/gallery/moment-1.jpg" 
+                             alt="Moment du forum" 
+                             class="img-fluid rounded"
+                             style="height: 60px; width: 100%; object-fit: cover; cursor: pointer;"
+                             onerror="this.style.display='none';"
+                             data-bs-toggle="modal" data-bs-target="#galleryModal">
+                    </div>
+                    <div class="col-2">
+                        <img src="/images/gallery/moment-2.jpg" 
+                             alt="Moment du forum" 
+                             class="img-fluid rounded"
+                             style="height: 60px; width: 100%; object-fit: cover; cursor: pointer;"
+                             onerror="this.style.display='none';"
+                             data-bs-toggle="modal" data-bs-target="#galleryModal">
+                    </div>
+                    <div class="col-2">
+                        <img src="/images/gallery/moment-3.jpg" 
+                             alt="Moment du forum" 
+                             class="img-fluid rounded"
+                             style="height: 60px; width: 100%; object-fit: cover; cursor: pointer;"
+                             onerror="this.style.display='none';"
+                             data-bs-toggle="modal" data-bs-target="#galleryModal">
+                    </div>
+                    <div class="col-2">
+                        <img src="/images/gallery/moment-4.jpg" 
+                             alt="Moment du forum" 
+                             class="img-fluid rounded"
+                             style="height: 60px; width: 100%; object-fit: cover; cursor: pointer;"
+                             onerror="this.style.display='none';"
+                             data-bs-toggle="modal" data-bs-target="#galleryModal">
+                    </div>
+                    <div class="col-2">
+                        <img src="/images/gallery/moment-5.jpg" 
+                             alt="Moment du forum" 
+                             class="img-fluid rounded"
+                             style="height: 60px; width: 100%; object-fit: cover; cursor: pointer;"
+                             onerror="this.style.display='none';"
+                             data-bs-toggle="modal" data-bs-target="#galleryModal">
+                    </div>
+                    <div class="col-2">
+                        <div class="bg-primary bg-opacity-50 rounded d-flex align-items-center justify-content-center" 
+                             style="height: 60px; cursor: pointer;"
+                             data-bs-toggle="modal" data-bs-target="#galleryModal">
+                            <span class="text-white small">+50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="my-4 border-secondary">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0 text-light opacity-75">
+                    &copy; 2025 YouthConnekt Sahel. Tous droits réservés.
+                </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="d-flex justify-content-md-end gap-3 mt-3 mt-md-0">
+                    <a href="/contact" class="text-light opacity-75 text-decoration-none hover-underline">Contact</a>
+                    <span class="text-light opacity-50">|</span>
+                    <a href="/privacy" class="text-light opacity-75 text-decoration-none hover-underline">Confidentialité</a>
+                    <span class="text-light opacity-50">|</span>
+                    <a href="/terms" class="text-light opacity-75 text-decoration-none hover-underline">CGU</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- CSS pour les effets hover -->
+<style>
+.hover-underline:hover {
+    text-decoration: underline !important;
+    opacity: 1 !important;
+}
+
+.social-links .btn:hover {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+</style>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic - Problème d'affichage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .warning { background-color: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>🔍 Diagnostic - Problème d'affichage</h1>
+        
+        <div class="test-section">
+            <h3>Test 1: Messages d'erreur intégrés</h3>
+            <div id="message-test-area" style="display: none;">
+                <div id="message-test-content" class="alert alert-dismissible" role="alert">
+                    <span id="message-test-text"></span>
+                    <button type="button" class="btn-close" onclick="hideTestMessage()"></button>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="testSuccessMessage()">Test Message Succès</button>
+            <button class="btn btn-danger" onclick="testErrorMessage()">Test Message Erreur</button>
+            <button class="btn btn-warning" onclick="testWarningMessage()">Test Message Avertissement</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test 2: Connexion API</h3>
+            <div id="api-test-results"></div>
+            <button class="btn btn-info" onclick="testAPI()">Tester API Backend</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test 3: Inscription simulée</h3>
+            <div id="registration-test-results"></div>
+            <button class="btn btn-success" onclick="testRegistration()">Tester Inscription</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>Informations système</h3>
+            <div id="system-info"></div>
+        </div>
+    </div>
+
+    <script>
+        // Fonctions de test des messages
+        function showTestMessage(message, type = 'info') {
+            const messageArea = document.getElementById('message-test-area');
+            const messageContent = document.getElementById('message-test-content');
+            const messageText = document.getElementById('message-test-text');
+            
+            messageText.textContent = message;
+            messageContent.className = 'alert alert-dismissible';
+            
+            switch(type) {
+                case 'success':
+                    messageContent.classList.add('alert-success');
+                    break;
+                case 'error':
+                    messageContent.classList.add('alert-danger');
+                    break;
+                case 'warning':
+                    messageContent.classList.add('alert-warning');
+                    break;
+                default:
+                    messageContent.classList.add('alert-info');
+            }
+            
+            messageArea.style.display = 'block';
+        }
+        
+        function hideTestMessage() {
+            document.getElementById('message-test-area').style.display = 'none';
+        }
+        
+        function testSuccessMessage() {
+            showTestMessage('✅ Test de message de succès - Fonctionne correctement !', 'success');
+        }
+        
+        function testErrorMessage() {
+            showTestMessage('❌ Test de message d\'erreur - Fonctionne correctement !', 'error');
+        }
+        
+        function testWarningMessage() {
+            showTestMessage('⚠️ Test de message d\'avertissement - Fonctionne correctement !', 'warning');
+        }
+        
+        // Test API
+        async function testAPI() {
+            const resultsDiv = document.getElementById('api-test-results');
+            resultsDiv.innerHTML = '<div class="alert alert-info">🔄 Test en cours...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/participants');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultsDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            ✅ API Backend fonctionne<br>
+                            Status: ${response.status}<br>
+                            Participants: ${data.data ? data.data.length : 0}
+                        </div>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            ⚠️ API Backend répond mais avec erreur<br>
+                            Status: ${response.status}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        ❌ Erreur de connexion à l'API Backend<br>
+                        Erreur: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Test inscription
+        async function testRegistration() {
+            const resultsDiv = document.getElementById('registration-test-results');
+            resultsDiv.innerHTML = '<div class="alert alert-info">🔄 Test d\'inscription en cours...</div>';
+            
+            const testData = {
+                first_name: 'Test',
+                last_name: 'Diagnostic',
+                email: 'testdiagnostic' + Date.now() + '@example.com',
+                phone: '+1234567890',
+                country: 'TestLand',
+                city: 'TestCity',
+                status: 'pending'
+            };
+            
+            try {
+                const response = await fetch('http://localhost:3000/participants/register-complete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    resultsDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            ✅ Inscription réussie<br>
+                            Status: ${response.status}<br>
+                            Message: ${result.message}
+                        </div>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            ⚠️ Inscription échouée<br>
+                            Status: ${response.status}<br>
+                            Message: ${result.message || 'Erreur inconnue'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        ❌ Erreur de connexion au frontend<br>
+                        Erreur: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Informations système
+        function loadSystemInfo() {
+            const systemDiv = document.getElementById('system-info');
+            systemDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <strong>Informations système:</strong><br>
+                    User Agent: ${navigator.userAgent}<br>
+                    URL actuelle: ${window.location.href}<br>
+                    Timestamp: ${new Date().toLocaleString('fr-FR')}<br>
+                    <br>
+                    <strong>Serveurs attendus:</strong><br>
+                    Backend Laravel: http://localhost:8000<br>
+                    Frontend Express: http://localhost:3000
+                </div>
+            `;
+        }
+        
+        // Charger les informations au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSystemInfo();
+        });
+    </script>
+</body>
+</html>
+

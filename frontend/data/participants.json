@@ -1,0 +1,70 @@
+[
+  {
+    "id": "demo_1",
+    "first_name": "Ahmed",
+    "last_name": "Mahamat",
+    "email": "ahmed.mahamat@example.com",
+    "phone": "+235 66 12 34 56",
+    "country": "Tchad",
+    "city": "N'Djamena",
+    "registration_type": "national",
+    "status": "confirmed",
+    "invitation_sent": false,
+    "createdAt": "2025-01-06T12:00:00.000Z"
+  },
+  {
+    "id": "demo_2",
+    "first_name": "Fatima",
+    "last_name": "Ousmane",
+    "email": "fatima.ousmane@example.com",
+    "phone": "+235 66 78 90 12",
+    "country": "Tchad",
+    "city": "Moundou",
+    "registration_type": "national",
+    "status": "pending",
+    "invitation_sent": false,
+    "createdAt": "2025-01-06T12:00:00.000Z"
+  },
+  {
+    "id": "demo_3",
+    "first_name": "Ibrahim",
+    "last_name": "Diallo",
+    "email": "ibrahim.diallo@example.com",
+    "phone": "+223 66 12 34 56",
+    "country": "Mali",
+    "city": "Bamako",
+    "registration_type": "international",
+    "status": "confirmed",
+    "invitation_sent": true,
+    "invitation_sent_at": "2025-01-06T12:00:00.000Z",
+    "createdAt": "2025-01-06T12:00:00.000Z"
+  },
+  {
+    "id": "demo_4",
+    "first_name": "Aminata",
+    "last_name": "Traoré",
+    "email": "aminata.traore@example.com",
+    "phone": "+223 66 78 90 12",
+    "country": "Mali",
+    "city": "Sikasso",
+    "registration_type": "international",
+    "status": "pending",
+    "invitation_sent": false,
+    "createdAt": "2025-01-06T12:00:00.000Z"
+  },
+  {
+    "id": "demo_5",
+    "first_name": "Mohamed",
+    "last_name": "Sissoko",
+    "email": "mohamed.sissoko@example.com",
+    "phone": "+223 66 12 34 56",
+    "country": "Mali",
+    "city": "Tombouctou",
+    "registration_type": "international",
+    "status": "confirmed",
+    "invitation_sent": true,
+    "invitation_sent_at": "2025-01-06T12:00:00.000Z",
+    "createdAt": "2025-01-06T12:00:00.000Z"
+  }
+]
+

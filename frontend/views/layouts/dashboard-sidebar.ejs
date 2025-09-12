@@ -1,0 +1,79 @@
+<!-- Sidebar Dashboard -->
+<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'dashboard') ? 'active' : '' %>" href="/admin/dashboard">
+                    <i class="fas fa-tachometer-alt me-2"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'participants') ? 'active' : '' %>" href="/admin/participants">
+                    <i class="fas fa-users me-2"></i>
+                    Participants
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'messages') ? 'active' : '' %>" href="/admin/messages">
+                    <i class="fas fa-envelope me-2"></i>
+                    Messages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'blogs') ? 'active' : '' %>" href="/admin/blogs">
+                    <i class="fas fa-blog me-2"></i>
+                    Blogs & Média
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'newsletters') ? 'active' : '' %>" href="/admin/newsletters">
+                    <i class="fas fa-newspaper me-2"></i>
+                    Newsletters
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'badges') ? 'active' : '' %>" href="/admin/badges">
+                    <i class="fas fa-id-badge me-2"></i>
+                    Badges
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'partners') ? 'active' : '' %>" href="/admin/partners">
+                    <i class="fas fa-handshake me-2"></i>
+                    Partenaires
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'sponsors') ? 'active' : '' %>" href="/admin/sponsors">
+                    <i class="fas fa-star me-2"></i>
+                    Sponsors
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (typeof page !== 'undefined' && page === 'stands') ? 'active' : '' %>" href="/admin/stands">
+                    <i class="fas fa-store me-2"></i>
+                    Stands
+                </a>
+            </li>
+        </ul>
+
+        <hr>
+
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/exports">
+                    <i class="fas fa-download me-2"></i>
+                    Exports
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/settings">
+                    <i class="fas fa-cog me-2"></i>
+                    Paramètres
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'YouthConnekt Sahel 2025' %></title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #FF6B35;
+            --accent-color: #4CAF50;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --orange-bright: #FF6B35;
+            --green-dark: #2E7D32;
+            --green-light: #4CAF50;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        
+        /* S'assurer que tous les éléments de contenu restent en arrière-plan */
+        body > *:not(.navbar):not(.dropdown-menu) {
+            z-index: 1 !important;
+            position: relative;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        }
+        
+        .btn-primary {
+            background-color: var(--green-dark);
+            border-color: var(--green-dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1e5a21;
+            border-color: #1e5a21;
+        }
+        
+        .btn-secondary {
+            background-color: var(--orange-bright);
+            border-color: var(--orange-bright);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e55a2b;
+            border-color: #e55a2b;
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 999999 !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+        }
+        
+        .dropdown-menu {
+            z-index: 9999999 !important;
+            position: fixed !important;
+            top: auto !important;
+            left: auto !important;
+            min-width: 200px;
+            background-color: white !important;
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 0.375rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+            display: none;
+        }
+        
+        .dropdown-menu.show {
+            display: block !important;
+            z-index: 9999999 !important;
+        }
+        
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            color: #212529;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            clear: both;
+            font-weight: 400;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #1e2125;
+        }
+        
+        .dropdown-divider {
+            height: 0;
+            margin: 0.5rem 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(0,0,0,0.15);
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--dark-color) !important;
+            transition: color 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .alert {
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        
+        .btn-close:hover {
+            opacity: 1;
+        }
+        
+        /* Fix pour les dropdowns */
+        .navbar-nav .dropdown {
+            position: relative;
+        }
+        
+        .navbar-nav .dropdown-menu {
+            display: none !important;
+            position: absolute !important;
+            z-index: 100000 !important;
+            top: 100% !important;
+            left: 0 !important;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            margin: 0;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            list-style: none;
+            background-color: #fff !important;
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 0.375rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+        }
+        
+        .navbar-nav .dropdown-menu.show {
+            display: block !important;
+            z-index: 100000 !important;
+        }
+        
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block !important;
+            z-index: 100000 !important;
+        }
+        
+        .navbar-nav .dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+        
+        /* S'assurer que les sections hero n'interfèrent pas */
+        .hero-section, .bg-primary, .bg-gradient, section {
+            z-index: 1 !important;
+            position: relative;
+        }
+        
+        /* Forcer tous les éléments de contenu à rester en arrière-plan */
+        .container, .row, .col, main, .content {
+            z-index: 1 !important;
+            position: relative;
+        }
+        
+        /* S'assurer que la navbar et ses dropdowns sont toujours au-dessus */
+        .navbar, .navbar-nav, .dropdown, .dropdown-menu {
+            z-index: 99999 !important;
+        }
+        
+        .dropdown-menu {
+            z-index: 100000 !important;
+        }
+        
+        /* Override pour tous les styles inline des sections hero */
+        section[style*="z-index"], 
+        .hero-section[style*="z-index"],
+        .bg-primary[style*="z-index"],
+        .bg-gradient[style*="z-index"] {
+            z-index: 1 !important;
+        }
+        
+        /* Zone d'espace pour les dropdowns */
+        .dropdown-space {
+            height: 200px;
+            position: relative;
+            z-index: 1;
+            background: transparent;
+            pointer-events: none;
+        }
+        
+        /* Responsive dropdown */
+        @media (max-width: 991.98px) {
+            .navbar-nav .dropdown-menu {
+                position: static;
+                float: none;
+                width: auto;
+                margin-top: 0;
+                background-color: transparent;
+                border: 0;
+                box-shadow: none;
+            }
+            
+            .navbar-nav .dropdown-item {
+                padding-left: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <!-- Logo officiel YouthConnekt Sahel -->
+                <div class="me-3 d-flex align-items-center">
+                    <!-- Icône V stylisée -->
+                    <div class="position-relative me-2">
+                        <div style="width: 40px; height: 40px; position: relative;">
+                            <!-- V stylisé -->
+                            <div style="position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 30px solid var(--green-dark);"></div>
+                            <!-- Cercles de connexion -->
+                            <div style="position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; border-radius: 50%; background: radial-gradient(circle, var(--green-light) 20%, var(--orange-bright) 40%, var(--green-dark) 60%, #8D6E63 80%); opacity: 0.8;"></div>
+                        </div>
+                    </div>
+                    <!-- Texte du logo -->
+                    <div class="d-flex flex-column">
+                        <div class="d-flex">
+                            <span style="background: var(--orange-bright); color: white; padding: 4px 8px; font-weight: bold; font-size: 12px; margin-right: 2px;">YOUTH</span>
+                            <span style="background: var(--green-dark); color: white; padding: 4px 8px; font-weight: bold; font-size: 12px;">CONNEKT</span>
+                        </div>
+                        <span style="color: var(--green-dark); font-weight: bold; font-size: 14px; margin-top: 2px;">SAHEL</span>
+                    </div>
+                </div>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/program">Programme</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/speakers">Intervenants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2" href="/registration">
+                            <i class="fas fa-user-plus me-1"></i>
+                            S'inscrire
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 80px;"></div>
+    
+    <!-- Modal pour les options d'inscription -->
+    <div id="inscriptionModal" class="modal" style="display: none; position: fixed; z-index: 10000000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color: white; margin: 15% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 500px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #2E7D32;">Options d'inscription</h3>
+                <span class="close" style="color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <a href="/registration" style="display: flex; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border: 2px solid transparent; transition: all 0.3s;">
+                    <i class="fas fa-edit" style="margin-right: 10px; color: #2E7D32;"></i>
+                    <div>
+                        <strong>S'inscrire au Forum</strong>
+                        <div style="font-size: 14px; color: #666;">Inscription complète au forum</div>
+                    </div>
+                </a>
+                <a href="/participants/national" style="display: flex; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border: 2px solid transparent; transition: all 0.3s;">
+                    <i class="fas fa-flag" style="margin-right: 10px; color: #FF6B35;"></i>
+                    <div>
+                        <strong>Participants Nationaux</strong>
+                        <div style="font-size: 14px; color: #666;">Inscription pour les participants du Tchad</div>
+                    </div>
+                </a>
+                <a href="/participants/international" style="display: flex; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border: 2px solid transparent; transition: all 0.3s;">
+                    <i class="fas fa-globe" style="margin-right: 10px; color: #2E7D32;"></i>
+                    <div>
+                        <strong>Participants Internationaux</strong>
+                        <div style="font-size: 14px; color: #666;">Inscription pour les participants internationaux</div>
+                    </div>
+                </a>
+                <a href="/exhibitions" style="display: flex; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border: 2px solid transparent; transition: all 0.3s;">
+                    <i class="fas fa-store" style="margin-right: 10px; color: #FF6B35;"></i>
+                    <div>
+                        <strong>Exposition Stand</strong>
+                        <div style="font-size: 14px; color: #666;">Réserver un stand d'exposition</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript pour le modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('inscriptionModal');
+            const closeBtn = document.querySelector('.close');
+            const inscriptionLink = document.querySelector('a[href="#"]');
+            
+            // Ouvrir le modal quand on clique sur Inscription
+            document.querySelectorAll('.dropdown-toggle').forEach(function(link) {
+                if (link.textContent.includes('Inscription')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        modal.style.display = 'block';
+                    });
+                }
+            });
+            
+            // Fermer le modal
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Fermer le modal quand on clique en dehors
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>

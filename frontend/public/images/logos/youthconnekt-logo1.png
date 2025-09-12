@@ -1,0 +1,29 @@
+<svg width="200" height="80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cercles connectés représentant la jeunesse unie -->
+  <circle cx="30" cy="40" r="12" fill="url(#logoGradient)" opacity="0.8"/>
+  <circle cx="50" cy="25" r="10" fill="url(#logoGradient)" opacity="0.9"/>
+  <circle cx="50" cy="55" r="10" fill="url(#logoGradient)" opacity="0.9"/>
+  <circle cx="70" cy="40" r="12" fill="url(#logoGradient)"/>
+  
+  <!-- Lignes de connexion -->
+  <line x1="42" y1="40" x2="58" y2="40" stroke="url(#logoGradient)" stroke-width="2" opacity="0.6"/>
+  <line x1="38" y1="33" x2="52" y2="30" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.5"/>
+  <line x1="38" y1="47" x2="52" y2="50" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.5"/>
+  <line x1="58" y1="32" x2="65" y2="35" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.5"/>
+  <line x1="58" y1="48" x2="65" y2="45" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Texte -->
+  <text x="90" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="url(#logoGradient)">Youth</text>
+  <text x="90" y="55" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="url(#logoGradient)">Connekt</text>
+  
+  <!-- Point connecteur -->
+  <circle cx="140" cy="45" r="2" fill="#ffc107"/>
+  <text x="150" y="50" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffc107">2025</text>
+</svg>

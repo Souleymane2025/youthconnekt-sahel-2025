@@ -1,0 +1,102 @@
+<%- include('../layouts/dashboard-layout-start', { title: title, section: 'overview' }) %>
+<div class="container-fluid">
+   <div class="row g-4 mb-2">
+      <div class="col-md-3">
+         <div class="metric-card soft-green">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+               <div>
+                  <div class="text-uppercase small text-muted fw-semibold">Participants</div>
+                  <div class="metric-value text-success">0</div>
+               </div>
+               <div class="icon shadow-sm"><i class="fas fa-users"></i></div>
+            </div>
+            <div class="small text-muted">En attente de synchronisation</div>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <div class="metric-card soft-orange">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+               <div>
+                  <div class="text-uppercase small text-muted fw-semibold">Badges Générés</div>
+                  <div class="metric-value text-danger">0</div>
+               </div>
+               <div class="icon shadow-sm"><i class="fas fa-id-badge"></i></div>
+            </div>
+            <div class="small text-muted">Aucun badge pour le moment</div>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <div class="metric-card soft-accent">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+               <div>
+                  <div class="text-uppercase small text-muted fw-semibold">Emails Envoyés</div>
+                  <div class="metric-value text-primary">0</div>
+               </div>
+               <div class="icon shadow-sm"><i class="fas fa-envelope"></i></div>
+            </div>
+            <div class="small text-muted">Notifications à venir</div>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <div class="metric-card" style="background:linear-gradient(135deg,#fff,#f3f8f4);">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+               <div>
+                  <div class="text-uppercase small text-muted fw-semibold">Taux Remplissage</div>
+                  <div class="metric-value text-secondary">0%</div>
+               </div>
+               <div class="icon shadow-sm" style="background:var(--gradient-secondary)"><i class="fas fa-percent"></i></div>
+            </div>
+            <div class="small text-muted">Se mettra à jour</div>
+         </div>
+      </div>
+   </div>
+
+   <div class="card border-0 shadow-sm mb-4" style="border-radius:18px;">
+      <div class="card-body p-4">
+         <h5 class="mb-3 fw-bold text-success"><i class="fas fa-sync-alt me-2"></i>Synchronisation Backend</h5>
+         <p class="mb-3 text-muted small">Le backend Laravel n'est pas encore connecté. Une fois l'API disponible, les données (participants, badges, emails) apparaîtront automatiquement ici.</p>
+         <ul class="small mb-0 text-muted">
+            <li>Participants: récupération via endpoint /api/participants</li>
+            <li>Badges: génération PDF ou image à venir</li>
+            <li>Emails: historique des confirmations et newsletters</li>
+         </ul>
+      </div>
+   </div>
+
+   <div class="row g-4">
+      <div class="col-lg-8">
+         <div class="card border-0 shadow-sm" style="border-radius:18px;">
+            <div class="card-header bg-white border-0 pb-0">
+               <h6 class="fw-bold text-success mb-0"><i class="fas fa-clock me-1"></i> Activité récente</h6>
+            </div>
+            <div class="card-body">
+               <div class="text-center py-4 text-muted small">Aucune activité pour le moment.</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-4">
+         <div class="card border-0 shadow-sm mb-4" style="border-radius:18px;">
+            <div class="card-header bg-white border-0 pb-0">
+               <h6 class="fw-bold text-success mb-0"><i class="fas fa-bell me-1"></i> Notifications</h6>
+            </div>
+            <div class="card-body small">
+               <div class="text-muted">Aucune notification pour l'instant.</div>
+            </div>
+         </div>
+         <div class="card border-0 shadow-sm" style="border-radius:18px;">
+            <div class="card-header bg-white border-0 pb-0">
+               <h6 class="fw-bold text-success mb-0"><i class="fas fa-road me-1"></i> Prochaines étapes</h6>
+            </div>
+            <div class="card-body small">
+               <ol class="mb-0 text-muted">
+                  <li>Configurer API Laravel</li>
+                  <li>Brancher endpoints fetch()</li>
+                  <li>Activer génération des badges</li>
+                  <li>Déployer en staging</li>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </div>
+ </div>
+<%- include('../layouts/dashboard-layout-end') %>

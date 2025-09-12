@@ -1,0 +1,2698 @@
+/* Couleurs officielles YouthConnekt Sahel 2025 */
+:root {
+    /* Couleurs extraites du logo officiel */
+    --primary-color: #2E7D32;        /* Vert principal du logo */
+    --secondary-color: #FF5722;      /* Orange/Rouge du logo */
+    --accent-color: #4CAF50;         /* Vert clair complémentaire */
+    --dark-color: #1B5E20;           /* Vert foncé */
+    --light-color: #E8F5E8;          /* Vert très clair */
+    --white: #FFFFFF;                /* Blanc pur */
+    /* Couleurs de texte */
+    --text-color: #1B5E20;
+    --text-light: #4CAF50;
+    
+    /* Gradients avec les couleurs officielles */
+    /* Gradients adoucis */
+    --gradient-primary: linear-gradient(135deg, #2E7D32 0%, #3f8d41 60%, #4CAF50 100%);
+    --gradient-secondary: linear-gradient(135deg, #FF5722 0%, #ff6a33 55%, #FF7043 100%);
+    --gradient-accent: linear-gradient(135deg, #2E7D32 0%, #3f8d41 45%, #FF5722 100%);
+    --gradient-hero: linear-gradient(135deg, rgba(46,125,50,0.85) 0%, rgba(63,141,65,0.80) 50%, rgba(255,87,34,0.72) 100%);
+    --gradient-success: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    
+    /* Ombres utilitaires */
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.12);
+    --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.18);
+    
+    /* Couleurs supplémentaires (compatibilité ancien thème) */
+    --success-color: #4CAF50;
+    --warning-color: #FF9800;
+    --warning-dark: #E64A19;
+    
+    /* Variables Bootstrap personnalisées */
+    --bs-primary: #2E7D32;
+    --bs-secondary: #FF5722;
+    --bs-success: #4CAF50;
+    --bs-warning: #FF9800;
+    --bs-info: #00BCD4;
+    --bs-light: #E8F5E8;
+    --bs-dark: #1B5E20;
+}
+
+/* Override Bootstrap colors */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-warning, .btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-warning:hover, .btn-secondary:hover {
+    background-color: #E64A19;
+    border-color: #E64A19;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-warning {
+    color: var(--secondary-color) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.bg-light {
+    background-color: var(--light-color) !important;
+}
+
+/* Images et galerie */
+.hero-main-image img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-main-image img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+.partner-logo {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.partner-logo:hover {
+    transform: translateY(-5px);
+}
+
+.partner-logo img {
+    transition: all 0.3s ease;
+}
+
+/* Galerie footer */
+.gallery-thumbnail {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-thumbnail:hover {
+    transform: scale(1.05);
+}
+
+.gallery-thumbnail::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-thumbnail:hover::after {
+    opacity: 1;
+}
+
+/* Images avec fallback stylé */
+.image-fallback {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    min-height: 200px;
+    border-radius: 8px;
+}
+
+/* Style pour les logos manquants */
+.logo-fallback {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    color: #6c757d;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.logo-fallback:hover {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+/* Style pour les composants image avec placeholder */
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container img {
+    transition: all 0.3s ease;
+}
+
+.image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Responsive pour les mini-galeries */
+@media (max-width: 768px) {
+    .hero-main-image {
+        margin-bottom: 2rem;
+    }
+    
+    .gallery-thumbnail {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animation pour les logos partenaires */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.partner-logo:nth-child(odd) {
+    animation: float 3s ease-in-out infinite;
+}
+
+.partner-logo:nth-child(even) {
+    animation: float 3s ease-in-out infinite 1.5s;
+}
+
+/* Navbar personnalisée avec couleurs officielles */
+.navbar-brand {
+    font-weight: bold;
+    color: var(--primary-color) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--dark-color) !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--secondary-color) !important;
+}
+
+/* Dropdown amélioré (meilleure lisibilité) */
+.dropdown-menu {
+    border: 1px solid rgba(255,255,255,0.18);
+    background: linear-gradient(155deg, rgba(46,125,50,0.97) 0%, rgba(55,140,60,0.95) 55%, rgba(255,87,34,0.90) 100%);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    border-radius: 16px;
+    padding: 10px 10px 12px;
+    box-shadow: 0 14px 34px -6px rgba(0,0,0,0.45), 0 6px 18px -4px rgba(0,0,0,0.32);
+    animation: dropdownFade 140ms ease-out;
+}
+
+/* Items dropdown */
+.dropdown-item:hover {
+    background: rgba(255,255,255,0.20);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.dropdown-item {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 10px 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: .2px;
+    transition: background .18s ease, transform .18s ease, color .18s ease;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+.dropdown-item i {
+    width: 18px;
+    text-align: center;
+    opacity: .9;
+}
+
+.dropdown-item:active {
+    background: rgba(255,255,255,0.30);
+    transform: translateY(1px);
+}
+
+.dropdown-divider {
+    border-top: 1px solid rgba(255,255,255,0.25);
+    margin: 4px 0 6px;
+}
+
+.navbar .dropdown-toggle::after {
+    margin-left: 6px;
+    vertical-align: middle;
+    border-top-width: .45em;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(8px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Sous conteneur alignement */
+.navbar-nav .dropdown-menu {
+    min-width: 240px;
+}
+
+/* Mode sombre sur fond primaire */
+.navbar.bg-primary .nav-link, .navbar.bg-primary .navbar-brand {
+    color: #fff !important;
+}
+
+.navbar.bg-primary .nav-link:hover, .navbar.bg-primary .nav-link:focus {
+    color: var(--secondary-color) !important;
+}
+
+.navbar.bg-primary .nav-link.active {
+    position: relative;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.navbar.bg-primary .nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 4px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--secondary-color);
+}
+
+/* Effet focus accessible */
+.dropdown-item:focus, .nav-link:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* Animations et transitions améliorées */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Responsive pour les couleurs */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+}
+
+/* Hero Section avec couleurs officielles */
+.hero-section {
+    background: var(--gradient-hero);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="60" cy="30" r="1" fill="rgba(255,255,255,0.06)"/></svg>');
+    background-size: 100px 100px;
+    opacity: 0.3;
+}
+
+.hero-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Section titles avec couleurs du logo */
+.section-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--gradient-accent);
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+/* Cards et features avec les nouvelles couleurs */
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(46, 125, 50, 0.15);
+}
+
+/* Countdown avec couleurs officielles */
+.countdown-item {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.countdown-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+ .countdown-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background: #ffffff;
+}
+
+/* Modern Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-color);
+}
+
+.display-1, .display-2, .display-3, .display-4 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* (Duplicate hero-section removed to preserve official gradient settings) */
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-graphic {
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+/* Modern Buttons */
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 12px 32px;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: var(--shadow-light);
+}
+
+.btn-primary {
+    background: var(--gradient-accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    color: white;
+}
+
+.btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline-light:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.btn-lg {
+    padding: 16px 40px;
+    font-size: 1.1rem;
+}
+
+/* Feature Cards */
+.feature-card {
+    padding: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Stat Items */
+.stat-item {
+    padding: 1rem;
+}
+
+/* Navigation */
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Newsletter Form */
+.newsletter-form .input-group {
+    max-width: 300px;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 60vh;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .hero-buttons .btn {
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+}
+
+/* Partner/Sponsor Logos */
+.partner-logo img,
+.sponsor-logo img {
+    max-height: 80px;
+    width: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.partner-logo img:hover,
+.sponsor-logo img:hover {
+    filter: grayscale(0%);
+}
+
+/* Section Styling */
+section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-strong);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-accent);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Navigation */
+.navbar {
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color);
+}
+
+/* Footer */
+footer {
+    background: #1f2937;
+    color: white;
+    padding: 4rem 0 2rem;
+}
+
+.footer-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #d1d5db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+/* Form Styling Enhanced */
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    background: white;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.1);
+    outline: none;
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+/* Event-specific Components */
+.event-countdown {
+    background: var(--gradient-primary);
+    border-radius: 20px;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+}
+
+.countdown-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.countdown-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    display: block;
+}
+
+.countdown-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+/* Utility Classes */
+.text-primary { color: var(--primary-color) !important; }
+.bg-gradient { background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%); }
+
+/* Animation bounce pour les éléments flottants */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.floating-element {
+    animation: bounce 3s infinite;
+}
+
+/* Stats cards hover effect */
+.stat-item:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+/* Hero section improvements */
+.hero-content {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === OVERRIDES ACCESSIBILITE DROPDOWN (fin) === */
+.navbar .dropdown-menu {
+    background:#ffffff !important;
+    border:1px solid rgba(0,0,0,0.08) !important;
+    box-shadow:0 8px 24px -4px rgba(0,0,0,0.18); 
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+}
+.navbar .dropdown-item {
+    color:var(--dark-color) !important;
+    font-weight:500;
+    text-shadow:none !important;
+    opacity:1 !important;
+}
+.navbar .dropdown-item i { color:var(--primary-color) !important; opacity:1; }
+.navbar .dropdown-item:hover, .navbar .dropdown-item:focus {
+    background:var(--primary-color) !important;
+    color:#fff !important;
+}
+.navbar .dropdown-item:hover i, .navbar .dropdown-item:focus i { color:#fff !important; }
+.navbar .dropdown-divider { border-top:1px solid rgba(0,0,0,0.08) !important; }
+/* === FIN OVERRIDES === */
+
+/* Etat ouvert contrôlé par Bootstrap (.show) */
+/* Bootstrap gère l'affichage via .show – aucun override nécessaire */
+
+/* === NOUVELLES SECTIONS MODERNES === */
+
+/* Hero Section Moderne */
+.hero-section-modern {
+    background: var(--gradient-hero);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-background-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.hero-main-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(46, 125, 50, 0.7);
+}
+
+.hero-content-modern {
+    position: relative;
+    z-index: 3;
+    padding: 2rem 0;
+}
+
+.hero-badge-modern {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.hero-title-modern {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.gradient-text-modern {
+    background: linear-gradient(45deg, #FFD700, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle-modern {
+    font-size: 1.3rem;
+    font-weight: 400;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-stats {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-item-modern {
+    text-align: center;
+}
+
+.stat-number-modern {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    display: block;
+}
+
+.stat-label-modern {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
+.hero-buttons-modern {
+    margin-top: 2rem;
+}
+
+.btn-primary-modern {
+    background: var(--gradient-accent);
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn-primary-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    color: white;
+}
+
+.btn-outline-light-modern {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light-modern:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.hero-gallery-modern {
+    position: relative;
+    z-index: 3;
+}
+
+.hero-main-image-modern {
+    margin-bottom: 1.5rem;
+}
+
+.hero-main-img {
+    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.hero-main-img:hover {
+    transform: scale(1.02);
+}
+
+.hero-secondary-gallery {
+    margin-top: 1rem;
+}
+
+.gallery-item-modern img {
+    height: 80px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item-modern img:hover {
+    transform: scale(1.05);
+}
+
+/* Forum Section Moderne */
+.forum-section-modern {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+}
+
+.forum-title-modern {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.forum-description-modern {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.forum-stats-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-card-modern {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-icon-modern {
+    width: 50px;
+    height: 50px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.stat-info-modern {
+    flex: 1;
+}
+
+.stat-number-modern {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.stat-label-modern {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.forum-gallery-modern {
+    position: relative;
+}
+
+.forum-main-image-modern {
+    position: relative;
+}
+
+.forum-main-image-modern img {
+    max-height: 500px;
+    width: 100%;
+    object-fit: cover;
+    border: 4px solid rgba(255,255,255,0.2);
+}
+
+.forum-badge-modern {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.forum-images-grid-modern {
+    margin-top: 1rem;
+}
+
+.forum-image-item-modern img {
+    height: 80px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.forum-image-item-modern img:hover {
+    transform: scale(1.05);
+}
+
+.forum-location-badge-modern {
+    background: white;
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Galerie Section Moderne */
+.gallery-section-modern {
+    background: var(--light-color);
+}
+
+.section-title-modern {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.section-subtitle-modern {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 3rem;
+}
+
+.gallery-grid-modern {
+    margin-top: 2rem;
+}
+
+.gallery-card-modern {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.gallery-card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.gallery-image-modern {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+}
+
+.gallery-image-modern img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card-modern:hover .gallery-image-modern img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay-modern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(46,125,50,0.8) 0%, rgba(255,87,34,0.8) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-card-modern:hover .gallery-overlay-modern {
+    opacity: 1;
+}
+
+.gallery-content-modern {
+    text-align: center;
+    color: white;
+}
+
+.gallery-content-modern h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-content-modern p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Section Partenaires Moderne */
+.partners-section-modern {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+}
+
+.partners-title-modern {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.partners-subtitle-modern {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 3rem;
+}
+
+.partners-grid-modern {
+    margin-top: 2rem;
+}
+
+.partner-card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.partner-card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    border-color: var(--accent-color);
+}
+
+.partner-logo-modern {
+    margin-bottom: 1.5rem;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner-logo-modern img {
+    max-height: 80px;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.partner-card-modern:hover .partner-logo-modern img {
+    transform: scale(1.1);
+}
+
+.partner-info-modern {
+    color: var(--text-color);
+}
+
+.partner-name-modern {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.partner-country-modern {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.partner-role-modern {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.thank-you-message-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.thank-you-message-modern h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.thank-you-message-modern p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title-modern {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle-modern {
+        font-size: 1.1rem;
+    }
+    
+    .forum-title-modern {
+        font-size: 2rem;
+    }
+    
+    .section-title-modern {
+        font-size: 2rem;
+    }
+    
+    .partners-title-modern {
+        font-size: 2rem;
+    }
+    
+    .gallery-image-modern {
+        height: 200px;
+    }
+    
+    .stat-card-modern {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stat-icon-modern {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* === FORCE COULEURS BOOTSTRAP SUR TOUS NAVIGATEURS === */
+
+/* Force les couleurs Bootstrap sur tous les navigateurs */
+:root {
+    --bs-primary: #2E7D32 !important;
+    --bs-secondary: #FF5722 !important;
+    --bs-success: #4CAF50 !important;
+    --bs-warning: #FF9800 !important;
+    --bs-info: #00BCD4 !important;
+    --bs-light: #E8F5E8 !important;
+    --bs-dark: #1B5E20 !important;
+}
+
+/* Force les couleurs sur tous les éléments Bootstrap */
+.btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:visited {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #1B5E20 !important;
+    border-color: #1B5E20 !important;
+    color: white !important;
+}
+
+.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+.text-primary {
+    color: #2E7D32 !important;
+}
+
+.btn-outline-primary {
+    color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les liens */
+a.text-primary, a.text-primary:hover, a.text-primary:focus, a.text-primary:visited {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les badges */
+.badge.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les icônes */
+i.text-primary, .fas.text-primary, .fab.text-primary, .fa.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les sections */
+section.bg-primary, .bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les cartes */
+.card-header.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les navbar */
+.navbar-dark.bg-primary, .navbar.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les dropdowns */
+.dropdown-item.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les alertes */
+.alert-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les progress bars */
+.progress-bar.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les listes */
+.list-group-item.active {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les paginations */
+.page-item.active .page-link {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les tooltips */
+.tooltip-inner {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les popovers */
+.popover-header {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les modals */
+.modal-header.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les tables */
+.table-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les breadcrumbs */
+.breadcrumb-item.active {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les carousels */
+.carousel-indicators .active {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les spinners */
+.spinner-border.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les toasts */
+.toast-header.bg-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les offcanvas */
+.offcanvas-header.bg-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les accordions */
+.accordion-button:not(.collapsed) {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les tabs */
+.nav-tabs .nav-link.active {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les pills */
+.nav-pills .nav-link.active {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les form controls */
+.form-control:focus {
+    border-color: #2E7D32 !important;
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25) !important;
+}
+
+.form-select:focus {
+    border-color: #2E7D32 !important;
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25) !important;
+}
+
+/* Force les couleurs pour les checkboxes et radios */
+.form-check-input:checked {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les switches */
+.form-switch .form-check-input:checked {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les ranges */
+.form-range::-webkit-slider-thumb {
+    background-color: #2E7D32 !important;
+}
+
+.form-range::-moz-range-thumb {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les floating labels */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les input groups */
+.input-group-text {
+    background-color: #2E7D32 !important;
+    color: white !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les buttons groups */
+.btn-group .btn-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les button toolbars */
+.btn-toolbar .btn-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les dropdowns */
+.dropdown-menu .dropdown-item:active {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les navbars */
+.navbar .navbar-nav .nav-link.active {
+    color: #2E7D32 !important;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les breadcrumbs */
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les paginations */
+.pagination .page-link {
+    color: #2E7D32 !important;
+}
+
+.pagination .page-link:hover {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les listes */
+.list-group-item-action:hover {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+.list-group-item-action:focus {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les cards */
+.card.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les alerts */
+.alert-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les badges */
+.badge.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les progress bars */
+.progress-bar.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les spinners */
+.spinner-border.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les toasts */
+.toast.bg-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les tooltips */
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #2E7D32 !important;
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #2E7D32 !important;
+}
+
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #2E7D32 !important;
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les popovers */
+.popover.bs-popover-top .popover-arrow::before {
+    border-top-color: #2E7D32 !important;
+}
+
+.popover.bs-popover-bottom .popover-arrow::before {
+    border-bottom-color: #2E7D32 !important;
+}
+
+.popover.bs-popover-start .popover-arrow::before {
+    border-left-color: #2E7D32 !important;
+}
+
+.popover.bs-popover-end .popover-arrow::before {
+    border-right-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les modals */
+.modal-content.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les offcanvas */
+.offcanvas.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les accordions */
+.accordion-item.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les carousels */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les indicators */
+.carousel-indicators [data-bs-target] {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les tables */
+.table-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+.table-primary th,
+.table-primary td {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les figures */
+.figure-caption {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les blockquotes */
+.blockquote-footer {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les code */
+code {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les pre */
+pre {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les kbd */
+kbd {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les samp */
+samp {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les var */
+var {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les mark */
+mark {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les small */
+small {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les abbr */
+abbr[title] {
+    border-bottom-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les dfn */
+dfn {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les cite */
+cite {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les q */
+q {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les s */
+s {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les del */
+del {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les ins */
+ins {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les u */
+u {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les b */
+b {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les strong */
+strong {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les i */
+i {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les em */
+em {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les mark */
+mark {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les small */
+small {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les sub */
+sub {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les sup */
+sup {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les tt */
+tt {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les kbd */
+kbd {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les samp */
+samp {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les var */
+var {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les pre */
+pre {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les code */
+code {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les blockquote */
+blockquote {
+    border-left-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les figure */
+.figure-caption {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les table */
+.table-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les carousel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les indicators */
+.carousel-indicators [data-bs-target] {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les modal */
+.modal-content.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les offcanvas */
+.offcanvas.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les accordion */
+.accordion-item.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les toast */
+.toast.bg-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les tooltip */
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #2E7D32 !important;
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #2E7D32 !important;
+}
+
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #2E7D32 !important;
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les popover */
+.popover.bs-popover-top .popover-arrow::before {
+    border-top-color: #2E7D32 !important;
+}
+
+.popover.bs-popover-bottom .popover-arrow::before {
+    border-bottom-color: #2E7D32 !important;
+}
+
+.popover.bs-popover-start .popover-arrow::before {
+    border-left-color: #2E7D32 !important;
+}
+
+.popover.bs-popover-end .popover-arrow::before {
+    border-right-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les spinner */
+.spinner-border.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les progress */
+.progress-bar.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les badge */
+.badge.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les alert */
+.alert-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les card */
+.card.border-primary {
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les list */
+.list-group-item-action:hover {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+.list-group-item-action:focus {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les pagination */
+.pagination .page-link {
+    color: #2E7D32 !important;
+}
+
+.pagination .page-link:hover {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les breadcrumb */
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les nav */
+.navbar .navbar-nav .nav-link.active {
+    color: #2E7D32 !important;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les dropdown */
+.dropdown-menu .dropdown-item:active {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les button */
+.btn-toolbar .btn-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les group */
+.btn-group .btn-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les input */
+.input-group-text {
+    background-color: #2E7D32 !important;
+    color: white !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les floating */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les range */
+.form-range::-webkit-slider-thumb {
+    background-color: #2E7D32 !important;
+}
+
+.form-range::-moz-range-thumb {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les switch */
+.form-switch .form-check-input:checked {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les check */
+.form-check-input:checked {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les select */
+.form-select:focus {
+    border-color: #2E7D32 !important;
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25) !important;
+}
+
+/* Force les couleurs pour les control */
+.form-control:focus {
+    border-color: #2E7D32 !important;
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25) !important;
+}
+
+/* Force les couleurs pour les pill */
+.nav-pills .nav-link.active {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les tab */
+.nav-tabs .nav-link.active {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les accordion */
+.accordion-button:not(.collapsed) {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les offcanvas */
+.offcanvas-header.bg-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les toast */
+.toast-header.bg-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les spinner */
+.spinner-border.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les carousel */
+.carousel-indicators .active {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les breadcrumb */
+.breadcrumb-item.active {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les table */
+.table-primary {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les popover */
+.popover-header {
+    background-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les tooltip */
+.tooltip-inner {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les pagination */
+.page-item.active .page-link {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les list */
+.list-group-item.active {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les progress */
+.progress-bar.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les alert */
+.alert-primary {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les badge */
+.badge.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les icon */
+i.text-primary, .fas.text-primary, .fab.text-primary, .fa.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les section */
+section.bg-primary, .bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les card */
+.card-header.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les navbar */
+.navbar-dark.bg-primary, .navbar.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les dropdown */
+.dropdown-item.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les link */
+a.text-primary, a.text-primary:hover, a.text-primary:focus, a.text-primary:visited {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les outline */
+.btn-outline-primary {
+    color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+/* Force les couleurs pour les text */
+.text-primary {
+    color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les bg */
+.bg-primary {
+    background-color: #2E7D32 !important;
+}
+
+/* Force les couleurs pour les button */
+.btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:visited {
+    background-color: #2E7D32 !important;
+    border-color: #2E7D32 !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #1B5E20 !important;
+    border-color: #1B5E20 !important;
+    color: white !important;
+}
+
+/* === SECTIONS SPEAKERS MODERNES === */
+
+/* Hero Section Speakers */
+.speakers-hero-section-modern {
+    background: var(--gradient-hero);
+    min-height: 60vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.speakers-hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.speakers-hero-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+}
+
+.speakers-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(46, 125, 50, 0.8);
+}
+
+.speakers-hero-content-modern {
+    position: relative;
+    z-index: 3;
+    padding: 3rem 0;
+}
+
+.speakers-hero-badge-modern {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.speakers-hero-title-modern {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.speakers-hero-subtitle-modern {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.speakers-stats-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.speaker-stat-item-modern {
+    text-align: center;
+}
+
+.speaker-stat-number-modern {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    display: block;
+}
+
+.speaker-stat-label-modern {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
+/* Sections Speakers */
+.speakers-panel-section-modern,
+.speakers-ministers-section-modern,
+.speakers-entrepreneurs-section-modern {
+    padding: 4rem 0;
+}
+
+.speakers-section-title-modern {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.speakers-section-subtitle-modern {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 3rem;
+}
+
+/* Cartes Speakers Modernes */
+.speaker-card-modern {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 2px solid transparent;
+}
+
+.speaker-card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    border-color: var(--accent-color);
+}
+
+.speaker-image-modern {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+}
+
+.speaker-image-modern img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.speaker-card-modern:hover .speaker-image-modern img {
+    transform: scale(1.1);
+}
+
+.speaker-overlay-modern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(46,125,50,0.8) 0%, rgba(255,87,34,0.8) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.speaker-card-modern:hover .speaker-overlay-modern {
+    opacity: 1;
+}
+
+.speaker-badge-modern {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.president-badge-modern {
+    background: linear-gradient(45deg, #FFD700, #FF6B35);
+    color: white;
+}
+
+.minister-badge-modern {
+    background: linear-gradient(45deg, #2E7D32, #4CAF50);
+    color: white;
+}
+
+.entrepreneur-badge-modern {
+    background: linear-gradient(45deg, #2196F3, #03A9F4);
+    color: white;
+}
+
+.academic-badge-modern {
+    background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+    color: white;
+}
+
+.tech-badge-modern {
+    background: linear-gradient(45deg, #FF5722, #FF9800);
+    color: white;
+}
+
+.speaker-info-modern {
+    padding: 2rem;
+}
+
+.speaker-name-modern {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.speaker-title-modern {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.speaker-description-modern {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.speaker-tags-modern {
+    margin-bottom: 1.5rem;
+}
+
+.speaker-tag-modern {
+    display: inline-block;
+    background: var(--light-color);
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--accent-color);
+}
+
+.president-tag-modern {
+    background: linear-gradient(45deg, #FFD700, #FF6B35);
+    color: white;
+    border: none;
+}
+
+.panel-tag-modern {
+    background: linear-gradient(45deg, #FF5722, #FF9800);
+    color: white;
+    border: none;
+}
+
+.innovation-tag-modern {
+    background: linear-gradient(45deg, #2196F3, #03A9F4);
+    color: white;
+    border: none;
+}
+
+.women-tag-modern {
+    background: linear-gradient(45deg, #E91E63, #C2185B);
+    color: white;
+    border: none;
+}
+
+.economy-tag-modern {
+    background: linear-gradient(45deg, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+}
+
+.education-tag-modern {
+    background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+    color: white;
+    border: none;
+}
+
+.agritech-tag-modern {
+    background: linear-gradient(45deg, #8BC34A, #689F38);
+    color: white;
+    border: none;
+}
+
+.tech-tag-modern {
+    background: linear-gradient(45deg, #FF5722, #E64A19);
+    color: white;
+    border: none;
+}
+
+.speaker-actions-modern {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.speaker-action-btn-modern {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.speaker-action-btn-modern:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design pour Speakers */
+@media (max-width: 768px) {
+    .speakers-hero-title-modern {
+        font-size: 2.5rem;
+    }
+    
+    .speakers-hero-subtitle-modern {
+        font-size: 1.1rem;
+    }
+    
+    .speakers-section-title-modern {
+        font-size: 2rem;
+    }
+    
+    .speaker-image-modern {
+        height: 250px;
+    }
+    
+    .speaker-info-modern {
+        padding: 1.5rem;
+    }
+    
+    .speaker-name-modern {
+        font-size: 1.1rem;
+    }
+    
+    .speaker-title-modern {
+        font-size: 0.9rem;
+    }
+}
