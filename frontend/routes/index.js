@@ -22,4 +22,13 @@ router.get('/contact', homeController.contact);
 // Route pour envoyer un message de contact
 router.post('/contact', homeController.sendContactMessage);
 
+// Route des partenaires
+router.get('/partners', (req, res) => {
+    const partners = require('../config/partners');
+    res.render('pages/partners', {
+        title: 'Partenaires - YouthConnekt Sahel 2025',
+        partners: partners
+    });
+});
+
 module.exports = router;
